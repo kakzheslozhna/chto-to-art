@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Что-то АРТ - Креативное Агентство</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="container header__container">
+                <a href="/" class="logo header__logo">
+                    <span class="logo__main">Что-то</span>
+                    <span class="logo__accent">АРТ</span>
+                </a>
+                <nav class="nav header__nav">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href="#about" class="nav__link">О нас</a></li>
+                        <li class="nav__item"><a href="#services" class="nav__link">Услуги</a></li>
+                        <li class="nav__item"><a href="#projects" class="nav__link">Проекты</a></li>
+                        <li class="nav__item"><a href="#cases" class="nav__link">Кейсы</a></li>
+                        <li class="nav__item"><a href="#contacts" class="nav__link">Контакты</a></li>
+                    </ul>
+                </nav>
+                <div class="header__contacts">
+                    <a href="tel:+70000000000" class="header__phone">📞 +7 (000) 000-00-00</a>
+                    <button class="button button--outline header__callback-btn" data-modal-open="callback">Заказать звонок</button>
+                </div>
+                <button class="burger header__burger" aria-label="Открыть меню">
+                    <span class="burger__line"></span>
+                    <span class="burger__line"></span>
+                    <span class="burger__line"></span>
+                </button>
+            </div>
+        </header>
+
+        <main class="main">
+            <!-- Hero Services Section -->
+            <section class="hero-services" id="hero">
+                <div class="swiper hero-slider">
+                    <div class="swiper-wrapper">
+                        <!-- Slide 1 -->
+                        <div class="swiper-slide hero-slide" style="background-image: url('https://placehold.co/1920x1080/222222/cccccc?text=Абстрактный+фон+1');">
+                            <div class="container hero-slide__container">
+                                <div class="hero-slide__tabs-nav">
+                                    <button class="hero-slide__tab-btn active" data-tab-content="marketing">Маркетинг</button>
+                                    <button class="hero-slide__tab-btn" data-tab-content="development">Разработка</button>
+                                    <button class="hero-slide__tab-btn" data-tab-content="production">Продакшн</button>
+                                </div>
+                                <div class="hero-slide__content active" data-tab-id="marketing">
+                                    <h1 class="hero-slide__title" data-aos="fade-up">Креативные Маркетинговые Решения</h1>
+                                    <p class="hero-slide__subtitle" data-aos="fade-up" data-aos-delay="100">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ullamcorper scelerisque mi.</p>
+                                    <button class="button hero-slide__button" data-aos="fade-up" data-aos-delay="200" data-modal-open="discuss">Обсудить проект 〉</button>
+                                </div>
+                                <div class="hero-slide__content" data-tab-id="development">
+                                    <h1 class="hero-slide__title">Инновационная Веб-Разработка</h1>
+                                    <p class="hero-slide__subtitle">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc ullamcorper scelerisque mi.</p>
+                                    <button class="button hero-slide__button" data-modal-open="discuss">Обсудить проект 〉</button>
+                                </div>
+                                <div class="hero-slide__content" data-tab-id="production">
+                                    <h1 class="hero-slide__title">Качественный Видео Продакшн</h1>
+                                    <p class="hero-slide__subtitle">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. Nunc ullamcorper scelerisque mi.</p>
+                                    <button class="button hero-slide__button" data-modal-open="discuss">Обсудить проект 〉</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 2 -->
+                        <div class="swiper-slide hero-slide" style="background-image: url('https://placehold.co/1920x1080/333333/bbbbbb?text=Абстрактный+фон+2');">
+                            <div class="container hero-slide__container">
+                                <div class="hero-slide__content active">
+                                    <h1 class="hero-slide__title" data-aos="fade-up">Дизайн, Который Вдохновляет</h1>
+                                    <p class="hero-slide__subtitle" data-aos="fade-up" data-aos-delay="100">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore. Nunc ullamcorper scelerisque mi.</p>
+                                    <button class="button hero-slide__button" data-aos="fade-up" data-aos-delay="200" data-modal-open="discuss">Обсудить проект 〉</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination hero-slider__pagination"></div>
+                    <div class="swiper-button-prev hero-slider__nav hero-slider__nav--prev">‹</div>
+                    <div class="swiper-button-next hero-slider__nav hero-slider__nav--next">›</div>
+                </div>
+            </section>
+
+            <!-- Key Main Services Section -->
+            <section class="main-services-overview section-padding" id="main-services">
+                <div class="container">
+                    <h2 class="section-title" data-aos="fade-up">Ключевые направления "Что-то АРТ"</h2>
+                    <div class="main-services-overview__grid">
+                        <div class="main-services-overview__item" data-aos="fade-up" data-aos-delay="100"><div class="main-services-overview__icon-wrapper"><span class="main-services-overview__icon">⚙️</span></div><h3 class="main-services-overview__item-title">Разработка и PR</h3><p class="main-services-overview__item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p></div>
+                        <div class="main-services-overview__item" data-aos="fade-up" data-aos-delay="200"><div class="main-services-overview__icon-wrapper"><span class="main-services-overview__icon">🎬</span></div><h3 class="main-services-overview__item-title">Видеопродакшн</h3><p class="main-services-overview__item-text">Incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div>
+                        <div class="main-services-overview__item" data-aos="fade-up" data-aos-delay="300"><div class="main-services-overview__icon-wrapper"><span class="main-services-overview__icon">🎨</span></div><h3 class="main-services-overview__item-title">Дизайн и брендинг</h3><p class="main-services-overview__item-text">Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p></div>
+                        <div class="main-services-overview__item" data-aos="fade-up" data-aos-delay="400"><div class="main-services-overview__icon-wrapper"><span class="main-services-overview__icon">📈</span></div><h3 class="main-services-overview__item-title">Интернет-маркетинг</h3><p class="main-services-overview__item-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Company Section -->
+            <section class="about section-padding" id="about">
+                <div class="container">
+                    <h2 class="section-title" data-aos="fade-up">О компании "Что-то АРТ"</h2>
+                    <p class="about__description" data-aos="fade-up" data-aos-delay="100">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam euismod, nisl vitae aliquam ultricies, nunc nisl ultricies nunc, vitae aliquam nisl nisl vitae nisl. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+                    <div class="ticker-wrap" data-aos="fade-up" data-aos-delay="200">
+                        <div class="ticker">
+                            <span>Создаем впечатления ✨</span>
+                            <span>Инновационные решения 💡</span>
+                            <span>Ваш успех - наша цель 🎯</span>
+                            <span>Креатив без границ 🚀</span>
+                        </div>
+                    </div>
+                    <div class="stats-spinner" data-aos="fade-up" data-aos-delay="300">
+                        <div class="stats-spinner__item"><strong class="stats-spinner__number">10+</strong> лет опыта</div>
+                        <div class="stats-spinner__item"><strong class="stats-spinner__number">200+</strong> проектов</div>
+                        <div class="stats-spinner__item"><strong class="stats-spinner__number">40+</strong> наград</div>
+                        <div class="stats-spinner__item"><strong class="stats-spinner__number">90%</strong> LTV клиентов</div>
+                        <div class="stats-spinner__center">📊</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section class="services section-padding" id="services">
+                <div class="container">
+                    <h2 class="section-title" data-aos="fade-up">Услуги</h2>
+                    <div class="services__grid">
+                        <div class="service-card" data-aos="fade-up"><div class="service-card__icon">🧭</div><h3 class="service-card__title">Стратегия</h3><p class="service-card__text">Lorem ipsum dolor sit amet consectetur.</p></div>
+                        <div class="service-card" data-aos="fade-up" data-aos-delay="100"><div class="service-card__icon">💡</div><h3 class="service-card__title">Креатив</h3><p class="service-card__text">Adipiscing elit sed do eiusmod tempor.</p></div>
+                        <div class="service-card" data-aos="fade-up" data-aos-delay="200"><div class="service-card__icon">💻</div><h3 class="service-card__title">Веб-разработка</h3><p class="service-card__text">Incididunt ut labore et dolore magna.</p></div>
+                        <div class="service-card" data-aos="fade-up" data-aos-delay="300"><div class="service-card__icon">📱</div><h3 class="service-card__title">Мобильные приложения</h3><p class="service-card__text">Aliqua Ut enim ad minim veniam.</p></div>
+                        <div class="service-card" data-aos="fade-up" data-aos-delay="400"><div class="service-card__icon">📢</div><h3 class="service-card__title">PR и Коммуникации</h3><p class="service-card__text">Quis nostrud exercitation ullamco laboris.</p></div>
+                        <div class="service-card" data-aos="fade-up" data-aos-delay="500"><div class="service-card__icon">🎞️</div><h3 class="service-card__title">Видеопродакшн</h3><p class="service-card__text">Nisi ut aliquip ex ea commodo consequat.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section class="projects section-padding" id="projects">
+                <div class="container">
+                    <h2 class="section-title" data-aos="fade-up">Проекты</h2>
+                    <div class="tabs projects__tabs" data-aos="fade-up" data-aos-delay="100">
+                        <div class="tabs__nav">
+                            <button class="tabs__button active" data-tab="all">Все проекты</button>
+                            <button class="tabs__button" data-tab="dev">Разработка</button>
+                            <button class="tabs__button" data-tab="video">Видео</button>
+                            <button class="tabs__button" data-tab="design">Дизайн</button>
+                        </div>
+                        <div class="tabs__content">
+                            <div class="tabs__pane active" data-tab-content="all"><div class="projects__gallery"> <a href="https://placehold.co/800x600/555/fff?text=Project+1+Large" data-aos="zoom-in" class="projects__gallery-item"><img src="https://placehold.co/400x300/555/fff?text=Проект+1" alt="Проект 1"></a> <a href="https://placehold.co/800x600/555/fff?text=Project+2+Large" data-aos="zoom-in" data-aos-delay="50" class="projects__gallery-item"><img src="https://placehold.co/400x300/555/fff?text=Проект+2" alt="Проект 2"></a> <a href="https://placehold.co/800x600/555/fff?text=Project+3+Large" data-aos="zoom-in" data-aos-delay="100" class="projects__gallery-item"><img src="https://placehold.co/400x300/555/fff?text=Проект+3" alt="Проект 3"></a> <a href="https://placehold.co/800x600/555/fff?text=Project+4+Large" data-aos="zoom-in" data-aos-delay="150" class="projects__gallery-item"><img src="https://placehold.co/400x300/555/fff?text=Проект+4" alt="Проект 4"></a></div></div>
+                            <div class="tabs__pane" data-tab-content="dev"><p>Контент для вкладки "Разработка". Lorem ipsum dolor sit amet.</p><div class="projects__gallery"><a href="https://placehold.co/800x600/666/fff?text=Dev+Project+Large" class="projects__gallery-item"><img src="https://placehold.co/400x300/666/fff?text=Dev+Project" alt="Проект Разработка"></a></div></div>
+                            <div class="tabs__pane" data-tab-content="video"><p>Контент для вкладки "Видео". Consectetur adipiscing elit.</p><div class="projects__gallery"><a href="https://placehold.co/800x600/777/fff?text=Video+Project+Large" class="projects__gallery-item"><img src="https://placehold.co/400x300/777/fff?text=Video+Project" alt="Проект Видео"></a></div></div>
+                            <div class="tabs__pane" data-tab-content="design"><p>Контент для вкладки "Дизайн". Sed do eiusmod tempor.</p><div class="projects__gallery"><a href="https://placehold.co/800x600/888/fff?text=Design+Project+Large" class="projects__gallery-item"><img src="https://placehold.co/400x300/888/fff?text=Design+Project" alt="Проект Дизайн"></a></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cases Section -->
+            <section class="cases section-padding" id="cases">
+                <div class="container cases__header-container"><h2 class="section-title" data-aos="fade-up">Кейсы</h2></div>
+                <div class="swiper-container-outer">
+                    <div class="swiper cases-slider" data-aos="fade-up" data-aos-delay="100">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide case-slide"><img src="https://placehold.co/500x350/444/eee?text=Case+Study+1" alt="Кейс 1" class="case-slide__image"><div class="case-slide__content"><h3 class="case-slide__title">Название Кейса Один</h3><p class="case-slide__description">Краткое описание достижений. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><div class="case-slide__tags"><span class="case-slide__tag">Маркетинг</span><span class="case-slide__tag">Стратегия</span></div><a href="#" class="case-slide__link">Подробнее →</a></div></div>
+                            <div class="swiper-slide case-slide"><img src="https://placehold.co/500x350/484848/eee?text=Case+Study+2" alt="Кейс 2" class="case-slide__image"><div class="case-slide__content"><h3 class="case-slide__title">Очень Длинное Название Кейса Для Примера Два</h3><p class="case-slide__description">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p><div class="case-slide__tags"><span class="case-slide__tag">Разработка</span><span class="case-slide__tag">Дизайн</span></div><a href="#" class="case-slide__link">Подробнее →</a></div></div>
+                            <div class="swiper-slide case-slide"><img src="https://placehold.co/500x350/505050/eee?text=Case+Study+3" alt="Кейс 3" class="case-slide__image"><div class="case-slide__content"><h3 class="case-slide__title">Проект для крупного клиента Три</h3><p class="case-slide__description">Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><div class="case-slide__tags"><span class="case-slide__tag">Видео</span><span class="case-slide__tag">Креатив</span></div><a href="#" class="case-slide__link">Подробнее →</a></div></div>
+                            <div class="swiper-slide case-slide"><img src="https://placehold.co/500x350/585858/eee?text=Case+Study+4" alt="Кейс 4" class="case-slide__image"><div class="case-slide__content"><h3 class="case-slide__title">Еще один интересный кейс Четыре</h3><p class="case-slide__description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p><div class="case-slide__tags"><span class="case-slide__tag">PR</span></div><a href="#" class="case-slide__link">Подробнее →</a></div></div>
+                        </div>
+                    </div>
+                    <div class="swiper-button-prev cases-slider__nav cases-slider__nav--prev">‹</div>
+                    <div class="swiper-button-next cases-slider__nav cases-slider__nav--next">›</div>
+                </div>
+                <div class="swiper-pagination cases-slider__pagination"></div>
+            </section>
+
+            <!-- Production / How We Work Section -->
+            <section class="production section-padding" id="production">
+                <div class="container production__container">
+                    <div class="production__text-content" data-aos="fade-right"><h2 class="section-title production__title">Решаем задачи комплексно</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p><ul class="production__list"><li>✓ Глубокий анализ и стратегия</li><li>✓ Креативные идеи и концепции</li><li>✓ Качественная реализация и продакшн</li><li>✓ Эффективное продвижение</li></ul><button class="button">Узнать больше о процессе</button></div>
+                    <div class="production__visual-content" data-aos="fade-left" data-aos-delay="200"><div class="production__spinner-placeholder">🔄</div><p class="production__visual-caption">Интегрированный подход к каждому проекту.</p></div>
+                </div>
+            </section>
+
+            <!-- Video Section -->
+            <section class="video-section section-padding" id="video-promo">
+                <div class="container text-center"><h2 class="section-title" data-aos="fade-up">Посмотрите видео о "Что-то АРТ"</h2><div class="video-wrapper" data-aos="fade-up" data-aos-delay="100"><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="video-placeholder" style="background-image: url('https://placehold.co/800x450/333/fff?text=▶+Видео+о+нас');"><span class="play-button">▶</span></a></div></div>
+            </section>
+            
+            <!-- Team Section -->
+            <section class="team section-padding" id="team">
+                <div class="container team__container">
+                    <div class="team__text-content" data-aos="fade-right"><h2 class="section-title">Работаем с людьми, создаем для людей</h2><p>Наша команда — это профессионалы своего дела, объединенные общей целью и страстью к творчеству. Мы ценим каждого клиента и стремимся к долгосрочному партнерству. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><button class="button" data-modal-open="callback">Присоединиться к команде</button></div>
+                    <div class="team__image-content" data-aos="fade-left" data-aos-delay="200"><img src="https://placehold.co/550x400/666/fff?text=Наша+Дружная+Команда" alt="Наша Команда" class="team__image"></div>
+                </div>
+            </section>
+
+            <!-- Awards & Clients Section -->
+            <section class="awards-clients section-padding" id="awards">
+                <div class="container">
+                    <h2 class="section-title" data-aos="fade-up">Награды и признание</h2>
+                    <div class="swiper awards-slider" data-aos="fade-up" data-aos-delay="100"><div class="swiper-wrapper"><div class="swiper-slide award-slide"><img src="https://placehold.co/200x150/ddd/333?text=🏆+Награда+Alpha" alt="Награда Alpha"></div><div class="swiper-slide award-slide"><img src="https://placehold.co/200x150/ddd/333?text=🥇+Награда+Beta" alt="Награда Beta"></div><div class="swiper-slide award-slide"><img src="https://placehold.co/200x150/ddd/333?text=🏅+Награда+Gamma" alt="Награда Gamma"></div><div class="swiper-slide award-slide"><img src="https://placehold.co/200x150/ddd/333?text=🌟+Награда+Delta" alt="Награда Delta"></div><div class="swiper-slide award-slide"><img src="https://placehold.co/200x150/ddd/333?text=🏆+Награда+Epsilon" alt="Награда Epsilon"></div></div><div class="swiper-pagination awards-slider__pagination"></div></div>
+                    <h3 class="section-subtitle text-center" data-aos="fade-up">Нас выбирают</h3>
+                    <div class="swiper clients-slider" data-aos="fade-up" data-aos-delay="100"><div class="swiper-wrapper"><div class="swiper-slide client-logo"><img src="https://placehold.co/150x80/eee/777?text=Client+A" alt="Клиент А"></div><div class="swiper-slide client-logo"><img src="https://placehold.co/150x80/eee/777?text=Client+B" alt="Клиент Б"></div><div class="swiper-slide client-logo"><img src="https://placehold.co/150x80/eee/777?text=Client+C" alt="Клиент В"></div><div class="swiper-slide client-logo"><img src="https://placehold.co/150x80/eee/777?text=Client+D" alt="Клиент Г"></div><div class="swiper-slide client-logo"><img src="https://placehold.co/150x80/eee/777?text=Client+E" alt="Клиент Д"></div><div class="swiper-slide client-logo"><img src="https://placehold.co/150x80/eee/777?text=Client+F" alt="Клиент Е"></div></div></div>
+                </div>
+            </section>
+
+            <!-- Partner Letters Section -->
+            <section class="partner-letters section-padding" id="partner-letters">
+                <div class="container">
+                    <h2 class="section-title" data-aos="fade-up">Письма партнеров</h2>
+                    <div class="tabs partner-letters__tabs" data-aos="fade-up" data-aos-delay="100">
+                        <div class="tabs__nav"><button class="tabs__button active" data-tab="partner1">Партнер Альфа</button><button class="tabs__button" data-tab="partner2">Партнер Бета</button><button class="tabs__button" data-tab="partner3">Партнер Гамма</button></div>
+                        <div class="tabs__content">
+                            <div class="tabs__pane active partner-letters__pane" data-tab-content="partner1"><img src="https://placehold.co/400x550/f0f0f0/333?text=Письмо+от+Партнера+1" alt="Письмо от Партнера 1" class="partner-letters__image"><div class="partner-letters__text"><h4>Благодарность от "Партнер Альфа"</h4><p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae eros eget tellus tristique bibendum. Donec rutrum sed sem quis venenatis. Proin viverra risus a eros volutpat tempor."</p><p><strong>Иван Иванов</strong>, CEO "Партнер Альфа"</p></div></div>
+                            <div class="tabs__pane partner-letters__pane" data-tab-content="partner2"><img src="https://placehold.co/400x550/f0f0f0/333?text=Письмо+от+Партнера+2" alt="Письмо от Партнера 2" class="partner-letters__image"><div class="partner-letters__text"><h4>Отзыв от "Партнер Бета"</h4><p>"Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</p><p><strong>Мария Петрова</strong>, Маркетинг-директор "Партнер Бета"</p></div></div>
+                            <div class="tabs__pane partner-letters__pane" data-tab-content="partner3"><img src="https://placehold.co/400x550/f0f0f0/333?text=Письмо+от+Партнера+3" alt="Письмо от Партнера 3" class="partner-letters__image"><div class="partner-letters__text"><h4>Рекомендация от "Партнер Гамма"</h4><p>"Incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."</p><p><strong>Сергей Смирнов</strong>, Руководитель отдела "Партнер Гамма"</p></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Photo Gallery Section -->
+            <section class="photogallery section-padding" id="gallery">
+                <div class="container">
+                    <h2 class="section-title" data-aos="fade-up">Фотогалерея "Что-то АРТ"</h2>
+                    <div class="photogallery__grid" data-aos="fade-up" data-aos-delay="100">
+                        <a href="https://placehold.co/800x600/777/fff?text=Фото+1+Large" class="photogallery__item" data-aos="zoom-in-up"><img src="https://placehold.co/350x250/777/fff?text=Событие+1" alt="Фото 1"></a>
+                        <a href="https://placehold.co/800x600/777/fff?text=Фото+2+Large" class="photogallery__item" data-aos="zoom-in-up" data-aos-delay="50"><img src="https://placehold.co/350x250/777/fff?text=Команда+на+отдыхе" alt="Фото 2"></a>
+                        <a href="https://placehold.co/800x600/777/fff?text=Фото+3+Large" class="photogallery__item" data-aos="zoom-in-up" data-aos-delay="100"><img src="https://placehold.co/350x250/777/fff?text=Наш+офис" alt="Фото 3"></a>
+                        <a href="https://placehold.co/800x600/777/fff?text=Фото+4+Large" class="photogallery__item" data-aos="zoom-in-up" data-aos-delay="150"><img src="https://placehold.co/350x250/777/fff?text=Конференция" alt="Фото 4"></a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vacancies Section -->
+            <section class="vacancies section-padding" id="vacancies">
+                <div class="container text-center">
+                    <h2 class="section-title" data-aos="fade-up">Присоединяйся к команде "Что-то АРТ"</h2>
+                    <p class="vacancies__subtitle" data-aos="fade-up" data-aos-delay="100">Мы всегда в поиске талантливых специалистов, готовых создавать удивительные проекты. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <button class="button" data-aos="fade-up" data-aos-delay="200">Смотреть вакансии</button>
+                </div>
+            </section>
+
+            <!-- Contacts Section -->
+            <section class="contacts section-padding" id="contacts">
+                <div class="container contacts__container">
+                    <div class="contacts__info" data-aos="fade-right"><h2 class="section-title">Контакты</h2><p>📍 Адрес: г. Какой-то город, ул. Примерная, д. 1, оф. 101</p><p>📞 Телефон: <a href="tel:+70000000000">+7 (000) 000-00-00</a></p><p>✉️ Email: <a href="mailto:info@example.com">info@example.com</a></p><p>🕒 Часы работы: Пн-Пт, 09:00 - 18:00</p><div class="social-icons contacts__social-icons"><a href="#" aria-label="VK">VK</a><a href="#" aria-label="Telegram">TG</a><a href="#" aria-label="YouTube">YT</a></div></div>
+                    <div class="contacts__map" data-aos="fade-left" data-aos-delay="200"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.393789106239!2d37.61556501590434!3d55.75222008055659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54afc73d4b3c9%3A0xba4677ff8363e460!2z0JzQvtGB0LrQstCw!5e0!3m2!1sru!2sru!4v1678886400000!5m2!1sru!2sru" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Карта местоположения"></iframe></div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="container footer__container">
+                <div class="footer__main"><a href="/" class="logo footer__logo"><span class="logo__main">Что-то</span><span class="logo__accent">АРТ</span></a><p class="footer__description">Креативное агентство полного цикла. <br>Создаем проекты, которые работают и вдохновляют.</p></div>
+                <div class="footer__nav-col"><h4>Навигация</h4><ul class="footer__nav-list"><li><a href="#about">О нас</a></li><li><a href="#services">Услуги</a></li><li><a href="#projects">Проекты</a></li><li><a href="#cases">Кейсы</a></li><li><a href="#contacts">Контакты</a></li></ul></div>
+                <div class="footer__contacts-col"><h4>Контакты</h4><address class="footer__address"><p>📞 <a href="tel:+70000000000">+7 (000) 000-00-00</a></p><p>✉️ <a href="mailto:info@example.com">info@example.com</a></p><p>📍 г. Какой-то город, ул. Примерная, 1</p></address></div>
+                <div class="footer__social-col"><h4>Мы в соцсетях</h4><div class="social-icons footer__social-icons"><a href="#" aria-label="VK">VK</a><a href="#" aria-label="Telegram">TG</a><a href="#" aria-label="YouTube">YT</a></div></div>
+            </div>
+            <div class="footer__bottom"><p>© <span id="current-year"></span> Что-то АРТ. Все права защищены.</p><p><a href="#">Политика конфиденциальности</a></p></div>
+        </footer>
+    </div>
+
+    <!-- Модальные окна -->
+    <div class="modal" id="callback">
+        <div class="modal__content">
+            <button class="modal__close" data-modal-close>×</button>
+            <h3 class="modal__title">Заказать звонок</h3>
+            <p class="modal__description">Оставьте ваши данные, и мы свяжемся с вами в ближайшее время для консультации.</p>
+            <!-- index.html, модалка "Заказать звонок" -->
+            <form class="modal__form" id="callbackForm">
+                <input class="modal__input" type="text" name="name" placeholder="Ваше имя" required>
+                
+                <!-- ОБНОВЛЕННАЯ ГРУППА ДЛЯ ТЕЛЕФОНА С ВЫБОРОМ СТРАНЫ -->
+                <div class="modal__phone-group">
+                    <select id="phoneCountryCode" name="country_code_selector" class="modal__phone-group-select">
+                        <option value="RU" data-prefix="+7" data-mask="(000) 000-00-00" data-placeholder="(912) 345-67-89" selected>🇷🇺 +7</option>
+                        <option value="BY" data-prefix="+375" data-mask="(00) 000-00-00" data-placeholder="(29) 123-45-67">🇧🇾 +375</option>
+                        <option value="KZ" data-prefix="+7" data-mask="(000) 000-00-00" data-placeholder="(701) 234-56-78">🇰🇿 +7</option>
+                        <!-- Для Казахстана используется тот же код +7, но маска может быть идентичной или другой -->
+                    </select>
+                    <input class="modal__input modal__phone-group-input" id="callbackPhoneUnified" type="tel" name="phone_number_part" placeholder="(912) 345-67-89" required>
+                </div>
+                
+                <label class="modal__checkbox-label">
+                    <input class="modal__checkbox" type="checkbox" name="agreement" checked required>
+                    <span>Согласен на обработку персональных данных</span>
+                </label>
+                <button type="submit" class="button modal__submit-button">Отправить</button>
+                <div class="form-message" id="callbackFormMessage"></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="discuss">
+        <div class="modal__content">
+            <button class="modal__close" data-modal-close>×</button>
+            <h3 class="modal__title">Обсудить проект</h3>
+            <p class="modal__description">Расскажите нам о вашей задаче, и мы предложим оптимальное решение и подготовим предложение.</p>
+            <form class="modal__form" id="discussForm" enctype="multipart/form-data">
+                <input class="modal__input" type="text" name="name" placeholder="Ваше имя" required>
+                <input class="modal__input" type="email" name="email" placeholder="Ваш Email" required>
+                <textarea class="modal__textarea" name="project_details" placeholder="Кратко о проекте"></textarea>
+                <div class="file-upload-area" id="fileUploadArea"><input type="file" name="project_files[]" id="projectFiles" class="file-upload-area__input" multiple accept=".pdf,.xlsx,.xls,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png,.zip,.rar"><label for="projectFiles" class="file-upload-area__label"><span class="file-upload-area__icon">📤</span><span class="file-upload-area__text">Перетащите файлы сюда или <strong>нажмите для выбора</strong></span><span class="file-upload-area__hint">(до 3 файлов, макс. 5MB каждый, PDF, XLSX, DOC, JPG, PNG, ZIP, RAR)</span></label></div>
+                <div class="file-upload-list" id="fileUploadList"></div><div class="file-upload-error" id="fileUploadError"></div>
+                <label class="modal__checkbox-label"><input class="modal__checkbox" type="checkbox" name="agreement" checked required><span>Согласен на обработку персональных данных</span></label>
+                <button type="submit" class="button modal__submit-button" id="discussSubmitButton">Отправить заявку</button>
+                <div class="form-message" id="discussFormMessage"></div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- IMaskJS -->
+    <script src="https://unpkg.com/imask"></script> 
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
