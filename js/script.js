@@ -1,242 +1,678 @@
-// js/script.js
 document.addEventListener('DOMContentLoaded', function() {
+    const siteHeader = document.getElementById('site-header');
+    const heroSliderSection = document.getElementById('hero-slider');
+    const burgerMenu = document.getElementById('burger-menu');
+    const mainNavMenu = document.getElementById('main-navigation-menu');
 
-    // Инициализация AOS
-    AOS.init({ duration: 700, easing: 'ease-out-quad', once: true, offset: 50 });
-    document.body.classList.add('aos-animate');
+    function handleHeaderScroll() {
+        if (siteHeader && heroSliderSection) {
+            const scrollThreshold = heroSliderSection.offsetHeight * 0.5;
+            if (window.scrollY > scrollThreshold) {
+                siteHeader.classList.add('scrolled');
+            } else {
+                siteHeader.classList.remove('scrolled');
+            }
+        } else if (siteHeader) {
+            if (window.scrollY > 50) {
+                siteHeader.classList.add('scrolled');
+            } else {
+                siteHeader.classList.remove('scrolled');
+            }
+        }
+    }
 
-    // Плавный скролл к якорям
-    const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
-    smoothScrollLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const id = this.getAttribute('href').substring(1);
-            const targetElement = document.getElementById(id);
-            if (targetElement) {
-                const navMenu = document.querySelector('.header__nav');
-                const burgerButton = document.querySelector('.burger');
-                if (navMenu && navMenu.classList.contains('active')) {
-                    navMenu.classList.remove('active');
-                    if (burgerButton) burgerButton.classList.remove('active');
-                    document.body.style.overflow = '';
+    function setDynamicPadding() {
+        if (siteHeader && heroSliderSection) {
+            const headerHeight = siteHeader.offsetHeight;
+            heroSliderSection.style.paddingTop = `${headerHeight}px`;
+        }
+    }
+
+    window.addEventListener('scroll', handleHeaderScroll);
+    window.addEventListener('resize', setDynamicPadding);
+    setDynamicPadding();
+    handleHeaderScroll();
+
+    if (burgerMenu && mainNavMenu) {
+        burgerMenu.addEventListener('click', function() {
+            const isOpened = mainNavMenu.classList.toggle('active');
+            burgerMenu.classList.toggle('active');
+            burgerMenu.setAttribute('aria-expanded', String(isOpened));
+        });
+        const navLinks = mainNavMenu.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (mainNavMenu.classList.contains('active')) {
+                    mainNavMenu.classList.remove('active');
+                    burgerMenu.classList.remove('active');
+                    burgerMenu.setAttribute('aria-expanded', 'false');
                 }
-                let offset = 0;
-                const headerElement = document.querySelector('.header');
-                if (headerElement && getComputedStyle(headerElement).position === 'fixed') {
-                    const headerStyles = getComputedStyle(headerElement);
-                    if (headerStyles.transform === 'none' || !headerElement.classList.contains('hidden')) { 
-                        offset = headerElement.offsetHeight;
-                    } else if (headerElement.classList.contains('scrolled')) { 
-                         offset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height-sticky')) || 65;
-                    } else { 
-                         offset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 75;
-                    }
+            });
+        });
+        document.addEventListener('click', function(event) {
+            if (mainNavMenu.classList.contains('active')) {
+                const isClickInsideNav = mainNavMenu.contains(event.target);
+                const isClickOnBurger = burgerMenu.contains(event.target);
+                if (!isClickInsideNav && !isClickOnBurger) {
+                    mainNavMenu.classList.remove('active');
+                    burgerMenu.classList.remove('active');
+                    burgerMenu.setAttribute('aria-expanded', 'false');
                 }
-                const elementPosition = targetElement.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - offset;
-                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
             }
         });
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && mainNavMenu.classList.contains('active')) {
+                mainNavMenu.classList.remove('active');
+                burgerMenu.classList.remove('active');
+                burgerMenu.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+
+    const slidesData = [
+        { id: "naruzhnaya-reklama", label: "УСЛУГИ КОМПАНИИ", title: "Наружная реклама", description: "Яркие и эффективные решения для вашего бренда на улицах города.", image: "img/slide-naruzhnaya.jpg", tabName: "Наружная реклама" },
+        { id: "oformlenie-vitrin", label: "УСЛУГИ КОМПАНИИ", title: "Оформление витрин", description: "Инсталляции, световые решения, объемные фигуры, буквы в витринах.", image: "img/slide-vitrin.jpg", tabName: "Оформление витрин" },
+        { id: "magazino-stroenie", label: "УСЛУГИ КОМПАНИИ", title: "Магазино-строение", description: "Комплексные решения для открытия магазина: кассовые зоны, прилавки, витрины, торговые точки.", image: "img/slide-magazin.jpg", tabName: "Магазино-строение" },
+        { id: "dizain-proekty", label: "УСЛУГИ КОМПАНИИ", title: "Дизайн-проекты", description: "Создание эксклюзивной дизайн-концепции, адаптация, ребрендинг.", image: "img/slide-dizain.jpg", tabName: "Дизайн-проекты" },
+        { id: "navigatsiya", label: "УСЛУГИ КОМПАНИИ", title: "Навигация", description: "Внутренняя и внешняя рекламная навигация на любых носителях.", image: "img/slide-navigatsiya.jpg", tabName: "Навигация" },
+        { id: "eksklyuzivnye-pop-up", label: "УСЛУГИ КОМПАНИИ", title: "Эксклюзивные pop-up", description: "Сложные функциональные брендированные зоны в торговом пространстве.", image: "img/slide-popup.jpg", tabName: "Эксклюзивные pop-up" },
+        { id: "torgovye-prostranstva", label: "УСЛУГИ КОМПАНИИ", title: "Торговые пространства", description: "Комплексное брендирование магазинов, торговых центров, ресторанов, спортивных объектов.", image: "img/slide-torgovye.jpg", tabName: "Торговые пространства" },
+        { id: "sportivnye-obekty", label: "УСЛУГИ КОМПАНИИ", title: "Спортивные объекты", description: "Рекламное оформление, брендирование, спонсорская реклама, навигация и прочее в спортивных объектах.", image: "img/slide-sport.jpg", tabName: "Спортивные объекты" }
+    ];
+    const slideLabelEl = document.getElementById('slide-services-label');
+    const slideTitleEl = document.getElementById('slide-title');
+    const slideDescriptionEl = document.getElementById('slide-description');
+    const sliderImageColumn = document.querySelector('.slider-image-column');
+    const textContentWrapper = document.querySelector('.slider-text-column .slide-content-wrapper');
+    const prevArrow = document.getElementById('slider-arrow-prev');
+    const nextArrow = document.getElementById('slider-arrow-next');
+    const tabsContainer = document.getElementById('slider-tabs-container');
+    let currentSlideIndex = slidesData.findIndex(s => s.id === "eksklyuzivnye-pop-up");
+    if (currentSlideIndex === -1) currentSlideIndex = 0;
+    let autoPlayInterval;
+    const AUTOPLAY_DELAY = 7000;
+
+    function generateTabs() {
+        if (!tabsContainer) return;
+        tabsContainer.innerHTML = '';
+        slidesData.forEach((slide, index) => {
+            const tab = document.createElement('li');
+            tab.textContent = slide.tabName;
+            tab.setAttribute('data-slide-index', String(index));
+            tabsContainer.appendChild(tab);
+            tab.addEventListener('click', () => {
+                goToSlide(index);
+                stopAutoPlay();
+                startAutoPlay();
+            });
+        });
+    }
+
+    function updateSlide(index) {
+        if (!slidesData[index] || !slideLabelEl || !slideTitleEl || !slideDescriptionEl || !textContentWrapper || !sliderImageColumn) {
+            console.error("Slider elements not found or slide data missing for index:", index);
+            return;
+        }
+        const slide = slidesData[index];
+        textContentWrapper.classList.remove('slide-text-animating');
+        slideLabelEl.style.opacity = '0';
+        slideTitleEl.style.opacity = '0';
+        slideDescriptionEl.style.opacity = '0';
+        setTimeout(() => {
+            slideLabelEl.textContent = slide.label;
+            slideTitleEl.textContent = slide.title;
+            slideDescriptionEl.textContent = slide.description;
+            textContentWrapper.classList.add('slide-text-animating');
+        }, 50);
+        const newImage = document.createElement('img');
+        newImage.src = slide.image;
+        newImage.alt = slide.title;
+        const placeholderImg = document.getElementById('slide-image-placeholder');
+        if (placeholderImg) placeholderImg.classList.remove('active');
+        const currentActiveImage = sliderImageColumn.querySelector('img.active');
+        if (currentActiveImage) {
+            currentActiveImage.classList.remove('active');
+        }
+        sliderImageColumn.appendChild(newImage);
+        setTimeout(() => {
+            newImage.classList.add('active');
+        }, 20);
+        const allImages = sliderImageColumn.querySelectorAll('img');
+        allImages.forEach(img => {
+            if (img !== newImage && !img.classList.contains('active')) {
+                setTimeout(() => {
+                    if (img.parentNode) {
+                        img.remove();
+                    }
+                }, 800);
+            }
+        });
+        if (tabsContainer) {
+            const tabs = tabsContainer.querySelectorAll('li');
+            tabs.forEach((tab, i) => {
+                if (i === index) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+        }
+        currentSlideIndex = index;
+    }
+
+    function nextSlide() {
+        let newIndex = (currentSlideIndex + 1) % slidesData.length;
+        updateSlide(newIndex);
+    }
+
+    function prevSlide() {
+        let newIndex = (currentSlideIndex - 1 + slidesData.length) % slidesData.length;
+        updateSlide(newIndex);
+    }
+
+    function goToSlide(index) {
+        updateSlide(index);
+    }
+
+    function startAutoPlay() {
+        stopAutoPlay();
+        autoPlayInterval = setInterval(nextSlide, AUTOPLAY_DELAY);
+    }
+
+    function stopAutoPlay() {
+        clearInterval(autoPlayInterval);
+    }
+
+    if (slidesData.length > 0 && heroSliderSection) {
+        generateTabs();
+        updateSlide(currentSlideIndex);
+        startAutoPlay();
+        if (prevArrow && nextArrow) {
+            prevArrow.addEventListener('click', () => {
+                prevSlide();
+                stopAutoPlay();
+                startAutoPlay();
+            });
+            nextArrow.addEventListener('click', () => {
+                nextSlide();
+                stopAutoPlay();
+                startAutoPlay();
+            });
+        }
+        heroSliderSection.addEventListener('mouseenter', stopAutoPlay);
+        heroSliderSection.addEventListener('mouseleave', startAutoPlay);
+    }
+
+    const projectsGridContainer = document.getElementById('projects-grid-container');
+    const filterBtns = document.querySelectorAll('.project-filters .filter-btn');
+    const allProjects = [
+        { id: 1, title: "Сеть универсамов Верный", category: "visual", image: "https://via.placeholder.com/600x400.png?text=Верный", description: "Комплексное оформление сети универсамов 'Верный'.", details: "Более подробное описание проекта Верный...", gallery: ["https://via.placeholder.com/800x500.png?text=Верный+Деталь+1", "https://via.placeholder.com/800x500.png?text=Верный+Деталь+2"] }, { id: 2, title: "Авиапарк", category: "visual", image: "https://via.placeholder.com/600x400.png?text=Авиапарк", description: "Навигационные системы для ТРЦ Авиапарк.", details: "Детали проекта Авиапарк...", gallery: [] }, { id: 3, title: "Burger King", category: "visual", image: "https://via.placeholder.com/600x400.png?text=Burger+King", description: "Оформление ресторанов Burger King.", details: "Детали проекта Burger King...", gallery: [] }, { id: 4, title: "Стадион 'Спартак'", category: "sport", image: "https://via.placeholder.com/600x400.png?text=Спартак", description: "Брендирование стадиона 'Спартак'.", details: "Детали проекта стадион Спартак...", gallery: [] }, { id: 5, title: "Кубок России по футболу", category: "sport", image: "https://via.placeholder.com/600x400.png?text=Кубок+РФ", description: "Оформление мероприятий Кубка России.", details: "Детали проекта Кубок РФ...", gallery: [] }, { id: 6, title: "Winline Баскетбольная площадка", category: "sport", image: "https://via.placeholder.com/600x400.png?text=Winline", description: "Брендированная площадка Winline.", details: "Детали проекта Winline...", gallery: [] }, { id: 7, title: "Pop-up 'Monochrome'", category: "exclusive", image: "https://via.placeholder.com/600x400.png?text=Monochrome", description: "Эксклюзивный pop-up стенд.", details: "Детали проекта Monochrome...", gallery: [] }, { id: 8, title: "PRADA Гоночный болид", category: "exclusive", image: "https://via.placeholder.com/600x400.png?text=PRADA", description: "Инсталляция для PRADA.", details: "Детали проекта PRADA...", gallery: [] }, { id: 9, title: "Канатная дорога (декор)", category: "exclusive", image: "https://via.placeholder.com/600x400.png?text=Канатная+Дорога", description: "Декорирование канатной дороги.", details: "Детали проекта Канатная дорога...", gallery: [] }, { id: 10, title: "Divage стенд косметики", category: "design", image: "https://via.placeholder.com/600x400.png?text=Divage", description: "Стенд для Divage.", details: "Детали проекта Divage...", gallery: [] }, { id: 11, title: "Тинькофф мобильный офис", category: "design", image: "https://via.placeholder.com/600x400.png?text=Тинькофф", description: "Мобильный офис Тинькофф.", details: "Детали проекта Тинькофф...", gallery: [] }, { id: 12, title: "Еще один Визуальный проект", category: "visual", image: "https://via.placeholder.com/600x400.png?text=Визуал+Еще", description: "Описание еще одного визуального проекта.", details: "...", gallery: [] }, { id: 13, title: "Проект Спортивный Новый", category: "sport", image: "https://via.placeholder.com/600x400.png?text=Спорт+Новый", description: "Новый спортивный проект.", details: "...", gallery: [] }, { id: 14, title: "Эксклюзив для VIP", category: "exclusive", image: "https://via.placeholder.com/600x400.png?text=VIP+Эксклюзив", description: "Очень эксклюзивный проект.", details: "...", gallery: [] }, { id: 15, title: "Супер Дизайн Концепт", category: "design", image: "https://via.placeholder.com/600x400.png?text=Дизайн+Концепт", description: "Концептуальный дизайн проект.", details: "...", gallery: [] },
+    ];
+    let currentFilterProjects = 'all';
+    const initialProjectsToShow = 3;
+    let currentlyDisplayedCount = 0;
+    let filteredProjects = [];
+
+    function createProjectCard(project, isLoadMore = false) {
+        const card = document.createElement('div');
+        card.className = 'project-card animate-on-scroll';
+        if (isLoadMore) {
+            card.classList.add('load-more-card');
+            card.id = 'load-more-btn';
+            card.innerHTML = `<div class="load-more-content"><span class="load-more-title">БОЛЬШЕ ПРОЕКТОВ</span><span class="load-more-count" id="load-more-count-text">Показать еще N</span></div>`;
+            card.addEventListener('click', loadAllRemainingProjects);
+        } else {
+            card.dataset.category = project.category;
+            card.dataset.id = project.id;
+            const img = document.createElement('img');
+            img.src = project.image;
+            img.alt = project.title;
+            const overlay = document.createElement('div');
+            overlay.className = 'project-card-overlay';
+            const title = document.createElement('h3');
+            title.className = 'project-card-title';
+            title.textContent = project.title;
+            const categoryText = document.createElement('span');
+            categoryText.className = 'project-card-category';
+            categoryText.textContent = project.category;
+            overlay.appendChild(title);
+            overlay.appendChild(categoryText);
+            card.appendChild(img);
+            card.appendChild(overlay);
+            card.addEventListener('click', () => openProjectModal(project.id));
+        }
+        return card;
+    }
+
+    function renderProjects() {
+        if (!projectsGridContainer) return;
+        projectsGridContainer.innerHTML = '';
+        if (currentFilterProjects === 'all') {
+            filteredProjects = allProjects;
+        } else {
+            filteredProjects = allProjects.filter(p => p.category === currentFilterProjects);
+        }
+        currentlyDisplayedCount = 0;
+        appendProjects(initialProjectsToShow);
+    }
+
+    function appendProjects(count) {
+        const projectsToAppend = filteredProjects.slice(currentlyDisplayedCount, currentlyDisplayedCount + count);
+        projectsToAppend.forEach((project, index) => {
+            const card = createProjectCard(project);
+            card.style.animationDelay = `${index * 0.05}s`;
+            card.classList.add('reveal');
+            projectsGridContainer.appendChild(card);
+        });
+        currentlyDisplayedCount += projectsToAppend.length;
+        updateLoadMoreCardVisibility();
+    }
+
+    function loadAllRemainingProjects() {
+        const remainingCount = filteredProjects.length - currentlyDisplayedCount;
+        if (remainingCount > 0) {
+            appendProjects(remainingCount);
+        }
+        const loadMoreCard = document.getElementById('load-more-btn');
+        if (loadMoreCard) {
+            loadMoreCard.remove();
+        }
+    }
+
+    function updateLoadMoreCardVisibility() {
+        const existingLoadMoreCard = document.getElementById('load-more-btn');
+        if (existingLoadMoreCard) {
+            existingLoadMoreCard.remove();
+        }
+        if (currentlyDisplayedCount < filteredProjects.length && filteredProjects.length > initialProjectsToShow) {
+             const remaining = filteredProjects.length - currentlyDisplayedCount;
+             const loadMoreCard = createProjectCard(null, true);
+             projectsGridContainer.appendChild(loadMoreCard);
+             const loadMoreCountTextEl = loadMoreCard.querySelector('#load-more-count-text');
+             if (loadMoreCountTextEl) {
+                 loadMoreCountTextEl.textContent = `Показать еще ${remaining}`;
+             }
+        }
+    }
+    
+    if (filterBtns.length > 0) {
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilterProjects = btn.dataset.filter;
+                renderProjects();
+            });
+        });
+    }
+
+    const projectModal = document.getElementById('project-modal');
+    const closeModalBtn = document.getElementById('project-modal-close');
+    const backModalBtn = document.getElementById('project-modal-back');
+    const modalTitle = document.getElementById('modal-project-title');
+    const modalDescription = document.getElementById('modal-project-description');
+    const modalMainImage = document.getElementById('modal-main-image');
+    const modalGalleryContainer = document.getElementById('modal-gallery-container');
+
+    function openProjectModal(projectId) {
+        const project = allProjects.find(p => p.id === parseInt(projectId));
+        if (!project || !projectModal || !modalTitle || !modalDescription || !modalMainImage || !modalGalleryContainer) return;
+        modalTitle.textContent = project.title;
+        modalDescription.textContent = project.details || project.description;
+        modalMainImage.src = project.image;
+        modalMainImage.alt = project.title;
+        modalGalleryContainer.innerHTML = '';
+        if (project.gallery && project.gallery.length > 0) {
+            project.gallery.forEach(imgSrc => {
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                img.alt = `Фото проекта ${project.title}`;
+                modalGalleryContainer.appendChild(img);
+            });
+            modalGalleryContainer.style.display = 'grid';
+            const galleryTitle = modalGalleryContainer.previousElementSibling;
+            if (galleryTitle && galleryTitle.tagName === 'H4') galleryTitle.style.display = 'block';
+        } else {
+            modalGalleryContainer.style.display = 'none';
+            const galleryTitle = modalGalleryContainer.previousElementSibling;
+            if (galleryTitle && galleryTitle.tagName === 'H4') galleryTitle.style.display = 'none';
+        }
+        projectModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeProjectModal() {
+        if (!projectModal) return;
+        projectModal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeProjectModal);
+    if (backModalBtn) backModalBtn.addEventListener('click', closeProjectModal);
+    if (projectModal) {
+        projectModal.addEventListener('click', (event) => {
+            if (event.target === projectModal) {
+                closeProjectModal();
+            }
+        });
+    }
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && projectModal && projectModal.classList.contains('show')) {
+            closeProjectModal();
+        }
     });
 
-    // "Липкая" шапка со скрытием при скролле
-    const header = document.querySelector('.header');
-    let lastScrollTop = 0;
-    const scrollThreshold = 150; 
-    if (header) {
-        window.addEventListener('scroll', function() {
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollTop > scrollThreshold && scrollTop > lastScrollTop) { header.classList.add('hidden'); } 
-            else if (scrollTop < lastScrollTop || scrollTop <= scrollThreshold) { header.classList.remove('hidden'); }
-            if (scrollTop > 50) { header.classList.add('scrolled'); } 
-            else { header.classList.remove('scrolled'); }
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
-        }, { passive: true }); 
+    if (projectsGridContainer) {
+        renderProjects();
     }
 
-    // Мобильное меню (бургер)
-    const burger = document.querySelector('.burger');
-    const nav = document.querySelector('.header__nav'); // nav используется в closeModal
-    if (burger && nav) {
-        burger.addEventListener('click', function() {
-            this.classList.toggle('active');
-            nav.classList.toggle('active');
-            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    const observerCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const delay = entry.target.dataset.animationDelay || '0s';
+                entry.target.style.transitionDelay = delay;
+                entry.target.classList.add('is-visible');
+            }
         });
-    }
-    
-    // Hero Slider (Swiper.js)
-    const heroSlider = new Swiper('.hero-slider', { loop: true, effect: 'fade', fadeEffect: { crossFade: true }, autoplay: { delay: 6000, disableOnInteraction: false, }, pagination: { el: '.hero-slider__pagination', clickable: true, dynamicBullets: false, }, navigation: { nextEl: '.hero-slider__nav--next', prevEl: '.hero-slider__nav--prev', }, on: { init: function () { const activeSlide = this.slides[this.activeIndex]; AOS.refreshHard(activeSlide.querySelectorAll('[data-aos]')); initHeroSlideTabs(activeSlide); }, slideChangeTransitionStart: function () { this.slides.forEach(slide => { slide.querySelectorAll('[data-aos]').forEach(el => { el.classList.remove('aos-animate', 'aos-init'); }); }); }, slideChangeTransitionEnd: function () { const activeSlide = this.slides[this.activeIndex]; activeSlide.querySelectorAll('[data-aos]').forEach(el => { el.classList.add('aos-init'); setTimeout(() => el.classList.add('aos-animate'), 50); }); initHeroSlideTabs(activeSlide); } } });
-    function initHeroSlideTabs(slideElement) { const tabButtons = slideElement.querySelectorAll('.hero-slide__tab-btn'); const tabContents = slideElement.querySelectorAll('.hero-slide__content[data-tab-id]'); if (tabButtons.length > 0 && tabContents.length > 0) { if (!slideElement.querySelector('.hero-slide__tab-btn.active')) { tabButtons[0].classList.add('active'); } const activeTabButton = slideElement.querySelector('.hero-slide__tab-btn.active'); const defaultTabId = activeTabButton ? activeTabButton.dataset.tabContent : tabButtons[0].dataset.tabContent; tabContents.forEach(content => content.classList.remove('active')); const activeContent = slideElement.querySelector(`.hero-slide__content[data-tab-id="${defaultTabId}"]`); if (activeContent) activeContent.classList.add('active'); tabButtons.forEach(button => { const newButton = button.cloneNode(true); button.parentNode.replaceChild(newButton, button); newButton.addEventListener('click', function() { const tabId = this.dataset.tabContent; slideElement.querySelectorAll('.hero-slide__tab-btn').forEach(btn => btn.classList.remove('active')); this.classList.add('active'); tabContents.forEach(content => { content.classList.remove('active'); if (content.dataset.tabId === tabId) { content.classList.add('active'); content.querySelectorAll('[data-aos]').forEach(el => { el.classList.remove('aos-animate'); el.classList.add('aos-init'); setTimeout(() => el.classList.add('aos-animate'), 50); }); } }); }); }); } }
+    };
+    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    animatedElements.forEach(el => observer.observe(el));
 
-    // Cases Slider (Swiper.js) 
-    const casesSlider = new Swiper('.cases-slider', { loop: true, slidesPerView: 'auto', spaceBetween: 25, centeredSlides: true, pagination: { el: '.cases-slider__pagination', clickable: true, }, navigation: { nextEl: '.cases-slider__nav--next', prevEl: '.cases-slider__nav--prev', }, breakpoints: { 320: { spaceBetween: 15, }, 768: { spaceBetween: 25, }, 1024: { spaceBetween: 30, } } });
-    // Awards Slider 
-    const awardsSlider = new Swiper('.awards-slider', { loop: true, slidesPerView: 2, spaceBetween: 20, autoplay: { delay: 3500, disableOnInteraction: false, }, pagination: { el: '.awards-slider__pagination', clickable: true, }, breakpoints: { 576: { slidesPerView: 3, spaceBetween: 20 }, 768: { slidesPerView: 4, spaceBetween: 30 }, 992: { slidesPerView: 5, spaceBetween: 30 } } });
-    // Clients Slider 
-    const clientsSlider = new Swiper('.clients-slider', { loop: true, slidesPerView: 3, spaceBetween: 30, autoplay: { delay: 3000, disableOnInteraction: false, }, breakpoints: { 576: { slidesPerView: 4, spaceBetween: 30 }, 768: { slidesPerView: 5, spaceBetween: 40 }, 992: { slidesPerView: 6, spaceBetween: 40 }, } });
-    
-    // Табы (для секций "Проекты" и "Письма партнеров")
-    const tabContainers = document.querySelectorAll('.tabs'); tabContainers.forEach(container => { const tabButtons = container.querySelectorAll('.tabs__button'); const tabPanes = container.querySelectorAll('.tabs__pane'); tabButtons.forEach(button => { button.addEventListener('click', function() { const tabId = this.dataset.tab; tabButtons.forEach(btn => btn.classList.remove('active')); this.classList.add('active'); tabPanes.forEach(pane => { pane.classList.remove('active'); if (pane.dataset.tabContent === tabId) { pane.classList.add('active'); pane.querySelectorAll('[data-aos]').forEach(el => { el.classList.remove('aos-animate'); el.classList.add('aos-init'); setTimeout(() => el.classList.add('aos-animate'), 50); }); } }); }); }); });
-
-    // Модальные окна
-    const modalOpenButtons = document.querySelectorAll('[data-modal-open]');
-    const modalCloseButtons = document.querySelectorAll('[data-modal-close]');
-    modalOpenButtons.forEach(button => { button.addEventListener('click', function() { const modalId = this.dataset.modalOpen; const modal = document.getElementById(modalId); if (modal) { modal.classList.add('active'); document.body.style.overflow = 'hidden'; if (modalId === 'discuss') { if (typeof checkDiscussFormCooldown === 'function') { checkDiscussFormCooldown(); } } } }); });
-    function closeModal(modal) { if (!modal) return; modal.classList.remove('active'); const anyModalActive = document.querySelector('.modal.active'); const mobileNavActive = nav ? nav.classList.contains('active') : false; if (!anyModalActive && !mobileNavActive) { document.body.style.overflow = ''; } }
-    modalCloseButtons.forEach(button => { button.addEventListener('click', function() { const modal = this.closest('.modal'); if (modal) { closeModal(modal); } }); });
-    document.querySelectorAll('.modal').forEach(modal => { modal.addEventListener('click', function(e) { if (e.target === this) { closeModal(this); } }); });
-    document.addEventListener('keydown', function(e) { if (e.key === "Escape") { const activeModal = document.querySelector('.modal.active'); if (activeModal) { closeModal(activeModal); } } });
-
-    // "Статистический спиннер" 
-    const statsSpinner = document.querySelector('.stats-spinner'); if (statsSpinner) { const items = Array.from(statsSpinner.querySelectorAll('.stats-spinner__item')); const centerElement = statsSpinner.querySelector('.stats-spinner__center'); const containerWidth = statsSpinner.offsetWidth; const containerHeight = statsSpinner.offsetHeight; const itemsToPlace = items.filter(item => !item.classList.contains('stats-spinner__center')); const numItems = itemsToPlace.length; if (numItems > 0) { const radiusX = containerWidth / 2.8; const radiusY = containerHeight / 2.8; const angleStep = (2 * Math.PI) / numItems; itemsToPlace.forEach((item, index) => { const angle = index * angleStep - (Math.PI / 2); const x = radiusX * Math.cos(angle) + (containerWidth / 2) - (item.offsetWidth / 2); const y = radiusY * Math.sin(angle) + (containerHeight / 2) - (item.offsetHeight / 2); item.style.left = `${x}px`; item.style.top = `${y}px`; }); } if(centerElement) { centerElement.style.left = `calc(50% - ${centerElement.offsetWidth / 2}px)`; centerElement.style.top = `calc(50% - ${centerElement.offsetHeight / 2}px)`; centerElement.style.position = 'absolute'; } }
-    // Обновление года в футере
-    const currentYearElement = document.getElementById('current-year'); if (currentYearElement) { currentYearElement.textContent = new Date().getFullYear(); }
-    // Бегущая строка
-    const ticker = document.querySelector('.ticker'); if (ticker) { const contentWidth = ticker.scrollWidth / 2; const tickerWrapWidth = ticker.parentElement.offsetWidth; if (ticker.firstElementChild && contentWidth < tickerWrapWidth) { let currentContent = ticker.innerHTML; while(ticker.scrollWidth / 2 < tickerWrapWidth * 1.5) { ticker.innerHTML += currentContent; if (ticker.scrollWidth > tickerWrapWidth * 4) break; } } else if (!ticker.firstElementChild) { const textContent = ticker.textContent; ticker.innerHTML = `<span>${textContent}</span><span>${textContent}</span>`; } else { const originalHTML = ticker.innerHTML; ticker.innerHTML += originalHTML; } }
-
-    // File Upload Logic for Discuss Project Form
-    const discussForm = document.getElementById('discussForm'); 
-    if (discussForm) { 
-        const fileUploadArea = discussForm.querySelector('#fileUploadArea');
-        const fileInput = discussForm.querySelector('#projectFiles');
-        const fileUploadList = discussForm.querySelector('#fileUploadList');
-        const fileUploadError = discussForm.querySelector('#fileUploadError');
-        const submitButton = discussForm.querySelector('#discussSubmitButton'); // Переменная для кнопки формы "Обсудить проект"
-        const formMessage = discussForm.querySelector('#discussFormMessage'); 
-        const MAX_FILES = 3; const MAX_FILE_SIZE_MB = 5; const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024; const ALLOWED_EXTENSIONS = ['pdf', 'xlsx', 'xls', 'doc', 'docx', 'ppt', 'pptx', 'jpg', 'jpeg', 'png', 'zip', 'rar'];
-        const COOLDOWN_DURATION_MS = 15 * 60 * 1000; const SUBMIT_COUNT_LIMIT = 2; const LOCAL_STORAGE_SUBMIT_COUNT_KEY = 'discussFormSubmitCount'; const LOCAL_STORAGE_LAST_SUBMIT_KEY = 'discussFormLastSubmitTime';
-        let selectedFiles = []; 
-        if (fileUploadArea) { ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => { fileUploadArea.addEventListener(eventName, preventDefaults, false); }); function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); } ['dragenter', 'dragover'].forEach(eventName => { fileUploadArea.addEventListener(eventName, () => fileUploadArea.classList.add('dragover'), false); }); ['dragleave', 'drop'].forEach(eventName => { fileUploadArea.addEventListener(eventName, () => fileUploadArea.classList.remove('dragover'), false); }); fileUploadArea.addEventListener('drop', handleDrop, false); }
-        function handleDrop(e) { let dt = e.dataTransfer; let files = dt.files; handleFiles(files); }
-        if (fileInput) { fileInput.addEventListener('change', (e) => { handleFiles(e.target.files); fileInput.value = ''; }); }
-        function handleFiles(files) { fileUploadError.textContent = ''; let currentFiles = Array.from(files); if (selectedFiles.length + currentFiles.length > MAX_FILES) { fileUploadError.textContent = `Можно прикрепить не более ${MAX_FILES} файлов.`; return; } for (let file of currentFiles) { if (file.size > MAX_FILE_SIZE_BYTES) { fileUploadError.textContent = `Файл "${escapeHTML(file.name)}" слишком большой (макс. ${MAX_FILE_SIZE_MB}MB).`; continue; } const extension = file.name.split('.').pop().toLowerCase(); if (!ALLOWED_EXTENSIONS.includes(extension)) { fileUploadError.textContent = `Файл "${escapeHTML(file.name)}" имеет недопустимый тип.`; continue; } if (selectedFiles.length < MAX_FILES) { const isDuplicate = selectedFiles.some(sf => sf.name === file.name && sf.size === file.size); if (!isDuplicate) { selectedFiles.push(file); } } else { fileUploadError.textContent = `Достигнут лимит в ${MAX_FILES} файла.`; break; } } renderFileList(); }
-        function renderFileList() { fileUploadList.innerHTML = ''; selectedFiles.forEach((file, index) => { const listItem = document.createElement('div'); listItem.classList.add('file-upload-list__item'); const fileIcon = getFileIcon(file.name); listItem.innerHTML = ` <span class="file-upload-list__item-name">${fileIcon} ${escapeHTML(file.name)}</span> <div style="display: flex; align-items: center;"> <span class="file-upload-list__item-size">${formatFileSize(file.size)}</span> <button type="button" class="file-upload-list__item-remove" data-index="${index}" title="Удалить файл">×</button> </div> `; fileUploadList.appendChild(listItem); }); fileUploadList.querySelectorAll('.file-upload-list__item-remove').forEach(button => { button.addEventListener('click', (e) => { const indexToRemove = parseInt(e.currentTarget.dataset.index); selectedFiles.splice(indexToRemove, 1); renderFileList(); }); }); }
-        function getFileIcon(filename) { const ext = filename.split('.').pop().toLowerCase(); if (['pdf'].includes(ext)) return '📄'; if (['doc', 'docx'].includes(ext)) return '📝'; if (['xls', 'xlsx'].includes(ext)) return '📊'; if (['ppt', 'pptx'].includes(ext)) return '💻'; if (['jpg', 'jpeg', 'png', 'gif'].includes(ext)) return '🖼️'; if (['zip', 'rar'].includes(ext)) return '📦'; return '📎'; }
-        function formatFileSize(bytes) { if (bytes === 0) return '0 Bytes'; const k = 1024; const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']; const i = Math.floor(Math.log(bytes) / Math.log(k)); return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]; }
-        function escapeHTML(str) { if (typeof str !== 'string') return ''; return str.replace(/[&<>"']/g, function (match) { return {'&': '&','<': '<','>': '>','"': '"',"'": "'"}[match]; }); }
-        let discussCooldownInterval; 
-        function checkDiscussFormCooldown() { const lastSubmitTime = parseInt(localStorage.getItem(LOCAL_STORAGE_LAST_SUBMIT_KEY) || '0'); const submitCount = parseInt(localStorage.getItem(LOCAL_STORAGE_SUBMIT_COUNT_KEY) || '0'); const now = Date.now(); if (submitCount >= SUBMIT_COUNT_LIMIT) { const timePassed = now - lastSubmitTime; if (timePassed < COOLDOWN_DURATION_MS) { const timeLeft = COOLDOWN_DURATION_MS - timePassed; disableDiscussSubmitButton(Math.ceil(timeLeft / 1000)); return false; } else { localStorage.setItem(LOCAL_STORAGE_SUBMIT_COUNT_KEY, '0'); } } enableDiscussSubmitButton(); return true; }
-        function disableDiscussSubmitButton(secondsLeft) { if (!submitButton) return; submitButton.disabled = true; let originalText = 'Отправить заявку'; clearInterval(discussCooldownInterval); if (secondsLeft > 0) { submitButton.textContent = `Подождите ${secondsLeft} сек...`; discussCooldownInterval = setInterval(() => { secondsLeft--; if (secondsLeft > 0) { submitButton.textContent = `Подождите ${secondsLeft} сек...`; } else { clearInterval(discussCooldownInterval); submitButton.textContent = originalText; submitButton.disabled = false; localStorage.setItem(LOCAL_STORAGE_SUBMIT_COUNT_KEY, '0'); } }, 1000); } else { submitButton.textContent = 'Отправка...'; } }
-        function enableDiscussSubmitButton() { if (!submitButton) return; clearInterval(discussCooldownInterval); submitButton.disabled = false; submitButton.textContent = 'Отправить заявку'; }
-        function updateDiscussSubmitStats() { let submitCount = parseInt(localStorage.getItem(LOCAL_STORAGE_SUBMIT_COUNT_KEY) || '0'); submitCount++; localStorage.setItem(LOCAL_STORAGE_SUBMIT_COUNT_KEY, submitCount.toString()); localStorage.setItem(LOCAL_STORAGE_LAST_SUBMIT_KEY, Date.now().toString()); }
-        const discussModal = document.getElementById('discuss'); if (discussModal) { const observer = new MutationObserver(mutations => { mutations.forEach(mutation => { if (mutation.attributeName === 'class' && discussModal.classList.contains('active')) { checkDiscussFormCooldown(); } }); }); observer.observe(discussModal, { attributes: true }); } checkDiscussFormCooldown(); 
-        discussForm.addEventListener('submit', async function(e) { e.preventDefault(); if (formMessage) { formMessage.style.display = 'none'; formMessage.className = 'form-message'; } fileUploadError.textContent = ''; if (!checkDiscussFormCooldown()) { return; } disableDiscussSubmitButton(0); const formData = new FormData(discussForm); formData.delete('project_files[]'); selectedFiles.forEach((file) => { formData.append('project_files[]', file, file.name); }); try { const response = await fetch('http://localhost:5000/api/submit_project', { method: 'POST', body: formData, }); const result = await response.json(); if (formMessage) { if (response.ok) { formMessage.textContent = result.message || 'Заявка успешно отправлена!'; formMessage.classList.add('success'); discussForm.reset(); selectedFiles = []; renderFileList(); updateDiscussSubmitStats(); checkDiscussFormCooldown(); setTimeout(() => { closeModal(discussForm.closest('.modal')); formMessage.style.display = 'none'; }, 3000); } else { formMessage.textContent = result.error || 'Ошибка при отправке заявки. Попробуйте позже.'; formMessage.classList.add('error'); enableDiscussSubmitButton(); } formMessage.style.display = 'block'; } else { if (response.ok) alert(result.message || 'Заявка успешно отправлена!'); else alert(result.error || 'Ошибка при отправке заявки. Попробуйте позже.'); if (response.ok) { discussForm.reset(); selectedFiles = []; renderFileList(); updateDiscussSubmitStats(); checkDiscussFormCooldown(); setTimeout(() => closeModal(discussForm.closest('.modal')), 3000); } else { enableDiscussSubmitButton(); } } } catch (error) { console.error('Ошибка сети или сервера:', error); const errorMsg = 'Сетевая ошибка или сервер недоступен.'; if (formMessage) { formMessage.textContent = errorMsg; formMessage.classList.add('error'); formMessage.style.display = 'block'; } else { alert(errorMsg); } enableDiscussSubmitButton(); } });
-    }
-
-    // --- Код для формы Заказать звонок с IMaskJS (УНИФИЦИРОВАННОЕ ПОЛЕ) ---
-    const callbackForm = document.getElementById('callbackForm');
-    
-    if (callbackForm) {
-        const phoneInputUnified = callbackForm.querySelector('#callbackPhoneUnified');
-        const countryCodeSelect = callbackForm.querySelector('#phoneCountryCode'); // Наш новый селект
-        const callbackFormMessage = callbackForm.querySelector('#callbackFormMessage'); 
-        let phoneMaskInstanceUnified;
-
-        function initializePhoneMask() {
-            if (phoneMaskInstanceUnified) {
-                phoneMaskInstanceUnified.destroy();
-            }
-
-            const selectedOption = countryCodeSelect.options[countryCodeSelect.selectedIndex];
-            const maskPattern = selectedOption.dataset.mask;
-            const placeholderText = selectedOption.dataset.prefix + " " + selectedOption.dataset.placeholder;
-            // Префикс уже будет в итоговом значении маски, если маска его включает,
-            // или мы добавим его при отправке. Для плейсхолдера покажем его.
-            
-            phoneInputUnified.placeholder = placeholderText;
-            phoneInputUnified.value = ''; // Очищаем инпут при смене маски
-
-            if (maskPattern && window.IMask) {
-                const maskOptions = {
-                    mask: maskPattern, 
-                    lazy: false, 
-                    placeholderChar: '_',
-                    // Для IMask, если префикс страны не является частью редактируемой маски,
-                    // его нужно будет добавлять отдельно при формировании итогового номера.
-                    // Если маска УЖЕ включает код страны (как '+{7} (000) ...'), то это проще.
-                    // Давай сделаем маски, которые НЕ включают код страны, а код берем из data-prefix.
-                };
-                phoneMaskInstanceUnified = IMask(phoneInputUnified, maskOptions);
-                console.log("IMask инициализирован/обновлен для:", selectedOption.value, phoneMaskInstanceUnified);
-            }
-        }
-
-        if (phoneInputUnified && countryCodeSelect && window.IMask) {
-            console.log("Попытка инициализации IMask для #callbackPhoneUnified с выбором страны");
-            countryCodeSelect.addEventListener('change', initializePhoneMask);
-            initializePhoneMask(); // Первичная инициализация
-        } else { 
-            if (!phoneInputUnified) console.error("Элемент #callbackPhoneUnified не найден!"); 
-            if (!countryCodeSelect) console.error("Элемент #phoneCountryCode не найден!"); 
-            if (!window.IMask) console.error("Библиотека IMask не загружена!"); 
-        }
-
-        callbackForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            if(callbackFormMessage) { callbackFormMessage.style.display = 'none'; callbackFormMessage.className = 'form-message'; }
-            
-            const submitBtn = callbackForm.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.textContent;
-            submitBtn.disabled = true; submitBtn.textContent = 'Отправка...';
-            
-            const formData = new FormData(callbackForm); // Изначально содержит name и phone_number_part
-            let fullPhoneNumber = "";
-            const selectedOption = countryCodeSelect.options[countryCodeSelect.selectedIndex];
-            const countryPrefix = selectedOption.dataset.prefix; // +7, +375
-
-            if (phoneMaskInstanceUnified) {
-                const unmaskedValue = phoneMaskInstanceUnified.unmaskedValue; // Только цифры из инпута (без префикса)
-                const expectedLength = phoneMaskInstanceUnified.mask.replace(/[^0]/g, "").length; // Ожидаемая длина цифр в маске
-
-                if (unmaskedValue.length === expectedLength) { 
-                    fullPhoneNumber = countryPrefix + unmaskedValue;
-                    console.log("Сформированный номер телефона (IMask + Select):", fullPhoneNumber);
+    const mainCircleStat = document.getElementById('main-circle-stat');
+    if (mainCircleStat) {
+        const progressDot = document.getElementById('progress-dot');
+        const progressCircle = document.getElementById('progress-dot-circle');
+        const radius = progressCircle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        let dotAnimationId;
+        const animateCircleAndDot = () => {
+            progressCircle.style.strokeDashoffset = circumference;
+            setTimeout(() => {
+                progressCircle.style.strokeDashoffset = "0";
+            }, 100);
+            let angle = 0;
+            const dotAnimationDuration = 4000;
+            const totalSteps = dotAnimationDuration / (1000 / 60);
+            const angleIncrement = 360 / totalSteps;
+            let currentStep = 0;
+            cancelAnimationFrame(dotAnimationId);
+            function animateDot() {
+                if (currentStep < totalSteps) {
+                    angle = (angle + angleIncrement);
+                    const x = 50 + radius * Math.cos((angle - 90) * Math.PI / 180);
+                    const y = 50 + radius * Math.sin((angle - 90) * Math.PI / 180);
+                    progressDot.setAttribute('cx', x);
+                    progressDot.setAttribute('cy', y);
+                    currentStep++;
+                    dotAnimationId = requestAnimationFrame(animateDot);
                 } else {
-                    const errorText = `Пожалуйста, введите полный номер телефона (${expectedLength} цифр после кода).`;
-                    if(callbackFormMessage) { callbackFormMessage.textContent = errorText; callbackFormMessage.classList.add('error'); callbackFormMessage.style.display = 'block';} 
-                    else { alert(errorText); }
-                    submitBtn.disabled = false; submitBtn.textContent = originalBtnText;
-                    return;
+                    angle = 0;
+                    currentStep = 0;
+                    dotAnimationId = requestAnimationFrame(animateDot);
                 }
-            } else {
-                // Фоллбэк, если IMask не сработал
-                const rawPhonePart = phoneInputUnified.value.replace(/\D/g, '');
-                if (rawPhonePart.length > 5) { // Очень простая проверка
-                    fullPhoneNumber = countryPrefix + rawPhonePart;
-                } else {
-                    if(callbackFormMessage) { callbackFormMessage.textContent = 'Пожалуйста, введите корректный номер телефона.'; /*...*/ } else { alert('Пожалуйста, введите корректный номер телефона.'); }
-                    submitBtn.disabled = false; submitBtn.textContent = originalBtnText;
-                    return;
-                }
-                console.warn("IMask не инициализирован, используется сырой ввод с префиксом:", fullPhoneNumber);
             }
-
-            formData.set('phone', fullPhoneNumber); // Заменяем/добавляем поле 'phone'
-            formData.delete('phone_number_part');   // Удаляем частичный номер
-            formData.delete('country_code_selector'); // Удаляем селектор, если не нужен на бэке
-
-            console.log("Отправляемые данные (callback):", Object.fromEntries(formData));
-            
-            try {
-                const response = await fetch('http://localhost:5000/api/submit_callback', { method: 'POST', body: formData });
-                const result = await response.json();
-                if (callbackFormMessage) {
-                    if (response.ok) { 
-                        callbackFormMessage.textContent = result.message || 'Заявка на звонок успешно отправлена!'; 
-                        callbackFormMessage.classList.add('success'); 
-                        callbackForm.reset(); 
-                        if (phoneMaskInstanceUnified) phoneMaskInstanceUnified.value = ''; 
-                        initializePhoneMask(); // Сбросить маску к дефолтной стране
-                        setTimeout(() => { closeModal(callbackForm.closest('.modal')); callbackFormMessage.style.display = 'none'; }, 3000); 
-                    } else { 
-                        callbackFormMessage.textContent = result.error || 'Ошибка отправки. Попробуйте позже.'; 
-                        callbackFormMessage.classList.add('error'); 
+            animateDot();
+        };
+        const numberCounters = document.querySelectorAll('.production-visual-content .stat-number');
+        const animateCounter = (el) => {
+            const target = +el.dataset.target;
+            const duration = 2000;
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                el.textContent = Math.floor(progress * target).toLocaleString('ru-RU');
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            };
+            requestAnimationFrame(step);
+        };
+        const circleObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (!entry.target.dataset.animated) {
+                        animateCircleAndDot();
+                        numberCounters.forEach(animateCounter);
+                        entry.target.dataset.animated = "true";
                     }
-                    callbackFormMessage.style.display = 'block';
-                } else { /* ... alert fallback ... */ }
-            } catch (error) { /* ... обработка сетевой ошибки ... */ }
-            submitBtn.disabled = false; submitBtn.textContent = originalBtnText;
+                }
+            });
+        }, { threshold: 0.5 });
+        circleObserver.observe(mainCircleStat);
+        document.querySelectorAll('.stat-circle-small, .stat-circle-medium').forEach(circle => {
+            const smallCircleObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const numberEl = entry.target.querySelector('.stat-number');
+                        if (numberEl && !numberEl.dataset.animated) {
+                            animateCounter(numberEl);
+                            numberEl.dataset.animated = "true";
+                        }
+                    }
+                });
+            }, { threshold: 0.5 });
+            smallCircleObserver.observe(circle);
         });
+    }
+
+    const mainVimeoPlayer = document.getElementById('main-vimeo-player');
+    const videoThumbnails = document.querySelectorAll('.video-thumbnail-item');
+    if (mainVimeoPlayer && videoThumbnails.length > 0) {
+        videoThumbnails.forEach(thumb => {
+            thumb.addEventListener('click', function() {
+                const vimeoId = this.dataset.vimeoId;
+                if (vimeoId) {
+                    mainVimeoPlayer.src = `https://player.vimeo.com/video/${vimeoId}?autoplay=1&loop=0&muted=0&title=0&byline=0&portrait=0`;
+                }
+            });
+        });
+    }
+
+    const teamPhotosContainer = document.getElementById('team-photos-container');
+    if (teamPhotosContainer) {
+        const numberOfPhotos = 10;
+        const photoSizeMin = 130; 
+        const photoSizeMax = 230; 
+        teamPhotosContainer.innerHTML = '';
+        for (let i = 0; i < numberOfPhotos; i++) {
+            const photoEl = document.createElement('div');
+            photoEl.className = 'team-photo-item animate-on-scroll';
+            photoEl.dataset.animationDelay = `${i * 0.08}s`;
+            const img = document.createElement('img');
+            const randomWidth = Math.floor(Math.random() * (photoSizeMax - photoSizeMin + 1) + photoSizeMin);
+            const randomHeight = Math.floor(randomWidth * (Math.random() * 0.2 + 1.1));
+            img.src = `https://via.placeholder.com/${randomWidth}x${randomHeight}.png/e0e0e0/a0a0a0?text=Сотрудник+${i + 1}`;
+            photoEl.appendChild(img);
+            
+            let containerWidth = teamPhotosContainer.offsetWidth;
+            let containerHeight = teamPhotosContainer.offsetHeight;
+            if(containerWidth === 0 && containerHeight === 0) {
+                containerWidth = 500; containerHeight = 500; 
+            }
+
+            let x, y, overlap;
+            let attempts = 0;
+            const maxAttempts = 50;
+            const existingPhotos = teamPhotosContainer.querySelectorAll('.team-photo-item');
+
+            do {
+                overlap = false;
+                x = Math.random() * (containerWidth - randomWidth * 1.1) + randomWidth * 0.05;
+                y = Math.random() * (containerHeight - randomHeight * 1.1) + randomHeight * 0.05;
+                
+                for (const existingPhoto of existingPhotos) {
+                    const ex = parseFloat(existingPhoto.style.left);
+                    const ey = parseFloat(existingPhoto.style.top);
+                    const ew = parseFloat(existingPhoto.style.width);
+                    const eh = parseFloat(existingPhoto.style.height);
+                    if (x < ex + ew && x + randomWidth > ex && y < ey + eh && y + randomHeight > ey) {
+                        overlap = true;
+                        break;
+                    }
+                }
+                attempts++;
+            } while (overlap && attempts < maxAttempts);
+
+            photoEl.style.width = `${randomWidth}px`;
+            photoEl.style.height = `${randomHeight}px`;
+            photoEl.style.left = `${x}px`;
+            photoEl.style.top = `${y}px`;
+            photoEl.style.animationDelay = `${0.5 + Math.random() * 2.5}s`;
+            photoEl.style.animationDuration = `${22 + Math.random() * 12}s`;
+            photoEl.style.zIndex = Math.floor(Math.random() * 3) + 1;
+            teamPhotosContainer.appendChild(photoEl);
+        }
+        const newAnimatedTeamPhotos = teamPhotosContainer.querySelectorAll('.team-photo-item.animate-on-scroll');
+        const teamObserver = new IntersectionObserver(observerCallback, observerOptions);
+        newAnimatedTeamPhotos.forEach(el => teamObserver.observe(el));
+    }
+    
+    const mainAwardsData = [
+        { title: "Лауреат конкурса POPAI <br>AWARDS 2019-2024", description: "Проекты-победители: Елка Swarovski, Бар Johnnie Walker, Оформление витрин Dior Christmas, Фотозона в бутике Dior, Baby Dior и др.", image: "https://via.placeholder.com/280x280.png/4A90E2/fff?text=POPAI" },
+        { title: "Лауреат конкурса ZHAK <br>2014-2024", description: "Проекты-победители: Инсталляция для Универсама “Верный”, Оформление магазинов Ивлев шеф, Вагон метро Monochrome в ТЦ ЦУМ и др.", image: "https://via.placeholder.com/280x280.png/50E3C2/333?text=ZHAK" },
+        { title: "Лауреат конкурса Полный <br>АУТ", description: "Проекты-победители: Елка Swarovski", image: "https://via.placeholder.com/280x280.png/F5A623/333?text=АУТ" }
+    ];
+
+    const mainAwardSlidesContainer = document.getElementById('main-award-slides-container');
+    if (mainAwardSlidesContainer) {
+        mainAwardsData.forEach(award => {
+            const slide = document.createElement('div');
+            slide.className = 'swiper-slide main-award-slide'; 
+            slide.innerHTML = `
+                <div class="main-award-image">
+                    <img src="${award.image}" alt="${award.title.replace(/<br\s*\/?>/gi, ' ')}">
+                </div>
+                <div class="main-award-text">
+                    <h3>${award.title}</h3>
+                    <p>${award.description}</p>
+                </div>
+            `;
+            mainAwardSlidesContainer.appendChild(slide);
+        });
+    }
+    
+    if (typeof Swiper !== 'undefined') {
+        const mainAwardSwiperEl = document.getElementById('main-award-swiper-container');
+        if (mainAwardSwiperEl) {
+            new Swiper(mainAwardSwiperEl, {
+                loop: true,
+                slidesPerView: 1,
+                spaceBetween: 30,
+                navigation: {
+                    nextEl: '#main-award-next',
+                    prevEl: '#main-award-prev',
+                },
+                autoplay: {
+                    delay: 5500,
+                    disableOnInteraction: true,
+                },
+                observer: true, 
+                observeParents: true, 
+            });
+        }
+
+        const clientsSwiperContainer = document.getElementById('clients-swiper-container');
+        if (clientsSwiperContainer) {
+             new Swiper(clientsSwiperContainer, {
+                loop: true,
+                slidesPerView: 'auto', 
+                spaceBetween: 25,      
+                centeredSlides: false,  
+                autoplay: {
+                    delay: 2800,       
+                    disableOnInteraction: false, 
+                    pauseOnMouseEnter: true,     
+                },
+                navigation: {
+                    nextEl: '#clients-swiper-next',
+                    prevEl: '#clients-swiper-prev',
+                },
+                observer: true, 
+                observeParents: true,
+            });
+        }
+    } else {
+        console.warn('Swiper library is not loaded. Sliders will not function.');
+    }
+
+    // Partner Letters Section
+    const partnerLettersData = [
+        { id: 'x5', name: 'X5 RETAIL GROUP', image: 'https://i.imgur.com/s0nFHtP.png' }, // Пример, замени на реальные пути
+        { id: 'tsum', name: 'ЦУМ', image: 'https://via.placeholder.com/600x850/ffffff/cccccc?text=Письмо+ЦУМ' },
+        { id: 'avangard', name: 'АВАНГАРД', image: 'https://via.placeholder.com/600x850/ffffff/cccccc?text=Письмо+АВАНГАРД' },
+        { id: 'fhr', name: 'ФХР', image: 'https://via.placeholder.com/600x850/ffffff/cccccc?text=Письмо+ФХР' },
+        { id: 'familia', name: 'ФАМИЛИЯ', image: 'https://via.placeholder.com/600x850/ffffff/cccccc?text=Письмо+ФАМИЛИЯ' },
+    ];
+
+    const letterImageColumn = document.getElementById('letter-image-column');
+    const partnerNamesColumn = document.getElementById('partner-names-column');
+    let currentLetterImage = document.getElementById('current-letter-image');
+    let currentPartnerIndex = 0;
+
+    function displayPartnerLetter(index) {
+        if (!letterImageColumn || !partnerNamesColumn || !partnerLettersData[index]) return;
+
+        const partner = partnerLettersData[index];
+
+        // Update active name
+        const nameItems = partnerNamesColumn.querySelectorAll('.partner-name-item');
+        nameItems.forEach((item, i) => {
+            item.classList.toggle('active', i === index);
+        });
+
+        // Create new image element for the new letter
+        const newLetterImage = document.createElement('img');
+        newLetterImage.src = partner.image;
+        newLetterImage.alt = `Письмо от ${partner.name}`;
+        
+        // Animation: current image slides out, new image slides in
+        if (currentLetterImage) {
+            currentLetterImage.classList.remove('active');
+            currentLetterImage.classList.add('previous'); // To slide it out
+            // Remove the old 'previous' image after animation
+            const oldPrevious = letterImageColumn.querySelector('img.previous:not(.active)');
+            if(oldPrevious && oldPrevious !== currentLetterImage) {
+                 setTimeout(() => { if(oldPrevious.parentNode) oldPrevious.remove(); }, 500);
+            }
+        }
+        
+        letterImageColumn.appendChild(newLetterImage);
+        
+        // Make the new image active after a short delay to allow CSS transition
+        setTimeout(() => {
+            newLetterImage.classList.add('active');
+            // Remove the truly previous image (that just slid out)
+            if(currentLetterImage && currentLetterImage !== newLetterImage && currentLetterImage.parentNode) {
+                 setTimeout(() => { currentLetterImage.remove(); }, 500);
+            }
+            currentLetterImage = newLetterImage; // Update current image reference
+        }, 20); // Small delay for transition trigger
+
+        currentPartnerIndex = index;
+    }
+
+    if (partnerNamesColumn && letterImageColumn) {
+        partnerLettersData.forEach((partner, index) => {
+            const nameItem = document.createElement('div');
+            nameItem.className = 'partner-name-item';
+            nameItem.textContent = partner.name;
+            nameItem.dataset.index = index;
+            nameItem.addEventListener('click', () => {
+                displayPartnerLetter(index);
+            });
+            partnerNamesColumn.appendChild(nameItem);
+        });
+        // Display the first letter initially
+        if (partnerLettersData.length > 0) {
+            displayPartnerLetter(0); 
+            // Set placeholder for the first image directly if it's hardcoded in HTML
+            const initialImage = document.getElementById('current-letter-image');
+            if(initialImage) initialImage.src = partnerLettersData[0].image;
+
+        }
     }
 });
