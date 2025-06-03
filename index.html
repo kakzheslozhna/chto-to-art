@@ -2,322 +2,390 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Что-то АРТ - Креативное Агентство</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Гильдия Луч</title>
+    <!-- Подключаем стили Swiper.js -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="wrapper">
-        <header class="header">
-            <div class="container header__container">
-                <a href="/" class="logo header__logo">
-                    <span class="logo__main">Что-то</span>
-                    <span class="logo__accent">АРТ</span>
-                </a>
-                <nav class="nav header__nav">
-                    <ul class="nav__list">
-                        <li class="nav__item"><a href="#about" class="nav__link">О нас</a></li>
-                        <li class="nav__item"><a href="#services" class="nav__link">Услуги</a></li>
-                        <li class="nav__item"><a href="#projects" class="nav__link">Проекты</a></li>
-                        <li class="nav__item"><a href="#cases" class="nav__link">Кейсы</a></li>
-                        <li class="nav__item"><a href="#contacts" class="nav__link">Контакты</a></li>
-                    </ul>
-                </nav>
-                <div class="header__contacts">
-                    <a href="tel:+70000000000" class="header__phone">📞 +7 (000) 000-00-00</a>
-                    <button class="button button--outline header__callback-btn" data-modal-open="callback">Заказать звонок</button>
+
+    <header class="site-header" id="site-header">
+        <div class="container header-inner-container">
+            <div class="logo-area">
+                <a href="/" class="logo-text">Гильдия Луч</a>
+            </div>
+            <nav class="main-navigation" id="main-navigation-menu">
+                <ul>
+                    <li><a href="#">О компании</a></li>
+                    <li><a href="#">Проекты</a></li>
+                    <li><a href="#">Производство</a></li>
+                    <li><a href="#">Вакансии</a></li>
+                    <li><a href="#">Контакты</a></li>
+                    <li><a href="#">Тренды</a></li>
+                </ul>
+            </nav>
+            <div class="header-right-controls">
+                <div class="header-contact">
+                    <a href="tel:+74950238888" class="phone-number">+7 (495) 023-88-88</a>
+                    <button type="button" class="callback-button">Позвоните мне</button>
                 </div>
-                <button class="burger header__burger" aria-label="Открыть меню">
-                    <span class="burger__line"></span>
-                    <span class="burger__line"></span>
-                    <span class="burger__line"></span>
+                <button class="burger-menu" id="burger-menu" aria-label="Открыть меню" aria-expanded="false" aria-controls="main-navigation-menu">
+                    <span></span><span></span><span></span>
                 </button>
             </div>
-        </header>
-
-        <main class="main">
-            <!-- Hero Services Section -->
-            <section class="hero-services" id="hero">
-                <div class="swiper hero-slider">
-                    <div class="swiper-wrapper">
-                        <!-- Slide 1 -->
-                        <div class="swiper-slide hero-slide" style="background-image: url('https://placehold.co/1920x1080/222222/cccccc?text=Абстрактный+фон+1');">
-                            <div class="container hero-slide__container">
-                                <div class="hero-slide__tabs-nav">
-                                    <button class="hero-slide__tab-btn active" data-tab-content="marketing">Маркетинг</button>
-                                    <button class="hero-slide__tab-btn" data-tab-content="development">Разработка</button>
-                                    <button class="hero-slide__tab-btn" data-tab-content="production">Продакшн</button>
-                                </div>
-                                <div class="hero-slide__content active" data-tab-id="marketing">
-                                    <h1 class="hero-slide__title" data-aos="fade-up">Креативные Маркетинговые Решения</h1>
-                                    <p class="hero-slide__subtitle" data-aos="fade-up" data-aos-delay="100">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ullamcorper scelerisque mi.</p>
-                                    <button class="button hero-slide__button" data-aos="fade-up" data-aos-delay="200" data-modal-open="discuss">Обсудить проект 〉</button>
-                                </div>
-                                <div class="hero-slide__content" data-tab-id="development">
-                                    <h1 class="hero-slide__title">Инновационная Веб-Разработка</h1>
-                                    <p class="hero-slide__subtitle">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc ullamcorper scelerisque mi.</p>
-                                    <button class="button hero-slide__button" data-modal-open="discuss">Обсудить проект 〉</button>
-                                </div>
-                                <div class="hero-slide__content" data-tab-id="production">
-                                    <h1 class="hero-slide__title">Качественный Видео Продакшн</h1>
-                                    <p class="hero-slide__subtitle">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. Nunc ullamcorper scelerisque mi.</p>
-                                    <button class="button hero-slide__button" data-modal-open="discuss">Обсудить проект 〉</button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Slide 2 -->
-                        <div class="swiper-slide hero-slide" style="background-image: url('https://placehold.co/1920x1080/333333/bbbbbb?text=Абстрактный+фон+2');">
-                            <div class="container hero-slide__container">
-                                <div class="hero-slide__content active">
-                                    <h1 class="hero-slide__title" data-aos="fade-up">Дизайн, Который Вдохновляет</h1>
-                                    <p class="hero-slide__subtitle" data-aos="fade-up" data-aos-delay="100">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore. Nunc ullamcorper scelerisque mi.</p>
-                                    <button class="button hero-slide__button" data-aos="fade-up" data-aos-delay="200" data-modal-open="discuss">Обсудить проект 〉</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-pagination hero-slider__pagination"></div>
-                    <div class="swiper-button-prev hero-slider__nav hero-slider__nav--prev">‹</div>
-                    <div class="swiper-button-next hero-slider__nav hero-slider__nav--next">›</div>
-                </div>
-            </section>
-
-            <!-- Key Main Services Section -->
-            <section class="main-services-overview section-padding" id="main-services">
-                <div class="container">
-                    <h2 class="section-title" data-aos="fade-up">Ключевые направления "Что-то АРТ"</h2>
-                    <div class="main-services-overview__grid">
-                        <div class="main-services-overview__item" data-aos="fade-up" data-aos-delay="100"><div class="main-services-overview__icon-wrapper"><span class="main-services-overview__icon">⚙️</span></div><h3 class="main-services-overview__item-title">Разработка и PR</h3><p class="main-services-overview__item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p></div>
-                        <div class="main-services-overview__item" data-aos="fade-up" data-aos-delay="200"><div class="main-services-overview__icon-wrapper"><span class="main-services-overview__icon">🎬</span></div><h3 class="main-services-overview__item-title">Видеопродакшн</h3><p class="main-services-overview__item-text">Incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div>
-                        <div class="main-services-overview__item" data-aos="fade-up" data-aos-delay="300"><div class="main-services-overview__icon-wrapper"><span class="main-services-overview__icon">🎨</span></div><h3 class="main-services-overview__item-title">Дизайн и брендинг</h3><p class="main-services-overview__item-text">Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p></div>
-                        <div class="main-services-overview__item" data-aos="fade-up" data-aos-delay="400"><div class="main-services-overview__icon-wrapper"><span class="main-services-overview__icon">📈</span></div><h3 class="main-services-overview__item-title">Интернет-маркетинг</h3><p class="main-services-overview__item-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- About Company Section -->
-            <section class="about section-padding" id="about">
-                <div class="container">
-                    <h2 class="section-title" data-aos="fade-up">О компании "Что-то АРТ"</h2>
-                    <p class="about__description" data-aos="fade-up" data-aos-delay="100">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam euismod, nisl vitae aliquam ultricies, nunc nisl ultricies nunc, vitae aliquam nisl nisl vitae nisl. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
-                    <div class="ticker-wrap" data-aos="fade-up" data-aos-delay="200">
-                        <div class="ticker">
-                            <span>Создаем впечатления ✨</span>
-                            <span>Инновационные решения 💡</span>
-                            <span>Ваш успех - наша цель 🎯</span>
-                            <span>Креатив без границ 🚀</span>
-                        </div>
-                    </div>
-                    <div class="stats-spinner" data-aos="fade-up" data-aos-delay="300">
-                        <div class="stats-spinner__item"><strong class="stats-spinner__number">10+</strong> лет опыта</div>
-                        <div class="stats-spinner__item"><strong class="stats-spinner__number">200+</strong> проектов</div>
-                        <div class="stats-spinner__item"><strong class="stats-spinner__number">40+</strong> наград</div>
-                        <div class="stats-spinner__item"><strong class="stats-spinner__number">90%</strong> LTV клиентов</div>
-                        <div class="stats-spinner__center">📊</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Services Section -->
-            <section class="services section-padding" id="services">
-                <div class="container">
-                    <h2 class="section-title" data-aos="fade-up">Услуги</h2>
-                    <div class="services__grid">
-                        <div class="service-card" data-aos="fade-up"><div class="service-card__icon">🧭</div><h3 class="service-card__title">Стратегия</h3><p class="service-card__text">Lorem ipsum dolor sit amet consectetur.</p></div>
-                        <div class="service-card" data-aos="fade-up" data-aos-delay="100"><div class="service-card__icon">💡</div><h3 class="service-card__title">Креатив</h3><p class="service-card__text">Adipiscing elit sed do eiusmod tempor.</p></div>
-                        <div class="service-card" data-aos="fade-up" data-aos-delay="200"><div class="service-card__icon">💻</div><h3 class="service-card__title">Веб-разработка</h3><p class="service-card__text">Incididunt ut labore et dolore magna.</p></div>
-                        <div class="service-card" data-aos="fade-up" data-aos-delay="300"><div class="service-card__icon">📱</div><h3 class="service-card__title">Мобильные приложения</h3><p class="service-card__text">Aliqua Ut enim ad minim veniam.</p></div>
-                        <div class="service-card" data-aos="fade-up" data-aos-delay="400"><div class="service-card__icon">📢</div><h3 class="service-card__title">PR и Коммуникации</h3><p class="service-card__text">Quis nostrud exercitation ullamco laboris.</p></div>
-                        <div class="service-card" data-aos="fade-up" data-aos-delay="500"><div class="service-card__icon">🎞️</div><h3 class="service-card__title">Видеопродакшн</h3><p class="service-card__text">Nisi ut aliquip ex ea commodo consequat.</p></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Projects Section -->
-            <section class="projects section-padding" id="projects">
-                <div class="container">
-                    <h2 class="section-title" data-aos="fade-up">Проекты</h2>
-                    <div class="tabs projects__tabs" data-aos="fade-up" data-aos-delay="100">
-                        <div class="tabs__nav">
-                            <button class="tabs__button active" data-tab="all">Все проекты</button>
-                            <button class="tabs__button" data-tab="dev">Разработка</button>
-                            <button class="tabs__button" data-tab="video">Видео</button>
-                            <button class="tabs__button" data-tab="design">Дизайн</button>
-                        </div>
-                        <div class="tabs__content">
-                            <div class="tabs__pane active" data-tab-content="all"><div class="projects__gallery"> <a href="https://placehold.co/800x600/555/fff?text=Project+1+Large" data-aos="zoom-in" class="projects__gallery-item"><img src="https://placehold.co/400x300/555/fff?text=Проект+1" alt="Проект 1"></a> <a href="https://placehold.co/800x600/555/fff?text=Project+2+Large" data-aos="zoom-in" data-aos-delay="50" class="projects__gallery-item"><img src="https://placehold.co/400x300/555/fff?text=Проект+2" alt="Проект 2"></a> <a href="https://placehold.co/800x600/555/fff?text=Project+3+Large" data-aos="zoom-in" data-aos-delay="100" class="projects__gallery-item"><img src="https://placehold.co/400x300/555/fff?text=Проект+3" alt="Проект 3"></a> <a href="https://placehold.co/800x600/555/fff?text=Project+4+Large" data-aos="zoom-in" data-aos-delay="150" class="projects__gallery-item"><img src="https://placehold.co/400x300/555/fff?text=Проект+4" alt="Проект 4"></a></div></div>
-                            <div class="tabs__pane" data-tab-content="dev"><p>Контент для вкладки "Разработка". Lorem ipsum dolor sit amet.</p><div class="projects__gallery"><a href="https://placehold.co/800x600/666/fff?text=Dev+Project+Large" class="projects__gallery-item"><img src="https://placehold.co/400x300/666/fff?text=Dev+Project" alt="Проект Разработка"></a></div></div>
-                            <div class="tabs__pane" data-tab-content="video"><p>Контент для вкладки "Видео". Consectetur adipiscing elit.</p><div class="projects__gallery"><a href="https://placehold.co/800x600/777/fff?text=Video+Project+Large" class="projects__gallery-item"><img src="https://placehold.co/400x300/777/fff?text=Video+Project" alt="Проект Видео"></a></div></div>
-                            <div class="tabs__pane" data-tab-content="design"><p>Контент для вкладки "Дизайн". Sed do eiusmod tempor.</p><div class="projects__gallery"><a href="https://placehold.co/800x600/888/fff?text=Design+Project+Large" class="projects__gallery-item"><img src="https://placehold.co/400x300/888/fff?text=Design+Project" alt="Проект Дизайн"></a></div></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Cases Section -->
-            <section class="cases section-padding" id="cases">
-                <div class="container cases__header-container"><h2 class="section-title" data-aos="fade-up">Кейсы</h2></div>
-                <div class="swiper-container-outer">
-                    <div class="swiper cases-slider" data-aos="fade-up" data-aos-delay="100">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide case-slide"><img src="https://placehold.co/500x350/444/eee?text=Case+Study+1" alt="Кейс 1" class="case-slide__image"><div class="case-slide__content"><h3 class="case-slide__title">Название Кейса Один</h3><p class="case-slide__description">Краткое описание достижений. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><div class="case-slide__tags"><span class="case-slide__tag">Маркетинг</span><span class="case-slide__tag">Стратегия</span></div><a href="#" class="case-slide__link">Подробнее →</a></div></div>
-                            <div class="swiper-slide case-slide"><img src="https://placehold.co/500x350/484848/eee?text=Case+Study+2" alt="Кейс 2" class="case-slide__image"><div class="case-slide__content"><h3 class="case-slide__title">Очень Длинное Название Кейса Для Примера Два</h3><p class="case-slide__description">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p><div class="case-slide__tags"><span class="case-slide__tag">Разработка</span><span class="case-slide__tag">Дизайн</span></div><a href="#" class="case-slide__link">Подробнее →</a></div></div>
-                            <div class="swiper-slide case-slide"><img src="https://placehold.co/500x350/505050/eee?text=Case+Study+3" alt="Кейс 3" class="case-slide__image"><div class="case-slide__content"><h3 class="case-slide__title">Проект для крупного клиента Три</h3><p class="case-slide__description">Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><div class="case-slide__tags"><span class="case-slide__tag">Видео</span><span class="case-slide__tag">Креатив</span></div><a href="#" class="case-slide__link">Подробнее →</a></div></div>
-                            <div class="swiper-slide case-slide"><img src="https://placehold.co/500x350/585858/eee?text=Case+Study+4" alt="Кейс 4" class="case-slide__image"><div class="case-slide__content"><h3 class="case-slide__title">Еще один интересный кейс Четыре</h3><p class="case-slide__description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p><div class="case-slide__tags"><span class="case-slide__tag">PR</span></div><a href="#" class="case-slide__link">Подробнее →</a></div></div>
-                        </div>
-                    </div>
-                    <div class="swiper-button-prev cases-slider__nav cases-slider__nav--prev">‹</div>
-                    <div class="swiper-button-next cases-slider__nav cases-slider__nav--next">›</div>
-                </div>
-                <div class="swiper-pagination cases-slider__pagination"></div>
-            </section>
-
-            <!-- Production / How We Work Section -->
-            <section class="production section-padding" id="production">
-                <div class="container production__container">
-                    <div class="production__text-content" data-aos="fade-right"><h2 class="section-title production__title">Решаем задачи комплексно</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p><ul class="production__list"><li>✓ Глубокий анализ и стратегия</li><li>✓ Креативные идеи и концепции</li><li>✓ Качественная реализация и продакшн</li><li>✓ Эффективное продвижение</li></ul><button class="button">Узнать больше о процессе</button></div>
-                    <div class="production__visual-content" data-aos="fade-left" data-aos-delay="200"><div class="production__spinner-placeholder">🔄</div><p class="production__visual-caption">Интегрированный подход к каждому проекту.</p></div>
-                </div>
-            </section>
-
-            <!-- Video Section -->
-            <section class="video-section section-padding" id="video-promo">
-                <div class="container text-center"><h2 class="section-title" data-aos="fade-up">Посмотрите видео о "Что-то АРТ"</h2><div class="video-wrapper" data-aos="fade-up" data-aos-delay="100"><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="video-placeholder" style="background-image: url('https://placehold.co/800x450/333/fff?text=▶+Видео+о+нас');"><span class="play-button">▶</span></a></div></div>
-            </section>
-            
-            <!-- Team Section -->
-            <section class="team section-padding" id="team">
-                <div class="container team__container">
-                    <div class="team__text-content" data-aos="fade-right"><h2 class="section-title">Работаем с людьми, создаем для людей</h2><p>Наша команда — это профессионалы своего дела, объединенные общей целью и страстью к творчеству. Мы ценим каждого клиента и стремимся к долгосрочному партнерству. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><button class="button" data-modal-open="callback">Присоединиться к команде</button></div>
-                    <div class="team__image-content" data-aos="fade-left" data-aos-delay="200"><img src="https://placehold.co/550x400/666/fff?text=Наша+Дружная+Команда" alt="Наша Команда" class="team__image"></div>
-                </div>
-            </section>
-
-            <!-- Awards & Clients Section -->
-            <section class="awards-clients section-padding" id="awards">
-                <div class="container">
-                    <h2 class="section-title" data-aos="fade-up">Награды и признание</h2>
-                    <div class="swiper awards-slider" data-aos="fade-up" data-aos-delay="100"><div class="swiper-wrapper"><div class="swiper-slide award-slide"><img src="https://placehold.co/200x150/ddd/333?text=🏆+Награда+Alpha" alt="Награда Alpha"></div><div class="swiper-slide award-slide"><img src="https://placehold.co/200x150/ddd/333?text=🥇+Награда+Beta" alt="Награда Beta"></div><div class="swiper-slide award-slide"><img src="https://placehold.co/200x150/ddd/333?text=🏅+Награда+Gamma" alt="Награда Gamma"></div><div class="swiper-slide award-slide"><img src="https://placehold.co/200x150/ddd/333?text=🌟+Награда+Delta" alt="Награда Delta"></div><div class="swiper-slide award-slide"><img src="https://placehold.co/200x150/ddd/333?text=🏆+Награда+Epsilon" alt="Награда Epsilon"></div></div><div class="swiper-pagination awards-slider__pagination"></div></div>
-                    <h3 class="section-subtitle text-center" data-aos="fade-up">Нас выбирают</h3>
-                    <div class="swiper clients-slider" data-aos="fade-up" data-aos-delay="100"><div class="swiper-wrapper"><div class="swiper-slide client-logo"><img src="https://placehold.co/150x80/eee/777?text=Client+A" alt="Клиент А"></div><div class="swiper-slide client-logo"><img src="https://placehold.co/150x80/eee/777?text=Client+B" alt="Клиент Б"></div><div class="swiper-slide client-logo"><img src="https://placehold.co/150x80/eee/777?text=Client+C" alt="Клиент В"></div><div class="swiper-slide client-logo"><img src="https://placehold.co/150x80/eee/777?text=Client+D" alt="Клиент Г"></div><div class="swiper-slide client-logo"><img src="https://placehold.co/150x80/eee/777?text=Client+E" alt="Клиент Д"></div><div class="swiper-slide client-logo"><img src="https://placehold.co/150x80/eee/777?text=Client+F" alt="Клиент Е"></div></div></div>
-                </div>
-            </section>
-
-            <!-- Partner Letters Section -->
-            <section class="partner-letters section-padding" id="partner-letters">
-                <div class="container">
-                    <h2 class="section-title" data-aos="fade-up">Письма партнеров</h2>
-                    <div class="tabs partner-letters__tabs" data-aos="fade-up" data-aos-delay="100">
-                        <div class="tabs__nav"><button class="tabs__button active" data-tab="partner1">Партнер Альфа</button><button class="tabs__button" data-tab="partner2">Партнер Бета</button><button class="tabs__button" data-tab="partner3">Партнер Гамма</button></div>
-                        <div class="tabs__content">
-                            <div class="tabs__pane active partner-letters__pane" data-tab-content="partner1"><img src="https://placehold.co/400x550/f0f0f0/333?text=Письмо+от+Партнера+1" alt="Письмо от Партнера 1" class="partner-letters__image"><div class="partner-letters__text"><h4>Благодарность от "Партнер Альфа"</h4><p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae eros eget tellus tristique bibendum. Donec rutrum sed sem quis venenatis. Proin viverra risus a eros volutpat tempor."</p><p><strong>Иван Иванов</strong>, CEO "Партнер Альфа"</p></div></div>
-                            <div class="tabs__pane partner-letters__pane" data-tab-content="partner2"><img src="https://placehold.co/400x550/f0f0f0/333?text=Письмо+от+Партнера+2" alt="Письмо от Партнера 2" class="partner-letters__image"><div class="partner-letters__text"><h4>Отзыв от "Партнер Бета"</h4><p>"Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</p><p><strong>Мария Петрова</strong>, Маркетинг-директор "Партнер Бета"</p></div></div>
-                            <div class="tabs__pane partner-letters__pane" data-tab-content="partner3"><img src="https://placehold.co/400x550/f0f0f0/333?text=Письмо+от+Партнера+3" alt="Письмо от Партнера 3" class="partner-letters__image"><div class="partner-letters__text"><h4>Рекомендация от "Партнер Гамма"</h4><p>"Incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."</p><p><strong>Сергей Смирнов</strong>, Руководитель отдела "Партнер Гамма"</p></div></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Photo Gallery Section -->
-            <section class="photogallery section-padding" id="gallery">
-                <div class="container">
-                    <h2 class="section-title" data-aos="fade-up">Фотогалерея "Что-то АРТ"</h2>
-                    <div class="photogallery__grid" data-aos="fade-up" data-aos-delay="100">
-                        <a href="https://placehold.co/800x600/777/fff?text=Фото+1+Large" class="photogallery__item" data-aos="zoom-in-up"><img src="https://placehold.co/350x250/777/fff?text=Событие+1" alt="Фото 1"></a>
-                        <a href="https://placehold.co/800x600/777/fff?text=Фото+2+Large" class="photogallery__item" data-aos="zoom-in-up" data-aos-delay="50"><img src="https://placehold.co/350x250/777/fff?text=Команда+на+отдыхе" alt="Фото 2"></a>
-                        <a href="https://placehold.co/800x600/777/fff?text=Фото+3+Large" class="photogallery__item" data-aos="zoom-in-up" data-aos-delay="100"><img src="https://placehold.co/350x250/777/fff?text=Наш+офис" alt="Фото 3"></a>
-                        <a href="https://placehold.co/800x600/777/fff?text=Фото+4+Large" class="photogallery__item" data-aos="zoom-in-up" data-aos-delay="150"><img src="https://placehold.co/350x250/777/fff?text=Конференция" alt="Фото 4"></a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Vacancies Section -->
-            <section class="vacancies section-padding" id="vacancies">
-                <div class="container text-center">
-                    <h2 class="section-title" data-aos="fade-up">Присоединяйся к команде "Что-то АРТ"</h2>
-                    <p class="vacancies__subtitle" data-aos="fade-up" data-aos-delay="100">Мы всегда в поиске талантливых специалистов, готовых создавать удивительные проекты. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <button class="button" data-aos="fade-up" data-aos-delay="200">Смотреть вакансии</button>
-                </div>
-            </section>
-
-            <!-- Contacts Section -->
-            <section class="contacts section-padding" id="contacts">
-                <div class="container contacts__container">
-                    <div class="contacts__info" data-aos="fade-right"><h2 class="section-title">Контакты</h2><p>📍 Адрес: г. Какой-то город, ул. Примерная, д. 1, оф. 101</p><p>📞 Телефон: <a href="tel:+70000000000">+7 (000) 000-00-00</a></p><p>✉️ Email: <a href="mailto:info@example.com">info@example.com</a></p><p>🕒 Часы работы: Пн-Пт, 09:00 - 18:00</p><div class="social-icons contacts__social-icons"><a href="#" aria-label="VK">VK</a><a href="#" aria-label="Telegram">TG</a><a href="#" aria-label="YouTube">YT</a></div></div>
-                    <div class="contacts__map" data-aos="fade-left" data-aos-delay="200"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.393789106239!2d37.61556501590434!3d55.75222008055659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54afc73d4b3c9%3A0xba4677ff8363e460!2z0JzQvtGB0LrQstCw!5e0!3m2!1sru!2sru!4v1678886400000!5m2!1sru!2sru" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Карта местоположения"></iframe></div>
-                </div>
-            </section>
-        </main>
-
-        <footer class="footer">
-            <div class="container footer__container">
-                <div class="footer__main"><a href="/" class="logo footer__logo"><span class="logo__main">Что-то</span><span class="logo__accent">АРТ</span></a><p class="footer__description">Креативное агентство полного цикла. <br>Создаем проекты, которые работают и вдохновляют.</p></div>
-                <div class="footer__nav-col"><h4>Навигация</h4><ul class="footer__nav-list"><li><a href="#about">О нас</a></li><li><a href="#services">Услуги</a></li><li><a href="#projects">Проекты</a></li><li><a href="#cases">Кейсы</a></li><li><a href="#contacts">Контакты</a></li></ul></div>
-                <div class="footer__contacts-col"><h4>Контакты</h4><address class="footer__address"><p>📞 <a href="tel:+70000000000">+7 (000) 000-00-00</a></p><p>✉️ <a href="mailto:info@example.com">info@example.com</a></p><p>📍 г. Какой-то город, ул. Примерная, 1</p></address></div>
-                <div class="footer__social-col"><h4>Мы в соцсетях</h4><div class="social-icons footer__social-icons"><a href="#" aria-label="VK">VK</a><a href="#" aria-label="Telegram">TG</a><a href="#" aria-label="YouTube">YT</a></div></div>
-            </div>
-            <div class="footer__bottom"><p>© <span id="current-year"></span> Что-то АРТ. Все права защищены.</p><p><a href="#">Политика конфиденциальности</a></p></div>
-        </footer>
-    </div>
-
-    <!-- Модальные окна -->
-    <div class="modal" id="callback">
-        <div class="modal__content">
-            <button class="modal__close" data-modal-close>×</button>
-            <h3 class="modal__title">Заказать звонок</h3>
-            <p class="modal__description">Оставьте ваши данные, и мы свяжемся с вами в ближайшее время для консультации.</p>
-            <!-- index.html, модалка "Заказать звонок" -->
-            <form class="modal__form" id="callbackForm">
-                <input class="modal__input" type="text" name="name" placeholder="Ваше имя" required>
-                
-                <!-- ОБНОВЛЕННАЯ ГРУППА ДЛЯ ТЕЛЕФОНА С ВЫБОРОМ СТРАНЫ -->
-                <div class="modal__phone-group">
-                    <select id="phoneCountryCode" name="country_code_selector" class="modal__phone-group-select">
-                        <option value="RU" data-prefix="+7" data-mask="(000) 000-00-00" data-placeholder="(912) 345-67-89" selected>🇷🇺 +7</option>
-                        <option value="BY" data-prefix="+375" data-mask="(00) 000-00-00" data-placeholder="(29) 123-45-67">🇧🇾 +375</option>
-                        <option value="KZ" data-prefix="+7" data-mask="(000) 000-00-00" data-placeholder="(701) 234-56-78">🇰🇿 +7</option>
-                        <!-- Для Казахстана используется тот же код +7, но маска может быть идентичной или другой -->
-                    </select>
-                    <input class="modal__input modal__phone-group-input" id="callbackPhoneUnified" type="tel" name="phone_number_part" placeholder="(912) 345-67-89" required>
-                </div>
-                
-                <label class="modal__checkbox-label">
-                    <input class="modal__checkbox" type="checkbox" name="agreement" checked required>
-                    <span>Согласен на обработку персональных данных</span>
-                </label>
-                <button type="submit" class="button modal__submit-button">Отправить</button>
-                <div class="form-message" id="callbackFormMessage"></div>
-            </form>
         </div>
-    </div>
+    </header>
 
-    <div class="modal" id="discuss">
-        <div class="modal__content">
-            <button class="modal__close" data-modal-close>×</button>
-            <h3 class="modal__title">Обсудить проект</h3>
-            <p class="modal__description">Расскажите нам о вашей задаче, и мы предложим оптимальное решение и подготовим предложение.</p>
-            <form class="modal__form" id="discussForm" enctype="multipart/form-data">
-                <input class="modal__input" type="text" name="name" placeholder="Ваше имя" required>
-                <input class="modal__input" type="email" name="email" placeholder="Ваш Email" required>
-                <textarea class="modal__textarea" name="project_details" placeholder="Кратко о проекте"></textarea>
-                <div class="file-upload-area" id="fileUploadArea"><input type="file" name="project_files[]" id="projectFiles" class="file-upload-area__input" multiple accept=".pdf,.xlsx,.xls,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png,.zip,.rar"><label for="projectFiles" class="file-upload-area__label"><span class="file-upload-area__icon">📤</span><span class="file-upload-area__text">Перетащите файлы сюда или <strong>нажмите для выбора</strong></span><span class="file-upload-area__hint">(до 3 файлов, макс. 5MB каждый, PDF, XLSX, DOC, JPG, PNG, ZIP, RAR)</span></label></div>
-                <div class="file-upload-list" id="fileUploadList"></div><div class="file-upload-error" id="fileUploadError"></div>
-                <label class="modal__checkbox-label"><input class="modal__checkbox" type="checkbox" name="agreement" checked required><span>Согласен на обработку персональных данных</span></label>
-                <button type="submit" class="button modal__submit-button" id="discussSubmitButton">Отправить заявку</button>
-                <div class="form-message" id="discussFormMessage"></div>
-            </form>
+    <section class="hero-slider-section" id="hero-slider">
+        <div class="slider-main-content">
+            <div class="slider-text-column">
+                <div class="slide-content-wrapper">
+                    <span class="services-label" id="slide-services-label">УСЛУГИ КОМПАНИИ</span>
+                    <h2 class="slide-title" id="slide-title">Загрузка...</h2>
+                    <p class="slide-description" id="slide-description">Описание загружается...</p>
+                </div>
+                <div class="slider-navigation-arrows">
+                    <button class="slider-arrow arrow-prev" id="slider-arrow-prev" aria-label="Предыдущий слайд">←</button>
+                    <button class="slider-arrow arrow-next" id="slider-arrow-next" aria-label="Следующий слайд">→</button>
+                </div>
+            </div>
+            <div class="slider-image-column">
+                <img src="img/placeholder.jpg" alt="Изображение слайда" id="slide-image-placeholder" style="opacity:0;">
+            </div>
+        </div>
+        <div class="slider-tabs-navigation">
+            <ul id="slider-tabs-container"></ul>
+        </div>
+    </section>
+
+    <section class="about-section" id="about-company-section">
+        <div class="container about-container">
+            <div class="about-content-grid">
+                <div class="about-text-column animate-on-scroll" data-animation-delay="0.1">
+                    <h2 class="section-title">О компании</h2>
+                    <p class="about-description">Гильдия Луч – эксперт в области instore-коммуникаций. Разрабатываем и производим рекламную продукцию, оформляем точки продаж, брендируем торговые зоны.</p>
+                    <div class="associations animate-on-scroll" data-animation-delay="0.3">
+                        <p class="associations-title">Участник международных ассоциаций</p>
+                        <div class="association-logos">
+                            <div class="association-logo-item"><img src="img/popai-logo-placeholder.png" alt="POPAI RUSSIA AWARDS" class="association-logo-img"></div>
+                            <div class="association-logo-item"><img src="img/vizkom-logo-placeholder.png" alt="ВИЗКОМ" class="association-logo-img"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual-column">
+                    <div class="background-brand-text-wrapper animate-on-scroll" data-animation-delay="0.2"><div class="background-brand-text">Гильдия Луч</div></div>
+                    <div class="stats">
+                        <div class="stat-item animate-on-scroll" data-animation-delay="0.4"><div class="stat-main">с <span class="stat-value">2008</span> года</div><div class="stat-sub-description">Успешно реализуем классные проекты</div></div>
+                        <div class="stat-item animate-on-scroll" data-animation-delay="0.5"><div class="stat-main"><span class="stat-value">3000</span> м<sup>2</sup></div><div class="stat-sub-description">Площадь собственного производства</div></div>
+                        <div class="stat-item animate-on-scroll" data-animation-delay="0.6"><div class="stat-main"><svg class="stat-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.6216 10.3787C17.8348 10.3787 18.8203 9.39321 18.8203 8.17998C18.8203 6.96675 17.8348 5.98126 16.6216 5.98126C15.4083 5.98126 14.4228 6.96675 14.4228 8.17998C14.4228 9.39321 15.4083 10.3787 16.6216 10.3787Z" stroke="#1e1e1e" stroke-width="1.5"></path><path d="M8.17963 10.3787L14.4228 10.3787M8.17963 10.3787C7.02343 10.3787 6.08398 11.3181 6.08398 12.4743V18.0187C6.08398 18.3949 6.39041 18.7013 6.76659 18.7013H8.17963M8.17963 10.3787V12.4743M8.17963 12.4743H5.20703M8.17963 12.4743H10.6846M8.17963 14.9293H5.20703" stroke="#1e1e1e" stroke-width="1.5" stroke-linecap="round"></path></svg></div><div class="stat-sub-description">Реализация проектов «под ключ»</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="marquee-section">
+        <div class="marquee-container">
+            <ul class="marquee-content">
+                <li>ТЕХНОЛОГИЯ.КОНСТРУИРОВАНИЕ</li><li>ПРОИЗВОДСТВО</li><li>ДОСТАВКА</li><li>МОНТАЖ</li><li>ДЕМОНТАЖ<span class="red-dot">●</span></li><li>ДИЗАЙН-ПРОЕКТ</li>
+                <li>ТЕХНОЛОГИЯ.КОНСТРУИРОВАНИЕ</li><li>ПРОИЗВОДСТВО</li><li>ДОСТАВКА</li><li>МОНТАЖ</li><li>ДЕМОНТАЖ<span class="red-dot">●</span></li><li>ДИЗАЙН-ПРОЕКТ</li>
+                <li>ТЕХНОЛОГИЯ.КОНСТРУИРОВАНИЕ</li><li>ПРОИЗВОДСТВО</li><li>ДОСТАВКА</li><li>МОНТАЖ</li><li>ДЕМОНТАЖ<span class="red-dot">●</span></li><li>ДИЗАЙН-ПРОЕКТ</li>
+                <li>ТЕХНОЛОГИЯ.КОНСТРУИРОВАНИЕ</li><li>ПРОИЗВОДСТВО</li><li>ДОСТАВКА</li><li>МОНТАЖ</li><li>ДЕМОНТАЖ<span class="red-dot">●</span></li><li>ДИЗАЙН-ПРОЕКТ</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="services-section" id="services-section">
+        <div class="container">
+            <h2 class="section-title services-title animate-on-scroll">Услуги Гильдия Луч</h2>
+            <div class="services-grid">
+                <div class="service-card animate-on-scroll" data-animation-delay="0.1"><div class="service-card-icon-wrapper"><span class="service-icon-placeholder">🖼️</span></div><h3 class="service-card-title">Брендирование пространств</h3></div>
+                <div class="service-card animate-on-scroll" data-animation-delay="0.15"><div class="service-card-icon-wrapper"><span class="service-icon-placeholder">📄</span></div><h3 class="service-card-title">Производство POSM</h3></div>
+                <div class="service-card animate-on-scroll" data-animation-delay="0.2"><div class="service-card-icon-wrapper"><span class="service-icon-placeholder">🏟️</span></div><h3 class="service-card-title">Оформление спортивных объектов</h3></div>
+                <div class="service-card animate-on-scroll" data-animation-delay="0.25"><div class="service-card-icon-wrapper"><span class="service-icon-placeholder">🛍️</span></div><h3 class="service-card-title">Оформление точек продаж</h3></div>
+                <div class="service-card animate-on-scroll" data-animation-delay="0.3"><div class="service-card-icon-wrapper"><span class="service-icon-placeholder">🖼️✨</span></div><h3 class="service-card-title">Оформление витрин, застройка pop-up стендов, Shop-in-shop</h3></div>
+                <div class="service-card animate-on-scroll" data-animation-delay="0.35"><div class="service-card-icon-wrapper"><span class="service-icon-placeholder">🛋️</span></div><h3 class="service-card-title">Производство эксклюзивных инсталляций и мебели</h3></div>
+                <div class="service-card animate-on-scroll" data-animation-delay="0.4"><div class="service-card-icon-wrapper"><span class="service-icon-placeholder">🧭</span></div><h3 class="service-card-title">Навигация</h3></div>
+                <div class="service-card animate-on-scroll" data-animation-delay="0.45"><div class="service-card-icon-wrapper"><span class="service-icon-placeholder">🚧</span></div><h3 class="service-card-title">Рекламные конструкции</h3></div>
+                <div class="service-card animate-on-scroll" data-animation-delay="0.5"><div class="service-card-icon-wrapper"><span class="service-icon-placeholder">🚚⭐</span></div><h3 class="service-card-title">Брендирование транспорта</h3></div>
+                <div class="service-card animate-on-scroll" data-animation-delay="0.55"><div class="service-card-icon-wrapper"><span class="service-icon-placeholder">🛠️</span></div><h3 class="service-card-title">Производство торгового оборудования</h3></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="projects-section" id="projects-section">
+        <div class="container">
+            <div class="projects-header animate-on-scroll">
+                <h2 class="projects-main-title">С 2008 года <br>реализовали более <br><span class="projects-count">10 000</span> проектов. <br>Гордимся Каждым!</h2>
+            </div>
+            <div class="project-filters animate-on-scroll" data-animation-delay="0.2">
+                <button class="filter-btn active" data-filter="all">Все проекты</button>
+                <button class="filter-btn" data-filter="visual">Визуальные коммуникации</button>
+                <button class="filter-btn" data-filter="sport">Спортивные решения</button>
+                <button class="filter-btn" data-filter="exclusive">Эксклюзивные решения</button>
+                <button class="filter-btn" data-filter="design">Дизайн-проекты</button>
+            </div>
+            <div class="projects-grid" id="projects-grid-container">
+            </div>
+        </div>
+    </section>
+
+    <section class="production-stats-section" id="production-stats">
+        <div class="container">
+            <div class="production-stats-grid">
+                <div class="production-text-content animate-on-scroll" data-animation-delay="0.1">
+                    <h2 class="section-title">РЕШАЕМ ЗАДАЧИ <br>БОЛЕЕ 10 ЛЕТ</h2>
+                    <p>За многолетний опыт реализации сложных и эксклюзивных проектов мы проделали большой путь, осваивая новые технологии, непрерывно участвуя и уделяя большое внимание инновациям, чтобы быть в курсе последних тенденций рекламной индустрии.</p>
+                    <p>Вся команда обладает способностью адаптироваться к новым требованиям рынка и предлагает уникальные креативные решения. Производственная команда состоит из опытных дизайнеров, технологов, конструкторов, отдела разработок, которые работают вместе для достижения высоких результатов. Каждый из них вносит свой вклад в реализацию амбициозных проектов.</p>
+                    
+                    <h3 class="workshops-title">Технические участки производства:</h3>
+                    <ul class="workshops-list">
+                        <li class="animate-on-scroll" data-animation-delay="0.2">
+                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M3 10h18M3 14h18M9 6V3h6v3M9 18v3h6v-3"/></svg>
+                            Фрезеровочный цех
+                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.25">
+                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.77 5.82 22 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            Лазерный цех
+                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.3">
+                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M20 9v10a2 2 0 01-2 2H6a2 2 0 01-2-2V9M8 3h8l4 6H4l4-6z"/></svg>
+                            Столярный цех
+                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.35">
+                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2M12 14l4-4M8 10l4 4m0-9v12"/></svg>
+                            Цех широкоформатной печати
+                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.4">
+                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M15 3l-3 3L9 3l-3 3L0 3M24 3l-3 3-3-3-3 3-3-3M12 7v14M9 21h6"/></svg>
+                            Цех каттерной резки
+                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.45">
+                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+                            Цех по производству вывесок
+                        </li>
+                         <li class="animate-on-scroll" data-animation-delay="0.5">
+                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M12 11.543A2.5 2.5 0 109.5 14a2.5 2.5 0 002.5-2.457zM20 14h.5a2.5 2.5 0 000-5H20m-16 5h-.5a2.5 2.5 0 010-5H4M7.5 9A2.5 2.5 0 105 11.543 2.5 2.5 0 007.5 9zm9 0a2.5 2.5 0 10-2.5 2.543A2.5 2.5 0 0016.5 9z"/></svg>
+                            Цех постпечатной обработки
+                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.55">
+                             <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M10 15H5.83A2.94 2.94 0 013 12.06V7a2 2 0 012-2h14a2 2 0 012 2v5.06A2.94 2.94 0 0118.17 15H14m-4 4V10m0 9a2 2 0 100-4 2 2 0 000 4z"/></svg>
+                            Цех 3D-резки из пенопласта
+                        </li>
+                         <li class="animate-on-scroll" data-animation-delay="0.6">
+                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                            Цех сборки
+                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.65">
+                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.72-1.71"/></svg>
+                            Сварочный цех
+                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.7">
+                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M21.242 10.758l-8.484-8.485a2 2 0 00-2.828 0L2.758 9.445A2 2 0 002 10.86V19a2 2 0 002 2h16a2 2 0 002-2v-6.14a2 2 0 00-.758-1.602zM12 12h.01"/></svg>
+                            Покрасочная камера
+                        </li>
+                         <li class="animate-on-scroll" data-animation-delay="0.75">
+                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M17 3H7a4 4 0 00-4 4v10a4 4 0 004 4h10a4 4 0 004-4V7a4 4 0 00-4-4z"/><path d="M7 7h10M7 12h10M7 17h5"/></svg>
+                            Ламинаторный цех
+                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.8">
+                           <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M18.36 6.64a9 9 0 11-12.73 0M12 2v10"/></svg>
+                            Цех металлообработки
+                        </li>
+                    </ul>
+                </div>
+                <div class="production-visual-content">
+                    <div class="stat-circle-large animate-on-scroll" data-animation-delay="0.3" id="main-circle-stat">
+                        <svg viewBox="0 0 100 100" class="circle-svg">
+                            <circle class="circle-bg" cx="50" cy="50" r="48"/>
+                            <circle class="circle-progress" cx="50" cy="50" r="48" id="progress-dot-circle"/>
+                            <circle class="progress-dot" cx="50" cy="2" r="1.5" id="progress-dot"/>
+                        </svg>
+                        <div class="circle-text">
+                            <span class="stat-number" data-target="39000">0</span>
+                            <span class="stat-label">Объем печатной продукции в месяц</span>
+                        </div>
+                    </div>
+                    <div class="stat-circle-small sc-1 animate-on-scroll" data-animation-delay="0.5">
+                        <div class="circle-text">
+                            <span class="stat-number" data-target="3000">0</span> м<sup>2</sup>
+                            <span class="stat-label">Площадь производства</span>
+                        </div>
+                         <div class="circle-brand-tag">POPAI</div>
+                    </div>
+                     <div class="stat-circle-small sc-2 animate-on-scroll" data-animation-delay="0.6">
+                        <div class="circle-text">
+                            <span class="stat-number" data-target="3960">0</span>
+                            <span class="stat-label">Количество выполненных заказов в 2024 году</span>
+                        </div>
+                        <div class="circle-brand-tag">ZNAK</div>
+                    </div>
+                    <div class="stat-circle-medium sc-3 animate-on-scroll" data-animation-delay="0.7">
+                        <div class="circle-text">
+                            <span class="stat-number" data-target="1705">0</span>
+                            <span class="stat-label">Произведено и смонтировано вывесок в 2024 году</span>
+                        </div>
+                    </div>
+                     <div class="stat-circle-small sc-4 animate-on-scroll" data-animation-delay="0.8">
+                        <div class="circle-brand-tag">POPAI <br>AWARDS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="video-gallery-section" id="video-gallery">
+        <div class="container">
+            <div class="main-video-player animate-on-scroll">
+                <iframe 
+                    id="main-vimeo-player"
+                    src="https://player.vimeo.com/video/137804996?h=97ecc89795&autoplay=0&loop=0&muted=0&title=0&byline=0&portrait=0" 
+                    width="100%" 
+                    frameborder="0" 
+                    allow="autoplay; fullscreen; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="video-thumbnails">
+                <div class="video-thumbnail-item animate-on-scroll" data-animation-delay="0.2" data-vimeo-id="137804996">
+                    <img src="https://i.vimeocdn.com/video/533048489-75465775f0479907179218344c4037904177701556856e4119869995b2f78415-d_640x360.jpg" alt="Превью видео 1">
+                    <div class="play-button-overlay">▶</div>
+                </div>
+                <div class="video-thumbnail-item animate-on-scroll" data-animation-delay="0.3" data-vimeo-id="259411563">
+                    <img src="https://i.vimeocdn.com/video/689958909-e7099bf174201a42a000e0c646a319102a9eaa0d8940c16107a08f5f1a3801aa-d_640x360.jpg" alt="Превью видео 2">
+                    <div class="play-button-overlay">▶</div>
+                </div>
+                <div class="video-thumbnail-item animate-on-scroll" data-animation-delay="0.4" data-vimeo-id="76979871">
+                     <img src="https://i.vimeocdn.com/filter/overlay?src0=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F453995099-cc9777c37638d753089ba4b46837993493a35162166707b7c744fdee2710a506-d_640x360&src1=https%3A%2F%2Ff.vimeocdn.com%2Fimages_v6%2Fshare%2Fplay_icon_overlay.png" alt="Превью видео 3">
+                    <div class="play-button-overlay">▶</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section" id="team-section">
+        <div class="container">
+            <div class="team-content-grid">
+                <div class="team-text-content animate-on-scroll" data-animation-delay="0.1">
+                    <h2 class="section-title">Работаем с людьми <br>и для людей</h2>
+                    <p class="team-subtitle">Экспертиза на каждом этапе, за которой стоит профессиональная команда:</p>
+                    <ul class="team-expertise-list">
+                        <li class="animate-on-scroll" data-animation-delay="0.2">
+                            <svg class="expertise-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                            Персональные менеджеры
+                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.25">
+                            <svg class="expertise-icon" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg>
+                            Дизайнеры
+                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.3">
+                            <svg class="expertise-icon" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                            Технологи
+                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.35">
+                            <svg class="expertise-icon" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                            Сметчики
+                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.4">
+                             <svg class="expertise-icon" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0L12 2.69z"/><circle cx="12" cy="12" r="3"/></svg>
+                            Конструкторы
+                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.45">
+                            <svg class="expertise-icon" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1L6 4M10 1L10 4M14 1L14 4"/></svg>
+                            Монтажная бригада
+                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.5">
+                           <svg class="expertise-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                            Декораторы
+                        </li>
+                    </ul>
+                </div>
+                <div class="team-visual-content animate-on-scroll" data-animation-delay="0.3">
+                    <div class="team-photos-whirl" id="team-photos-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="awards-section" id="awards-section">
+        <div class="container">
+            <h2 class="section-title awards-main-title animate-on-scroll">Награды</h2>
+
+            <div class="main-award-slider-wrapper animate-on-scroll" data-animation-delay="0.2">
+                <button class="slider-arrow award-arrow-prev" id="main-award-prev" aria-label="Предыдущая награда">←</button>
+                <div class="swiper-container main-award-swiper" id="main-award-swiper-container">
+                    <div class="swiper-wrapper" id="main-award-slides-container">
+                        <!-- Сюда будут добавлены слайды наград из JS -->
+                    </div>
+                </div>
+                <button class="slider-arrow award-arrow-next" id="main-award-next" aria-label="Следующая награда">→</button>
+            </div>
+
+            <h3 class="clients-choose-us-title animate-on-scroll" data-animation-delay="0.4">НАС ВЫБИРАЮТ</h3>
+            
+            <div class="clients-slider-wrapper animate-on-scroll" data-animation-delay="0.5">
+                <button class="slider-arrow clients-arrow-prev" id="clients-swiper-prev" aria-label="Предыдущие клиенты">←</button>
+                <div class="swiper-container clients-swiper" id="clients-swiper-container">
+                    <div class="swiper-wrapper">
+                        <!-- Пример логотипов, добавьте сколько нужно -->
+                        <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Burger_King_logo_%281999%29.svg/1200px-Burger_King_logo_%281999%29.svg.png" alt="Burger King"></div>
+                        <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Rado_logo.svg/1280px-Rado_logo.svg.png" alt="Rado"></div>
+                        <div class="swiper-slide client-logo-item"><img src="https://cdn.worldvectorlogo.com/logos/auchan-logo.svg" alt="Auchan"></div>
+                        <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/X5_Retail_Group_logo.svg/1280px-X5_Retail_Group_logo.svg.png" alt="X5 Retail Group"></div>
+                        <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Jil_Sander_Logo.svg/1200px-Jil_Sander_Logo.svg.png" alt="Jil Sander"></div>
+                        <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/ru/thumb/f/f9/%D0%A6%D0%A3%D0%9C_%D0%BB%D0%BE%D0%B3%D0%BE.svg/1200px-%D0%A6%D0%A3%D0%9C_%D0%BB%D0%BE%D0%B3%D0%BE.svg.png" alt="ЦУМ"></div>
+                        <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Ralph_Lauren_logo.svg/1200px-Ralph_Lauren_logo.svg.png" alt="Ralph Lauren"></div>
+                        <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Dior_logo.svg/1200px-Dior_logo.svg.png" alt="Dior"></div>
+                        <div class="swiper-slide client-logo-item"><img src="https://via.placeholder.com/100x50/000/fff?text=Citibank" alt="Citibank"></div>
+                        <div class="swiper-slide client-logo-item"><img src="https://via.placeholder.com/100x50/000/fff?text=OMEGA" alt="OMEGA"></div>
+                    </div>
+                </div>
+                <button class="slider-arrow clients-arrow-next" id="clients-swiper-next" aria-label="Следующие клиенты">→</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="partner-letters-section" id="partner-letters">
+        <div class="container">
+            <h2 class="section-title partner-letters-main-title animate-on-scroll">Письма партнеров</h2>
+            <div class="partner-letters-content animate-on-scroll" data-animation-delay="0.2">
+                <div class="letter-image-column" id="letter-image-column">
+                    <img src="https://via.placeholder.com/600x850/ffffff/cccccc?text=Письмо+X5" alt="Письмо от X5" id="current-letter-image" class="active">
+                    <!-- Сюда будут динамически добавляться другие изображения писем -->
+                </div>
+                <div class="partner-names-column" id="partner-names-column">
+                    <!-- Названия партнеров будут добавлены из JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main style="padding: 50px 20px; background-color: #e9e9e9; min-height:50vh; text-align: center; color: #333;">
+        <h2>Футер и другой контент ниже</h2>
+    </main>
+
+    <div class="project-modal" id="project-modal">
+        <div class="project-modal-content">
+            <button class="project-modal-close" id="project-modal-close">×</button>
+            <div class="project-modal-body">
+                <div class="project-modal-header">
+                    <button class="project-modal-back" id="project-modal-back">← Гильдия Луч</button>
+                    <h3 id="modal-project-title">Название проекта</h3>
+                </div>
+                <p id="modal-project-description">Описание проекта здесь...</p>
+                <img src="https://via.placeholder.com/800x500.png?text=Основное+Изображение" alt="Основное изображение проекта" id="modal-main-image">
+                <h4>Дополнительные изображения:</h4>
+                <div class="project-modal-gallery" id="modal-gallery-container">
+                    <img src="https://via.placeholder.com/300x200.png?text=Фото+1" alt="Фото проекта 1">
+                    <img src="https://via.placeholder.com/300x200.png?text=Фото+2" alt="Фото проекта 2">
+                    <img src="https://via.placeholder.com/300x200.png?text=Фото+3" alt="Фото проекта 3">
+                </div>
+            </div>
         </div>
     </div>
     
-    <!-- IMaskJS -->
-    <script src="https://unpkg.com/imask"></script> 
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="js/script.js"></script>
 </body>
