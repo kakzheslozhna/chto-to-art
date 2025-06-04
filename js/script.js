@@ -33,12 +33,19 @@ document.addEventListener('DOMContentLoaded', function() {
     setDynamicPadding();
     handleHeaderScroll();
 
+
     if (burgerMenu && mainNavMenu) {
         burgerMenu.addEventListener('click', function() {
             const isOpened = mainNavMenu.classList.toggle('active');
             burgerMenu.classList.toggle('active');
             burgerMenu.setAttribute('aria-expanded', String(isOpened));
+            if (isOpened) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
         });
+
         const navLinks = mainNavMenu.querySelectorAll('a');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -46,9 +53,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     mainNavMenu.classList.remove('active');
                     burgerMenu.classList.remove('active');
                     burgerMenu.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
                 }
             });
         });
+
         document.addEventListener('click', function(event) {
             if (mainNavMenu.classList.contains('active')) {
                 const isClickInsideNav = mainNavMenu.contains(event.target);
@@ -57,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     mainNavMenu.classList.remove('active');
                     burgerMenu.classList.remove('active');
                     burgerMenu.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
                 }
             }
         });
@@ -65,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 mainNavMenu.classList.remove('active');
                 burgerMenu.classList.remove('active');
                 burgerMenu.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
             }
         });
     }
@@ -87,8 +98,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const prevArrow = document.getElementById('slider-arrow-prev');
     const nextArrow = document.getElementById('slider-arrow-next');
     const tabsContainer = document.getElementById('slider-tabs-container');
-    let currentSlideIndex = slidesData.findIndex(s => s.id === "eksklyuzivnye-pop-up");
-    if (currentSlideIndex === -1) currentSlideIndex = 0;
+    
+    let defaultSlideId = "naruzhnaya-reklama"; 
+    let currentSlideIndex = slidesData.findIndex(s => s.id === defaultSlideId);
+    if (currentSlideIndex === -1) { 
+        currentSlideIndex = 0; 
+        console.warn(`Default slide with id "${defaultSlideId}" not found. Starting with the first slide.`);
+    }
+
     let autoPlayInterval;
     const AUTOPLAY_DELAY = 7000;
 
@@ -110,7 +127,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateSlide(index) {
         if (!slidesData[index] || !slideLabelEl || !slideTitleEl || !slideDescriptionEl || !textContentWrapper || !sliderImageColumn) {
-            console.error("Slider elements not found or slide data missing for index:", index);
             return;
         }
         const slide = slidesData[index];
@@ -188,16 +204,8 @@ document.addEventListener('DOMContentLoaded', function() {
         updateSlide(currentSlideIndex);
         startAutoPlay();
         if (prevArrow && nextArrow) {
-            prevArrow.addEventListener('click', () => {
-                prevSlide();
-                stopAutoPlay();
-                startAutoPlay();
-            });
-            nextArrow.addEventListener('click', () => {
-                nextSlide();
-                stopAutoPlay();
-                startAutoPlay();
-            });
+            prevArrow.addEventListener('click', () => { prevSlide(); stopAutoPlay(); startAutoPlay(); });
+            nextArrow.addEventListener('click', () => { nextSlide(); stopAutoPlay(); startAutoPlay(); });
         }
         heroSliderSection.addEventListener('mouseenter', stopAutoPlay);
         heroSliderSection.addEventListener('mouseleave', startAutoPlay);
@@ -234,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title.textContent = project.title;
             const categoryText = document.createElement('span');
             categoryText.className = 'project-card-category';
-            categoryText.textContent = project.category;
+            categoryText.textContent = project.category; 
             overlay.appendChild(title);
             overlay.appendChild(categoryText);
             card.appendChild(img);
@@ -295,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    if (filterBtns.length > 0) {
+    if (filterBtns.length > 0 && projectsGridContainer) {
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => b.classList.remove('active'));
@@ -366,19 +374,45 @@ document.addEventListener('DOMContentLoaded', function() {
         renderProjects();
     }
 
-    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
     const observerCallback = (entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const delay = entry.target.dataset.animationDelay || '0s';
-                entry.target.style.transitionDelay = delay;
+                entry.target.style.transitionDelay = delay; // Это устанавливает задержку только для первого появления
                 entry.target.classList.add('is-visible');
+                // observer.unobserve(entry.target); // УБЕРИ ЭТУ СТРОКУ, если она есть, чтобы анимация работала повторно
+            } else {
+                // Элемент ушел из зоны видимости
+                // Если хочешь, чтобы он скрывался КАЖДЫЙ РАЗ при уходе вверх, используй это:
+                // entry.target.classList.remove('is-visible');
+                // entry.target.style.transitionDelay = '0s, 0s, 0.7s'; // Восстанавливаем задержку для visibility при скрытии, если нужно
+                                                                  // Первый 0s для opacity, второй для transform
+
+                // Если хочешь, чтобы он оставался видимым после первого появления,
+                // но скрывался, если скроллишь очень быстро вверх и он снова попадает в "невидимую" зону
+                // (более сложный сценарий, требующий отслеживания направления скролла),
+                // то этот блок else можно оставить пустым или сделать его более умным.
+                // Пока сделаем так, что он будет скрываться при уходе из видимости.
+                 entry.target.classList.remove('is-visible');
             }
         });
     };
-    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+    // Уменьшим threshold, чтобы анимация срабатывала чуть раньше/позже, можно настроить
+    // rootMargin: '-50px 0px -50px 0px' означает, что зона видимости будет "уменьшена" на 50px сверху и снизу,
+    // т.е. элемент должен будет зайти на 50px в экран, чтобы сработать, и уйти на 50px, чтобы скрыться.
+    const observerOptions = { 
+        root: null, 
+        rootMargin: '0px 0px -10% 0px', // Сработает, когда 10% элемента снизу показалось или ушло
+        threshold: 0.01 // Минимальный порог пересечения
+    };
     const observer = new IntersectionObserver(observerCallback, observerOptions);
-    animatedElements.forEach(el => observer.observe(el));
+    animatedElements.forEach(el => {
+        // Устанавливаем начальную задержку из data-атрибута один раз
+        const initialDelay = el.dataset.animationDelay || '0s';
+        el.style.transitionDelay = `${initialDelay}, ${initialDelay}, 0.7s`; // opacity, transform, visibility
+        observer.observe(el);
+    });
 
     const mainCircleStat = document.getElementById('main-circle-stat');
     if (mainCircleStat) {
@@ -401,7 +435,7 @@ document.addEventListener('DOMContentLoaded', function() {
             cancelAnimationFrame(dotAnimationId);
             function animateDot() {
                 if (currentStep < totalSteps) {
-                    angle = (angle + angleIncrement);
+                    angle = (angle + angleIncrement) % 360;
                     const x = 50 + radius * Math.cos((angle - 90) * Math.PI / 180);
                     const y = 50 + radius * Math.sin((angle - 90) * Math.PI / 180);
                     progressDot.setAttribute('cx', x);
@@ -436,27 +470,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (entry.isIntersecting) {
                     if (!entry.target.dataset.animated) {
                         animateCircleAndDot();
-                        numberCounters.forEach(animateCounter);
-                        entry.target.dataset.animated = "true";
+                        numberCounters.forEach(counter => {
+                           if(counter.closest('#main-circle-stat') || counter.closest('.stat-circle-small') || counter.closest('.stat-circle-medium')) {
+                               if(!counter.dataset.animated) {
+                                   animateCounter(counter);
+                                   counter.dataset.animated = "true";
+                               }
+                           }
+                        });
+                        entry.target.dataset.animated = "true"; 
                     }
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.5 }); 
         circleObserver.observe(mainCircleStat);
-        document.querySelectorAll('.stat-circle-small, .stat-circle-medium').forEach(circle => {
-            const smallCircleObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const numberEl = entry.target.querySelector('.stat-number');
-                        if (numberEl && !numberEl.dataset.animated) {
-                            animateCounter(numberEl);
-                            numberEl.dataset.animated = "true";
-                        }
-                    }
-                });
-            }, { threshold: 0.5 });
-            smallCircleObserver.observe(circle);
-        });
     }
 
     const mainVimeoPlayer = document.getElementById('main-vimeo-player');
@@ -475,55 +502,67 @@ document.addEventListener('DOMContentLoaded', function() {
     const teamPhotosContainer = document.getElementById('team-photos-container');
     if (teamPhotosContainer) {
         const numberOfPhotos = 10;
-        const photoSizeMin = 130; 
-        const photoSizeMax = 230; 
-        teamPhotosContainer.innerHTML = '';
+        const photoSizeMin = 120;
+        const photoSizeMax = 220;
+        teamPhotosContainer.innerHTML = ''; 
+        let existingPhotoPositions = [];
         for (let i = 0; i < numberOfPhotos; i++) {
             const photoEl = document.createElement('div');
             photoEl.className = 'team-photo-item animate-on-scroll';
-            photoEl.dataset.animationDelay = `${i * 0.08}s`;
             const img = document.createElement('img');
             const randomWidth = Math.floor(Math.random() * (photoSizeMax - photoSizeMin + 1) + photoSizeMin);
-            const randomHeight = Math.floor(randomWidth * (Math.random() * 0.2 + 1.1));
+            const randomHeight = Math.floor(randomWidth * (Math.random() * 0.4 + 1.05));
             img.src = `https://via.placeholder.com/${randomWidth}x${randomHeight}.png/e0e0e0/a0a0a0?text=Сотрудник+${i + 1}`;
             photoEl.appendChild(img);
             
             let containerWidth = teamPhotosContainer.offsetWidth;
             let containerHeight = teamPhotosContainer.offsetHeight;
-            if(containerWidth === 0 && containerHeight === 0) {
-                containerWidth = 500; containerHeight = 500; 
-            }
 
+            if(containerWidth === 0 && containerHeight === 0) {
+                const parentVisualContent = document.querySelector('.team-visual-content');
+                if(parentVisualContent) {
+                    containerWidth = parentVisualContent.offsetWidth || 600;
+                    containerHeight = parentVisualContent.offsetHeight || 550;
+                } else {
+                    containerWidth = 600; containerHeight = 550; 
+                }
+            }
+            
             let x, y, overlap;
             let attempts = 0;
-            const maxAttempts = 50;
-            const existingPhotos = teamPhotosContainer.querySelectorAll('.team-photo-item');
+            const maxAttempts = 30; 
+            const paddingBetweenPhotos = 10;
 
             do {
                 overlap = false;
-                x = Math.random() * (containerWidth - randomWidth * 1.1) + randomWidth * 0.05;
-                y = Math.random() * (containerHeight - randomHeight * 1.1) + randomHeight * 0.05;
+                x = Math.random() * (containerWidth - randomWidth - 20) + 10;
+                y = Math.random() * (containerHeight - randomHeight - 20) + 10;
                 
-                for (const existingPhoto of existingPhotos) {
-                    const ex = parseFloat(existingPhoto.style.left);
-                    const ey = parseFloat(existingPhoto.style.top);
-                    const ew = parseFloat(existingPhoto.style.width);
-                    const eh = parseFloat(existingPhoto.style.height);
-                    if (x < ex + ew && x + randomWidth > ex && y < ey + eh && y + randomHeight > ey) {
+                x = Math.max(10, Math.min(x, containerWidth - randomWidth - 10));
+                y = Math.max(10, Math.min(y, containerHeight - randomHeight - 10));
+
+                for (const pos of existingPhotoPositions) {
+                    if (x < pos.x + pos.w + paddingBetweenPhotos && 
+                        x + randomWidth + paddingBetweenPhotos > pos.x && 
+                        y < pos.y + pos.h + paddingBetweenPhotos && 
+                        y + randomHeight + paddingBetweenPhotos > pos.y) {
                         overlap = true;
                         break;
                     }
                 }
                 attempts++;
             } while (overlap && attempts < maxAttempts);
+            
+            existingPhotoPositions.push({ x: x, y: y, w: randomWidth, h: randomHeight });
 
             photoEl.style.width = `${randomWidth}px`;
             photoEl.style.height = `${randomHeight}px`;
             photoEl.style.left = `${x}px`;
             photoEl.style.top = `${y}px`;
-            photoEl.style.animationDelay = `${0.5 + Math.random() * 2.5}s`;
-            photoEl.style.animationDuration = `${22 + Math.random() * 12}s`;
-            photoEl.style.zIndex = Math.floor(Math.random() * 3) + 1;
+            photoEl.style.animationDelay = `${0.5 + Math.random() * 2.5}s`; 
+            photoEl.style.animationDuration = `${20 + Math.random() * 15}s`;
+            photoEl.style.zIndex = Math.floor(Math.random() * numberOfPhotos) + 1;
+            
             teamPhotosContainer.appendChild(photoEl);
         }
         const newAnimatedTeamPhotos = teamPhotosContainer.querySelectorAll('.team-photo-item.animate-on-scroll');
@@ -575,33 +614,37 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        const clientsSwiperContainer = document.getElementById('clients-swiper-container');
+    const clientsSwiperContainer = document.getElementById('clients-swiper-container');
         if (clientsSwiperContainer) {
              new Swiper(clientsSwiperContainer, {
                 loop: true,
                 slidesPerView: 'auto', 
                 spaceBetween: 25,      
-                centeredSlides: false,  
+                centeredSlides: false, 
+                // loopedSlides: clientsSwiperContainer.querySelectorAll('.swiper-slide').length > 5 ? clientsSwiperContainer.querySelectorAll('.swiper-slide').length : 5, // Эту строку можно убрать или настроить точнее
                 autoplay: {
-                    delay: 2800,       
+                    delay: 0, // Поставь 0 или очень маленькое значение для непрерывного движения
                     disableOnInteraction: false, 
                     pauseOnMouseEnter: true,     
                 },
-                navigation: {
-                    nextEl: '#clients-swiper-next',
-                    prevEl: '#clients-swiper-prev',
-                },
+                speed: 8000, // Увеличь скорость для более медленного и плавного движения (8-10 секунд на "круг")
+                allowTouchMove: false, 
                 observer: true, 
                 observeParents: true,
-            });
+                freeMode: true, // Включаем свободный режим
+                freeModeMomentum: false, // Отключаем инерцию для плавности
+                // Убедись, что слайдов достаточно для зацикливания.
+                // Если их мало, loop: true может не работать как ожидается с slidesPerView: 'auto'
+                // В этом случае, в HTML можно просто продублировать существующие слайды.
+                // Например, если у тебя 15 лого, сделай 30 (скопируй блок swiper-slide 15 раз)
+             });
         }
     } else {
         console.warn('Swiper library is not loaded. Sliders will not function.');
     }
 
-    // Partner Letters Section
     const partnerLettersData = [
-        { id: 'x5', name: 'X5 RETAIL GROUP', image: 'https://i.imgur.com/s0nFHtP.png' }, // Пример, замени на реальные пути
+        { id: 'x5', name: 'X5 RETAIL GROUP', image: 'https://i.imgur.com/s0nFHtP.png' }, 
         { id: 'tsum', name: 'ЦУМ', image: 'https://via.placeholder.com/600x850/ffffff/cccccc?text=Письмо+ЦУМ' },
         { id: 'avangard', name: 'АВАНГАРД', image: 'https://via.placeholder.com/600x850/ffffff/cccccc?text=Письмо+АВАНГАРД' },
         { id: 'fhr', name: 'ФХР', image: 'https://via.placeholder.com/600x850/ffffff/cccccc?text=Письмо+ФХР' },
@@ -610,69 +653,665 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const letterImageColumn = document.getElementById('letter-image-column');
     const partnerNamesColumn = document.getElementById('partner-names-column');
-    let currentLetterImage = document.getElementById('current-letter-image');
     let currentPartnerIndex = 0;
 
     function displayPartnerLetter(index) {
         if (!letterImageColumn || !partnerNamesColumn || !partnerLettersData[index]) return;
-
         const partner = partnerLettersData[index];
-
-        // Update active name
         const nameItems = partnerNamesColumn.querySelectorAll('.partner-name-item');
         nameItems.forEach((item, i) => {
             item.classList.toggle('active', i === index);
         });
-
-        // Create new image element for the new letter
-        const newLetterImage = document.createElement('img');
-        newLetterImage.src = partner.image;
-        newLetterImage.alt = `Письмо от ${partner.name}`;
-        
-        // Animation: current image slides out, new image slides in
-        if (currentLetterImage) {
-            currentLetterImage.classList.remove('active');
-            currentLetterImage.classList.add('previous'); // To slide it out
-            // Remove the old 'previous' image after animation
-            const oldPrevious = letterImageColumn.querySelector('img.previous:not(.active)');
-            if(oldPrevious && oldPrevious !== currentLetterImage) {
-                 setTimeout(() => { if(oldPrevious.parentNode) oldPrevious.remove(); }, 500);
-            }
+        const newImage = document.createElement('img');
+        newImage.src = partner.image;
+        newImage.alt = `Письмо от ${partner.name}`;
+        const activeImage = letterImageColumn.querySelector('img.active');
+        if (activeImage) {
+            activeImage.classList.remove('active');
+            activeImage.classList.add('previous');
+             setTimeout(() => {
+                if (activeImage.parentNode && activeImage.classList.contains('previous')) {
+                     activeImage.remove();
+                }
+            }, 500); 
         }
-        
-        letterImageColumn.appendChild(newLetterImage);
-        
-        // Make the new image active after a short delay to allow CSS transition
+        letterImageColumn.appendChild(newImage);
         setTimeout(() => {
-            newLetterImage.classList.add('active');
-            // Remove the truly previous image (that just slid out)
-            if(currentLetterImage && currentLetterImage !== newLetterImage && currentLetterImage.parentNode) {
-                 setTimeout(() => { currentLetterImage.remove(); }, 500);
-            }
-            currentLetterImage = newLetterImage; // Update current image reference
-        }, 20); // Small delay for transition trigger
-
+            newImage.classList.add('active');
+        }, 20); 
         currentPartnerIndex = index;
     }
 
     if (partnerNamesColumn && letterImageColumn) {
+        partnerNamesColumn.innerHTML = ''; 
         partnerLettersData.forEach((partner, index) => {
             const nameItem = document.createElement('div');
             nameItem.className = 'partner-name-item';
             nameItem.textContent = partner.name;
-            nameItem.dataset.index = index;
+            nameItem.dataset.index = String(index);
             nameItem.addEventListener('click', () => {
                 displayPartnerLetter(index);
             });
             partnerNamesColumn.appendChild(nameItem);
         });
-        // Display the first letter initially
         if (partnerLettersData.length > 0) {
+            const initialImageInHtml = document.getElementById('current-letter-image');
+            if(initialImageInHtml && initialImageInHtml.parentNode === letterImageColumn) {
+                 letterImageColumn.innerHTML = '';
+            }
             displayPartnerLetter(0); 
-            // Set placeholder for the first image directly if it's hardcoded in HTML
-            const initialImage = document.getElementById('current-letter-image');
-            if(initialImage) initialImage.src = partnerLettersData[0].image;
+        }
+    }
 
+    const currentYearSpan = document.getElementById('current-year');
+    if (currentYearSpan) {
+        currentYearSpan.textContent = new Date().getFullYear();
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === "#" || targetId === "#top" || (this.classList.contains('scroll-to-top-btn') && targetId === "#site-header")) {
+                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                let headerOffset = 0;
+                const fixedHeader = document.getElementById('site-header');
+                if (fixedHeader && getComputedStyle(fixedHeader).position === 'fixed') {
+                    headerOffset = fixedHeader.offsetHeight;
+                }
+                const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = elementPosition - headerOffset;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                if (mainNavMenu && mainNavMenu.classList.contains('active') && this.closest('#main-navigation-menu')) {
+                    mainNavMenu.classList.remove('active');
+                    if(burgerMenu) {
+                        burgerMenu.classList.remove('active');
+                        burgerMenu.setAttribute('aria-expanded', 'false');
+                    }
+                    document.body.style.overflow = ''; 
+                }
+            }
+        });
+    });
+    
+    // --- MODAL LOGIC (SHARED FUNCTIONALITY) ---
+    function closeModal(modalElement) {
+        if (modalElement) {
+            modalElement.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+    }
+
+    function openModal(modalElement) {
+        if (modalElement) {
+            modalElement.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function setupModal(modalId, openBtnIdOrIds, closeBtnId, formId, phoneFieldsConfig) {
+        const modalElement = document.getElementById(modalId);
+        const closeBtn = document.getElementById(closeBtnId);
+        const formElement = document.getElementById(formId);
+
+        if (typeof openBtnIdOrIds === 'string') {
+            const openBtn = document.getElementById(openBtnIdOrIds);
+            if (openBtn) {
+                openBtn.addEventListener('click', () => {
+                    openModal(modalElement);
+                    if (phoneFieldsConfig && phoneFieldsConfig.countryCodeSelect && phoneFieldsConfig.phoneInput) {
+                        setPhonePlaceholderAndClear(phoneFieldsConfig.countryCodeSelect, phoneFieldsConfig.phoneInput);
+                    }
+                });
+            }
+        } else if (Array.isArray(openBtnIdOrIds)) { 
+            openBtnIdOrIds.forEach(btnId => {
+                const openBtn = document.getElementById(btnId);
+                if (openBtn) {
+                    openBtn.addEventListener('click', () => {
+                        openModal(modalElement);
+                        if (phoneFieldsConfig && phoneFieldsConfig.countryCodeSelect && phoneFieldsConfig.phoneInput) {
+                            setPhonePlaceholderAndClear(phoneFieldsConfig.countryCodeSelect, phoneFieldsConfig.phoneInput);
+                        }
+                        if (modalId === 'calculate-cost-modal') {
+                            if(formElement) formElement.reset(); 
+                            attachedFiles = []; 
+                            updateFileListUI();
+                            updateFileUploadInfo();
+                            const fileInputElem = document.getElementById('calc-modal-files');
+                            if(fileInputElem) fileInputElem.value = '';
+                            const charCounterElem = document.getElementById('calc-details-char-counter');
+                            if(charCounterElem) charCounterElem.textContent = '0 / 300';
+                            
+                            const modalContent = modalElement.querySelector('.modal-content');
+                            if(modalContent) {
+                                reinitializeCalcFormElements(modalContent); 
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        if (closeBtn) closeBtn.addEventListener('click', () => closeModal(modalElement));
+        if (modalElement) {
+            modalElement.addEventListener('click', (event) => {
+                if (event.target === modalElement) closeModal(modalElement);
+            });
+        }
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && modalElement && modalElement.classList.contains('show')) {
+                closeModal(modalElement);
+            }
+        });
+        return { modalElement, formElement };
+    }
+    
+    function setPhonePlaceholderAndClear(countryCodeSelectElem, phoneInputElem) {
+        if (countryCodeSelectElem && phoneInputElem) {
+            const selectedOption = countryCodeSelectElem.options[countryCodeSelectElem.selectedIndex];
+            phoneInputElem.placeholder = selectedOption.dataset.placeholder || '(XXX) XXX-XX-XX';
+            phoneInputElem.value = ''; 
+        }
+    }
+
+    function handlePhoneInput(e, countryCodeSelectElem) {
+        let input = e.target;
+        let value = input.value.replace(/\D/g, ''); 
+        const selectedOption = countryCodeSelectElem.options[countryCodeSelectElem.selectedIndex];
+        const countryCodeValue = selectedOption.value;
+        
+        let maxLength = 10; 
+        if (countryCodeValue === '+375') { 
+            maxLength = 9; 
+        }
+        value = value.substring(0, maxLength); 
+        let formattedValue = "";
+
+        if (countryCodeValue === '+7' || countryCodeValue === '+77') { 
+            if (value.length > 0) formattedValue += "(" + value.substring(0, Math.min(3, value.length));
+            if (value.length >= 3) formattedValue += ") ";
+            if (value.length > 3) formattedValue += value.substring(3, Math.min(6, value.length));
+            if (value.length >= 6) formattedValue += "-";
+            if (value.length > 6) formattedValue += value.substring(6, Math.min(8, value.length));
+            if (value.length >= 8) formattedValue += "-";
+            if (value.length > 8) formattedValue += value.substring(8, Math.min(10, value.length));
+        } else if (countryCodeValue === '+375') { 
+            if (value.length > 0) formattedValue += "(" + value.substring(0, Math.min(2, value.length));
+            if (value.length >= 2) formattedValue += ") ";
+            if (value.length > 2) formattedValue += value.substring(2, Math.min(5, value.length));
+            if (value.length >= 5) formattedValue += "-";
+            if (value.length > 5) formattedValue += value.substring(5, Math.min(7, value.length));
+            if (value.length >= 7) formattedValue += "-";
+            if (value.length > 7) formattedValue += value.substring(7, Math.min(9, value.length));
+        } else {
+            formattedValue = value; 
+        }
+        input.value = formattedValue;
+    }
+
+    function handlePhoneKeyDown(e, countryCodeSelectElem) {
+        const isDigit = e.key >= '0' && e.key <= '9';
+        const isControlKey = ['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key);
+        const isCtrlCmdAction = (e.ctrlKey || e.metaKey) && ['a', 'c', 'v', 'x', 'z'].includes(e.key.toLowerCase());
+        
+        let currentDigits = e.target.value.replace(/\D/g, '').length;
+        const selectedOption = countryCodeSelectElem.options[countryCodeSelectElem.selectedIndex];
+        const countryCodeValue = selectedOption.value;
+        let maxLength = 10;
+        if (countryCodeValue === '+375') maxLength = 9;
+
+        if (isDigit && currentDigits >= maxLength && e.target.selectionStart === e.target.selectionEnd) {
+            e.preventDefault(); return;
+        }
+        if (isDigit || isControlKey || isCtrlCmdAction) return; 
+        e.preventDefault(); 
+    }
+    
+    function showFormSubmissionResult(modalContentElement, success, message, originalHTMLToRestore, closeCallback) {
+        modalContentElement.innerHTML = `
+            <button class="modal-close-btn" id="close-result-message-btn" aria-label="Закрыть">×</button>
+            <h3 class="modal-title" style="color: ${success ? '#76c776' : '#ff6b6b'};">${success ? 'Успешно!' : 'Ошибка!'}</h3>
+            <p class="modal-subtitle">${message}</p>
+            <button type="button" class="modal-submit-btn" id="ok-result-message-btn">${success ? 'Отлично' : 'Понятно'}</button>
+        `;
+        const closeResultBtn = modalContentElement.querySelector('#close-result-message-btn');
+        const okResultBtn = modalContentElement.querySelector('#ok-result-message-btn');
+
+        const restoreFormAndClose = () => {
+            modalContentElement.innerHTML = originalHTMLToRestore;
+            closeCallback(true, modalContentElement); 
+        };
+        if(closeResultBtn) closeResultBtn.addEventListener('click', restoreFormAndClose);
+        if(okResultBtn) okResultBtn.addEventListener('click', restoreFormAndClose);
+    }
+
+    // --- "Свяжитесь со мной" Modal ---
+    const contactModalConfig = {
+        modalId: 'contact-modal',
+        openBtnId: 'open-contact-modal-btn',
+        closeBtnId: 'close-contact-modal-btn',
+        formId: 'contact-modal-form',
+        phoneFields: {
+            countryCodeSelect: document.getElementById('modal-country-code'),
+            phoneInput: document.getElementById('modal-phone')
+        }
+    };
+    
+    const { modalElement: contactModalElem, formElement: contactModalFormElem } = setupModal(
+        contactModalConfig.modalId,
+        contactModalConfig.openBtnId,
+        contactModalConfig.closeBtnId,
+        contactModalConfig.formId,
+        contactModalConfig.phoneFields
+    );
+    
+    if (contactModalConfig.phoneFields.countryCodeSelect && contactModalConfig.phoneFields.phoneInput) {
+        contactModalConfig.phoneFields.countryCodeSelect.addEventListener('change', () => setPhonePlaceholderAndClear(contactModalConfig.phoneFields.countryCodeSelect, contactModalConfig.phoneFields.phoneInput));
+        contactModalConfig.phoneFields.phoneInput.addEventListener('input', (e) => handlePhoneInput(e, contactModalConfig.phoneFields.countryCodeSelect));
+        contactModalConfig.phoneFields.phoneInput.addEventListener('keydown', (e) => handlePhoneKeyDown(e, contactModalConfig.phoneFields.countryCodeSelect));
+    }
+
+    let originalContactFormHTML = '';
+    if (contactModalFormElem) {
+        originalContactFormHTML = contactModalFormElem.closest('.modal-content').innerHTML;
+        
+        const contactFormSubmitHandler = async function(event) {
+            event.preventDefault(); 
+
+            const agreementCheckbox = document.getElementById('modal-agree'); 
+            if (!agreementCheckbox.checked) {
+                const modalContent = this.closest('.modal-content');
+                if (modalContent) {
+                    showFormSubmissionResult(
+                       modalContent,
+                       false, 
+                       'Необходимо согласие на обработку персональных данных.',
+                       originalContactFormHTML, 
+                       (shouldReInit, restoredContentEl) => { 
+                            if (shouldReInit && restoredContentEl) reinitializeContactFormElements(restoredContentEl);
+                       }
+                   );
+                } else {
+                  alert('Необходимо согласие на обработку персональных данных.');
+                }
+                return; 
+            }
+
+            const currentForm = this;
+            const submitButton = currentForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            submitButton.textContent = 'Отправка...';
+            submitButton.disabled = true;
+
+            const formData = new FormData(currentForm);
+            const phoneContactInput = document.getElementById('modal-phone');
+            if (phoneContactInput && phoneContactInput.value) {
+                formData.set('phone', phoneContactInput.value.replace(/\D/g, ''));
+            }
+            if (agreementCheckbox.checked) {
+                formData.set('agreement', 'on');
+            }
+            
+            console.log('Отправка данных формы "Свяжитесь со мной"...');
+            for (let [key, value] of formData.entries()) {
+                console.log(`FormData "Свяжитесь": ${key}: ${value}`);
+            }
+
+            try {
+                const response = await fetch('http://localhost:5000/api/submit_callback', { 
+                    method: 'POST',
+                    body: formData,
+                });
+                const result = await response.json();
+
+                if (response.ok) {
+                    showFormSubmissionResult(
+                        currentForm.closest('.modal-content'), 
+                        true, 
+                        result.message || 'Спасибо! Ваша заявка принята. Мы скоро свяжемся с вами.',
+                        originalContactFormHTML,
+                        (shouldReInit, restoredContentEl) => {
+                            closeModal(contactModalElem);
+                            if (shouldReInit && restoredContentEl) reinitializeContactFormElements(restoredContentEl);
+                        }
+                    );
+                    currentForm.reset(); 
+                    setPhonePlaceholderAndClear(contactModalConfig.phoneFields.countryCodeSelect, contactModalConfig.phoneFields.phoneInput);
+                } else {
+                    throw new Error(result.error || 'Ошибка при отправке формы "Свяжитесь со мной".');
+                }
+            } catch (error) {
+                console.error('Ошибка отправки формы "Свяжитесь со мной":', error);
+                 showFormSubmissionResult(
+                    currentForm.closest('.modal-content'),
+                    false,
+                    error.message || 'Произошла ошибка. Пожалуйста, попробуйте еще раз.',
+                    originalContactFormHTML,
+                     (shouldReInit, restoredContentEl) => { 
+                        if (shouldReInit && restoredContentEl) reinitializeContactFormElements(restoredContentEl);
+                     }
+                );
+            } finally {
+                 submitButton.textContent = originalButtonText;
+                 submitButton.disabled = false;
+            }
+        };
+        contactModalFormElem.onsubmit = contactFormSubmitHandler;
+    }
+
+
+    // --- "Рассчитать стоимость" Modal ---
+    const MAX_FILES_COUNT = 3;
+    const MAX_TOTAL_SIZE_MB = 4.5; 
+    const MAX_TOTAL_SIZE_BYTES = MAX_TOTAL_SIZE_MB * 1024 * 1024;
+    const ALLOWED_EXTENSIONS_CALC = ['pdf', 'xlsx', 'xls', 'doc', 'docx', 'ppt', 'pptx', 'jpg', 'jpeg', 'png', 'zip', 'rar'];
+    let attachedFiles = []; 
+
+    const calculateCostModalConfig = {
+        modalId: 'calculate-cost-modal',
+        openBtnIds: ['header-calculate-cost-btn', 'footer-calculate-cost-btn'], 
+        closeBtnId: 'close-calculate-cost-modal-btn',
+        formId: 'calculate-cost-modal-form',
+        phoneFields: {
+            countryCodeSelect: document.getElementById('calc-modal-country-code'),
+            phoneInput: document.getElementById('calc-modal-phone')
+        }
+    };
+
+    const { modalElement: calcModalElem, formElement: calcModalFormElem } = setupModal(
+        calculateCostModalConfig.modalId,
+        calculateCostModalConfig.openBtnIds, 
+        calculateCostModalConfig.closeBtnId,
+        calculateCostModalConfig.formId,
+        calculateCostModalConfig.phoneFields
+    );
+    
+    if (calculateCostModalConfig.phoneFields.countryCodeSelect && calculateCostModalConfig.phoneFields.phoneInput) {
+        calculateCostModalConfig.phoneFields.countryCodeSelect.addEventListener('change', () => setPhonePlaceholderAndClear(calculateCostModalConfig.phoneFields.countryCodeSelect, calculateCostModalConfig.phoneFields.phoneInput));
+        calculateCostModalConfig.phoneFields.phoneInput.addEventListener('input', (e) => handlePhoneInput(e, calculateCostModalConfig.phoneFields.countryCodeSelect));
+        calculateCostModalConfig.phoneFields.phoneInput.addEventListener('keydown', (e) => handlePhoneKeyDown(e, calculateCostModalConfig.phoneFields.countryCodeSelect));
+    }
+
+    const calcDetailsTextarea = document.getElementById('calc-modal-details');
+    const calcCharCounter = document.getElementById('calc-details-char-counter');
+    if (calcDetailsTextarea && calcCharCounter) {
+        calcDetailsTextarea.addEventListener('input', () => {
+            const currentLength = calcDetailsTextarea.value.length;
+            calcCharCounter.textContent = `${currentLength} / 300`;
+        });
+    }
+
+    // Эти переменные нужно будет переопределять в reinitializeCalcFormElements
+    // let fileDropArea = document.getElementById('calc-file-drop-area');
+    // let fileInput = document.getElementById('calc-modal-files');
+    // let fileListUI = document.getElementById('calc-file-list');
+    // let fileUploadInfoUI = document.getElementById('calc-file-upload-info');
+    // let fileCountInfoUI = document.getElementById('calc-file-count-info');
+    // let fileSizeInfoUI = document.getElementById('calc-file-size-info');
+
+    function handleFiles(files) {
+        let currentTotalSize = attachedFiles.reduce((sum, f) => sum + f.size, 0);
+        const localFileInput = document.getElementById('calc-modal-files'); // Получаем актуальный элемент
+
+        for (const file of files) {
+            if (attachedFiles.length >= MAX_FILES_COUNT) {
+                alert(`Можно прикрепить не более ${MAX_FILES_COUNT} файлов. Файл "${file.name}" не будет добавлен.`);
+                break; 
+            }
+            const extension = file.name.split('.').pop().toLowerCase();
+            if (!ALLOWED_EXTENSIONS_CALC.includes(extension)) {
+                alert(`Файл "${file.name}" имеет недопустимое расширение. Разрешены: ${ALLOWED_EXTENSIONS_CALC.join(', ')}`);
+                continue;
+            }
+            if (currentTotalSize + file.size > MAX_TOTAL_SIZE_BYTES) {
+                alert(`Файл "${file.name}" слишком большой или превышен суммарный лимит (${MAX_TOTAL_SIZE_MB}MB).`);
+                continue; 
+            }
+            if (attachedFiles.some(f => f.name === file.name && f.size === file.size)) {
+                alert(`Файл с именем "${file.name}" уже добавлен.`);
+                continue;
+            }
+
+            attachedFiles.push(file);
+            currentTotalSize += file.size;
+        }
+        updateFileListUI();
+        updateFileUploadInfo();
+        if (localFileInput) localFileInput.value = null; 
+    }
+
+    function updateFileListUI() {
+        const localFileListUI = document.getElementById('calc-file-list'); 
+        if (!localFileListUI) {
+            // console.error('updateFileListUI: localFileListUI element not found!');
+            return;
+        }
+        // console.log('updateFileListUI called. attachedFiles:', JSON.stringify(attachedFiles.map(f => f.name)));
+        
+        localFileListUI.innerHTML = ''; 
+        attachedFiles.forEach((file, index) => {
+            const listItem = document.createElement('div');
+            listItem.className = 'file-list-item';
+            listItem.innerHTML = `
+                <span class="file-name">${file.name}</span>
+                <span class="file-size">(${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+                <button type="button" class="remove-file-btn" data-index="${index}" aria-label="Удалить файл">×</button>
+            `;
+            localFileListUI.appendChild(listItem); 
+        });
+
+        const removeButtons = localFileListUI.querySelectorAll('.remove-file-btn');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const indexToRemove = parseInt(e.target.dataset.index);
+                attachedFiles.splice(indexToRemove, 1);
+                updateFileListUI(); 
+                updateFileUploadInfo();
+            });
+        });
+    }
+    
+    function updateFileUploadInfo() {
+        const localFileUploadInfoUI = document.getElementById('calc-file-upload-info');
+        const localFileCountInfoUI = document.getElementById('calc-file-count-info');
+        const localFileSizeInfoUI = document.getElementById('calc-file-size-info');
+
+        if (!localFileUploadInfoUI || !localFileCountInfoUI || !localFileSizeInfoUI) {
+            // console.error('updateFileUploadInfo: One or more UI elements not found!');
+            return;
+        }
+        if (attachedFiles.length > 0) {
+            localFileUploadInfoUI.style.display = 'block';
+            localFileCountInfoUI.textContent = `Файлов: ${attachedFiles.length}/${MAX_FILES_COUNT}`;
+            const totalSize = attachedFiles.reduce((sum, f) => sum + f.size, 0);
+            localFileSizeInfoUI.textContent = `Общий размер: ${(totalSize / 1024 / 1024).toFixed(2)}MB / ${MAX_TOTAL_SIZE_MB}MB`;
+            if (totalSize > MAX_TOTAL_SIZE_BYTES) {
+                localFileSizeInfoUI.classList.add('error');
+                localFileSizeInfoUI.classList.remove('success');
+            } else {
+                localFileSizeInfoUI.classList.remove('error');
+                localFileSizeInfoUI.classList.add('success');
+            }
+        } else {
+            localFileUploadInfoUI.style.display = 'none';
+        }
+    }
+
+    function reinitializeCalcFormElements(modalContentElement) {
+        const restoredForm = modalContentElement.querySelector('#' + calculateCostModalConfig.formId);
+        const restoredCountrySelect = modalContentElement.querySelector('#' + calculateCostModalConfig.phoneFields.countryCodeSelect.id);
+        const restoredPhoneInput = modalContentElement.querySelector('#' + calculateCostModalConfig.phoneFields.phoneInput.id);
+        const restoredCloseBtn = modalContentElement.querySelector('#' + calculateCostModalConfig.closeBtnId);
+        const restoredDetailsTextarea = modalContentElement.querySelector('#calc-modal-details');
+        const restoredCharCounter = modalContentElement.querySelector('#calc-details-char-counter');
+        const restoredFileInput = modalContentElement.querySelector('#calc-modal-files');
+        const restoredDropArea = modalContentElement.querySelector('#calc-file-drop-area');
+        
+        if (restoredForm && calcModalFormElem && calcModalFormElem.onsubmit) { // calcModalFormElem здесь это ссылка на первоначальный элемент
+             restoredForm.onsubmit = calcModalFormElem.onsubmit; 
+        }
+        if (restoredCountrySelect && restoredPhoneInput) {
+            restoredCountrySelect.onchange = () => setPhonePlaceholderAndClear(restoredCountrySelect, restoredPhoneInput);
+            restoredPhoneInput.oninput = (e) => handlePhoneInput(e, restoredCountrySelect);
+            restoredPhoneInput.onkeydown = (e) => handlePhoneKeyDown(e, restoredCountrySelect);
+        }
+        if (restoredCloseBtn && calcModalElem) { // calcModalElem тоже ссылка на первоначальный элемент
+            restoredCloseBtn.onclick = () => closeModal(calcModalElem);
+        }
+        if (restoredDetailsTextarea && restoredCharCounter) {
+            restoredDetailsTextarea.oninput = () => {
+                restoredCharCounter.textContent = `${restoredDetailsTextarea.value.length} / 300`;
+            };
+        }
+        if (restoredDropArea && restoredFileInput) {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(evName => restoredDropArea.addEventListener(evName, (e) => { e.preventDefault(); e.stopPropagation(); }));
+            ['dragenter', 'dragover'].forEach(evName => restoredDropArea.addEventListener(evName, () => restoredDropArea.classList.add('dragover')));
+            ['dragleave', 'drop'].forEach(evName => restoredDropArea.addEventListener(evName, () => restoredDropArea.classList.remove('dragover')));
+            restoredDropArea.ondrop = (e) => { e.preventDefault(); e.stopPropagation(); handleFiles(e.dataTransfer.files); };
+            restoredFileInput.onchange = (e) => handleFiles(e.target.files);
+            restoredDropArea.onclick = (e) => {
+                if (e.target === restoredDropArea || e.target.tagName === 'P' || e.target.classList.contains('file-input-label')) {
+                    if(e.target.tagName !== 'LABEL') { restoredFileInput.click(); }
+                }
+            };
+        }
+        updateFileListUI(); // Обновляем UI списка файлов после переинициализации
+        updateFileUploadInfo(); // Обновляем UI информации о файлах
+    }
+    
+    let originalCalcFormHTML = '';
+    if (calcModalFormElem) {
+        originalCalcFormHTML = calcModalFormElem.closest('.modal-content').innerHTML;
+        const calcFormSubmitHandler = async function(event) { // Именуем обработчик
+            event.preventDefault();
+            
+            const agreementCheckboxCalc = document.getElementById('calc-modal-agree');
+            if (!agreementCheckboxCalc.checked) {
+                 const modalContent = this.closest('.modal-content');
+                 if (modalContent) {
+                     showFormSubmissionResult(
+                        modalContent,
+                        false,
+                        'Необходимо согласие на обработку персональных данных.',
+                        originalCalcFormHTML, 
+                        (shouldReInit, restoredContentEl) => { 
+                            if (shouldReInit && restoredContentEl) reinitializeCalcFormElements(restoredContentEl);
+                        }
+                    );
+                 } else {
+                    alert('Необходимо согласие на обработку персональных данных.');
+                 }
+                 return;
+            }
+
+            const currentForm = this;
+            const submitButton = currentForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            submitButton.textContent = 'Отправка...';
+            submitButton.disabled = true;
+
+            const formData = new FormData(); 
+            formData.append('name', document.getElementById('calc-modal-name').value);
+            formData.append('email', document.getElementById('calc-modal-email').value);
+            const phoneCalcInput = document.getElementById('calc-modal-phone');
+            const countryCodeCalcSelect = document.getElementById('calc-modal-country-code');
+            if (phoneCalcInput && phoneCalcInput.value.replace(/\D/g, '').length > 0) {
+                formData.append('phone_calc', phoneCalcInput.value.replace(/\D/g, ''));
+                formData.append('country_code_calc', countryCodeCalcSelect.value);
+            } else {
+                formData.append('phone_calc', '');
+                formData.append('country_code_calc', '');
+            }
+            formData.append('project_details', document.getElementById('calc-modal-details').value);
+            if (agreementCheckboxCalc.checked) {
+                formData.set('agreement', 'on');
+            }
+            
+            attachedFiles.forEach((file) => {
+                formData.append('project_files[]', file, file.name);
+            });
+            
+            console.log('Отправка данных формы "Рассчитать стоимость"...');
+             for (let [key, value] of formData.entries()) {
+                if (value instanceof File) {
+                    console.log(`FormData "Расчет": ${key}: ${value.name} (size: ${value.size})`);
+                } else {
+                    console.log(`FormData "Расчет": ${key}: ${value}`);
+                }
+            }
+
+            try {
+                const response = await fetch('http://localhost:5000/api/calculate_project_cost', { 
+                    method: 'POST',
+                    body: formData, 
+                });
+                const result = await response.json();
+
+                if (response.ok) {
+                    showFormSubmissionResult(
+                        currentForm.closest('.modal-content'),
+                        true,
+                        result.message || 'Заявка на расчет успешно отправлена! Мы скоро свяжемся с вами.',
+                        originalCalcFormHTML,
+                        (shouldReInit, restoredContentEl) => {
+                            closeModal(calcModalElem); 
+                            if (shouldReInit && restoredContentEl) {
+                                reinitializeCalcFormElements(restoredContentEl);
+                            }
+                        }
+                    );
+                    currentForm.reset(); 
+                    attachedFiles = [];
+                    updateFileListUI(); 
+                    updateFileUploadInfo(); 
+                    if(document.getElementById('calc-modal-files')) document.getElementById('calc-modal-files').value = '';
+                    if(document.getElementById('calc-details-char-counter')) document.getElementById('calc-details-char-counter').textContent = '0 / 300';
+                    setPhonePlaceholderAndClear(calculateCostModalConfig.phoneFields.countryCodeSelect, calculateCostModalConfig.phoneFields.phoneInput);
+                } else {
+                    throw new Error(result.error || 'Ошибка при отправке формы.');
+                }
+            } catch (error) {
+                console.error('Ошибка отправки формы расчета:', error);
+                 showFormSubmissionResult(
+                    currentForm.closest('.modal-content'),
+                    false,
+                    error.message || 'Произошла ошибка. Пожалуйста, попробуйте еще раз.',
+                    originalCalcFormHTML,
+                     (shouldReInit, restoredContentEl) => { 
+                        if (shouldReInit && restoredContentEl) {
+                            reinitializeCalcFormElements(restoredContentEl);
+                        }
+                    }
+                );
+            } finally {
+                 submitButton.textContent = originalButtonText;
+                 submitButton.disabled = false;
+            }
+        };
+        calcModalFormElem.onsubmit = calcFormSubmitHandler; 
+    }
+
+    function reinitializeContactFormElements(modalContentElement) {
+        const restoredForm = modalContentElement.querySelector('#' + contactModalConfig.formId);
+        const restoredCountrySelect = modalContentElement.querySelector('#' + contactModalConfig.phoneFields.countryCodeSelect.id);
+        const restoredPhoneInput = modalContentElement.querySelector('#' + contactModalConfig.phoneFields.phoneInput.id);
+        const restoredCloseBtn = modalContentElement.querySelector('#' + contactModalConfig.closeBtnId);
+        
+        if (restoredForm && contactModalFormElem && contactModalFormElem.onsubmit) {
+            restoredForm.onsubmit = contactModalFormElem.onsubmit;
+        }
+        if (restoredCountrySelect && restoredPhoneInput) {
+            restoredCountrySelect.onchange = () => setPhonePlaceholderAndClear(restoredCountrySelect, restoredPhoneInput);
+            restoredPhoneInput.oninput = (e) => handlePhoneInput(e, restoredCountrySelect);
+            restoredPhoneInput.onkeydown = (e) => handlePhoneKeyDown(e, restoredCountrySelect);
+        }
+        if (restoredCloseBtn && contactModalElem) {
+            restoredCloseBtn.onclick = () => closeModal(contactModalElem);
         }
     }
 });
