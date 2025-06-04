@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Гильдия Луч</title>
-    <!-- Подключаем стили Swiper.js -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -13,22 +12,20 @@
     <header class="site-header" id="site-header">
         <div class="container header-inner-container">
             <div class="logo-area">
-                <a href="/" class="logo-text">Гильдия Луч</a>
+                <a href="#site-header" class="logo-text">Гильдия Луч</a>
             </div>
             <nav class="main-navigation" id="main-navigation-menu">
                 <ul>
-                    <li><a href="#">О компании</a></li>
-                    <li><a href="#">Проекты</a></li>
-                    <li><a href="#">Производство</a></li>
-                    <li><a href="#">Вакансии</a></li>
-                    <li><a href="#">Контакты</a></li>
-                    <li><a href="#">Тренды</a></li>
+                    <li><a href="#about-company-section">О компании</a></li>
+                    <li><a href="#projects-section">Проекты</a></li>
+                    <li><a href="#production-stats">Производство</a></li>
+                    <li><a href="#contact-us">Контакты</a></li>
                 </ul>
             </nav>
             <div class="header-right-controls">
                 <div class="header-contact">
                     <a href="tel:+74950238888" class="phone-number">+7 (495) 023-88-88</a>
-                    <button type="button" class="callback-button">Позвоните мне</button>
+                    <button type="button" class="callback-button" id="header-calculate-cost-btn">Рассчитать стоимость</button>
                 </div>
                 <button class="burger-menu" id="burger-menu" aria-label="Открыть меню" aria-expanded="false" aria-controls="main-navigation-menu">
                     <span></span><span></span><span></span>
@@ -126,8 +123,7 @@
                 <button class="filter-btn" data-filter="exclusive">Эксклюзивные решения</button>
                 <button class="filter-btn" data-filter="design">Дизайн-проекты</button>
             </div>
-            <div class="projects-grid" id="projects-grid-container">
-            </div>
+            <div class="projects-grid" id="projects-grid-container"></div>
         </div>
     </section>
 
@@ -138,98 +134,32 @@
                     <h2 class="section-title">РЕШАЕМ ЗАДАЧИ <br>БОЛЕЕ 10 ЛЕТ</h2>
                     <p>За многолетний опыт реализации сложных и эксклюзивных проектов мы проделали большой путь, осваивая новые технологии, непрерывно участвуя и уделяя большое внимание инновациям, чтобы быть в курсе последних тенденций рекламной индустрии.</p>
                     <p>Вся команда обладает способностью адаптироваться к новым требованиям рынка и предлагает уникальные креативные решения. Производственная команда состоит из опытных дизайнеров, технологов, конструкторов, отдела разработок, которые работают вместе для достижения высоких результатов. Каждый из них вносит свой вклад в реализацию амбициозных проектов.</p>
-                    
                     <h3 class="workshops-title">Технические участки производства:</h3>
                     <ul class="workshops-list">
-                        <li class="animate-on-scroll" data-animation-delay="0.2">
-                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M3 10h18M3 14h18M9 6V3h6v3M9 18v3h6v-3"/></svg>
-                            Фрезеровочный цех
-                        </li>
-                        <li class="animate-on-scroll" data-animation-delay="0.25">
-                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.77 5.82 22 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            Лазерный цех
-                        </li>
-                        <li class="animate-on-scroll" data-animation-delay="0.3">
-                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M20 9v10a2 2 0 01-2 2H6a2 2 0 01-2-2V9M8 3h8l4 6H4l4-6z"/></svg>
-                            Столярный цех
-                        </li>
-                        <li class="animate-on-scroll" data-animation-delay="0.35">
-                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2M12 14l4-4M8 10l4 4m0-9v12"/></svg>
-                            Цех широкоформатной печати
-                        </li>
-                        <li class="animate-on-scroll" data-animation-delay="0.4">
-                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M15 3l-3 3L9 3l-3 3L0 3M24 3l-3 3-3-3-3 3-3-3M12 7v14M9 21h6"/></svg>
-                            Цех каттерной резки
-                        </li>
-                        <li class="animate-on-scroll" data-animation-delay="0.45">
-                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
-                            Цех по производству вывесок
-                        </li>
-                         <li class="animate-on-scroll" data-animation-delay="0.5">
-                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M12 11.543A2.5 2.5 0 109.5 14a2.5 2.5 0 002.5-2.457zM20 14h.5a2.5 2.5 0 000-5H20m-16 5h-.5a2.5 2.5 0 010-5H4M7.5 9A2.5 2.5 0 105 11.543 2.5 2.5 0 007.5 9zm9 0a2.5 2.5 0 10-2.5 2.543A2.5 2.5 0 0016.5 9z"/></svg>
-                            Цех постпечатной обработки
-                        </li>
-                        <li class="animate-on-scroll" data-animation-delay="0.55">
-                             <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M10 15H5.83A2.94 2.94 0 013 12.06V7a2 2 0 012-2h14a2 2 0 012 2v5.06A2.94 2.94 0 0118.17 15H14m-4 4V10m0 9a2 2 0 100-4 2 2 0 000 4z"/></svg>
-                            Цех 3D-резки из пенопласта
-                        </li>
-                         <li class="animate-on-scroll" data-animation-delay="0.6">
-                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                            Цех сборки
-                        </li>
-                        <li class="animate-on-scroll" data-animation-delay="0.65">
-                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.72-1.71"/></svg>
-                            Сварочный цех
-                        </li>
-                        <li class="animate-on-scroll" data-animation-delay="0.7">
-                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M21.242 10.758l-8.484-8.485a2 2 0 00-2.828 0L2.758 9.445A2 2 0 002 10.86V19a2 2 0 002 2h16a2 2 0 002-2v-6.14a2 2 0 00-.758-1.602zM12 12h.01"/></svg>
-                            Покрасочная камера
-                        </li>
-                         <li class="animate-on-scroll" data-animation-delay="0.75">
-                            <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M17 3H7a4 4 0 00-4 4v10a4 4 0 004 4h10a4 4 0 004-4V7a4 4 0 00-4-4z"/><path d="M7 7h10M7 12h10M7 17h5"/></svg>
-                            Ламинаторный цех
-                        </li>
-                        <li class="animate-on-scroll" data-animation-delay="0.8">
-                           <svg class="workshop-icon" viewBox="0 0 24 24"><path d="M18.36 6.64a9 9 0 11-12.73 0M12 2v10"/></svg>
-                            Цех металлообработки
-                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.2"><svg class="workshop-icon" viewBox="0 0 24 24"><path d="M3 10h18M3 14h18M9 6V3h6v3M9 18v3h6v-3"/></svg>Фрезеровочный цех</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.25"><svg class="workshop-icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.77 5.82 22 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Лазерный цех</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.3"><svg class="workshop-icon" viewBox="0 0 24 24"><path d="M20 9v10a2 2 0 01-2 2H6a2 2 0 01-2-2V9M8 3h8l4 6H4l4-6z"/></svg>Столярный цех</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.35"><svg class="workshop-icon" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2M12 14l4-4M8 10l4 4m0-9v12"/></svg>Цех широкоформатной печати</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.4"><svg class="workshop-icon" viewBox="0 0 24 24"><path d="M15 3l-3 3L9 3l-3 3L0 3M24 3l-3 3-3-3-3 3-3-3M12 7v14M9 21h6"/></svg>Цех каттерной резки</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.45"><svg class="workshop-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>Цех по производству вывесок</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.5"><svg class="workshop-icon" viewBox="0 0 24 24"><path d="M12 11.543A2.5 2.5 0 109.5 14a2.5 2.5 0 002.5-2.457zM20 14h.5a2.5 2.5 0 000-5H20m-16 5h-.5a2.5 2.5 0 010-5H4M7.5 9A2.5 2.5 0 105 11.543 2.5 2.5 0 007.5 9zm9 0a2.5 2.5 0 10-2.5 2.543A2.5 2.5 0 0016.5 9z"/></svg>Цех постпечатной обработки</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.55"><svg class="workshop-icon" viewBox="0 0 24 24"><path d="M10 15H5.83A2.94 2.94 0 013 12.06V7a2 2 0 012-2h14a2 2 0 012 2v5.06A2.94 2.94 0 0118.17 15H14m-4 4V10m0 9a2 2 0 100-4 2 2 0 000 4z"/></svg>Цех 3D-резки из пенопласта</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.6"><svg class="workshop-icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Цех сборки</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.65"><svg class="workshop-icon" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.72-1.71"/></svg>Сварочный цех</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.7"><svg class="workshop-icon" viewBox="0 0 24 24"><path d="M21.242 10.758l-8.484-8.485a2 2 0 00-2.828 0L2.758 9.445A2 2 0 002 10.86V19a2 2 0 002 2h16a2 2 0 002-2v-6.14a2 2 0 00-.758-1.602zM12 12h.01"/></svg>Покрасочная камера</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.75"><svg class="workshop-icon" viewBox="0 0 24 24"><path d="M17 3H7a4 4 0 00-4 4v10a4 4 0 004 4h10a4 4 0 004-4V7a4 4 0 00-4-4z"/><path d="M7 7h10M7 12h10M7 17h5"/></svg>Ламинаторный цех</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.8"><svg class="workshop-icon" viewBox="0 0 24 24"><path d="M18.36 6.64a9 9 0 11-12.73 0M12 2v10"/></svg>Цех металлообработки</li>
                     </ul>
                 </div>
                 <div class="production-visual-content">
                     <div class="stat-circle-large animate-on-scroll" data-animation-delay="0.3" id="main-circle-stat">
-                        <svg viewBox="0 0 100 100" class="circle-svg">
-                            <circle class="circle-bg" cx="50" cy="50" r="48"/>
-                            <circle class="circle-progress" cx="50" cy="50" r="48" id="progress-dot-circle"/>
-                            <circle class="progress-dot" cx="50" cy="2" r="1.5" id="progress-dot"/>
-                        </svg>
-                        <div class="circle-text">
-                            <span class="stat-number" data-target="39000">0</span>
-                            <span class="stat-label">Объем печатной продукции в месяц</span>
-                        </div>
+                        <svg viewBox="0 0 100 100" class="circle-svg"><circle class="circle-bg" cx="50" cy="50" r="48"/><circle class="circle-progress" cx="50" cy="50" r="48" id="progress-dot-circle"/><circle class="progress-dot" cx="50" cy="2" r="1.5" id="progress-dot"/></svg>
+                        <div class="circle-text"><span class="stat-number" data-target="39000">0</span><span class="stat-label">Объем печатной продукции в месяц</span></div>
                     </div>
-                    <div class="stat-circle-small sc-1 animate-on-scroll" data-animation-delay="0.5">
-                        <div class="circle-text">
-                            <span class="stat-number" data-target="3000">0</span> м<sup>2</sup>
-                            <span class="stat-label">Площадь производства</span>
-                        </div>
-                         <div class="circle-brand-tag">POPAI</div>
-                    </div>
-                     <div class="stat-circle-small sc-2 animate-on-scroll" data-animation-delay="0.6">
-                        <div class="circle-text">
-                            <span class="stat-number" data-target="3960">0</span>
-                            <span class="stat-label">Количество выполненных заказов в 2024 году</span>
-                        </div>
-                        <div class="circle-brand-tag">ZNAK</div>
-                    </div>
-                    <div class="stat-circle-medium sc-3 animate-on-scroll" data-animation-delay="0.7">
-                        <div class="circle-text">
-                            <span class="stat-number" data-target="1705">0</span>
-                            <span class="stat-label">Произведено и смонтировано вывесок в 2024 году</span>
-                        </div>
-                    </div>
-                     <div class="stat-circle-small sc-4 animate-on-scroll" data-animation-delay="0.8">
-                        <div class="circle-brand-tag">POPAI <br>AWARDS</div>
-                    </div>
+                    <div class="stat-circle-small sc-1 animate-on-scroll" data-animation-delay="0.5"><div class="circle-text"><span class="stat-number" data-target="3000">0</span> м<sup>2</sup><span class="stat-label">Площадь производства</span></div><div class="circle-brand-tag">POPAI</div></div>
+                    <div class="stat-circle-small sc-2 animate-on-scroll" data-animation-delay="0.6"><div class="circle-text"><span class="stat-number" data-target="3960">0</span><span class="stat-label">Количество выполненных заказов в 2024 году</span></div><div class="circle-brand-tag">ZNAK</div></div>
+                    <div class="stat-circle-medium sc-3 animate-on-scroll" data-animation-delay="0.7"><div class="circle-text"><span class="stat-number" data-target="1705">0</span><span class="stat-label">Произведено и смонтировано вывесок в 2024 году</span></div></div>
+                    <div class="stat-circle-small sc-4 animate-on-scroll" data-animation-delay="0.8"><div class="circle-brand-tag">POPAI <br>AWARDS</div></div>
                 </div>
             </div>
         </div>
@@ -237,29 +167,11 @@
 
     <section class="video-gallery-section" id="video-gallery">
         <div class="container">
-            <div class="main-video-player animate-on-scroll">
-                <iframe 
-                    id="main-vimeo-player"
-                    src="https://player.vimeo.com/video/137804996?h=97ecc89795&autoplay=0&loop=0&muted=0&title=0&byline=0&portrait=0" 
-                    width="100%" 
-                    frameborder="0" 
-                    allow="autoplay; fullscreen; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
-            </div>
+            <div class="main-video-player animate-on-scroll"><iframe id="main-vimeo-player" src="https://player.vimeo.com/video/137804996?h=97ecc89795&autoplay=0&loop=0&muted=0&title=0&byline=0&portrait=0" width="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
             <div class="video-thumbnails">
-                <div class="video-thumbnail-item animate-on-scroll" data-animation-delay="0.2" data-vimeo-id="137804996">
-                    <img src="https://i.vimeocdn.com/video/533048489-75465775f0479907179218344c4037904177701556856e4119869995b2f78415-d_640x360.jpg" alt="Превью видео 1">
-                    <div class="play-button-overlay">▶</div>
-                </div>
-                <div class="video-thumbnail-item animate-on-scroll" data-animation-delay="0.3" data-vimeo-id="259411563">
-                    <img src="https://i.vimeocdn.com/video/689958909-e7099bf174201a42a000e0c646a319102a9eaa0d8940c16107a08f5f1a3801aa-d_640x360.jpg" alt="Превью видео 2">
-                    <div class="play-button-overlay">▶</div>
-                </div>
-                <div class="video-thumbnail-item animate-on-scroll" data-animation-delay="0.4" data-vimeo-id="76979871">
-                     <img src="https://i.vimeocdn.com/filter/overlay?src0=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F453995099-cc9777c37638d753089ba4b46837993493a35162166707b7c744fdee2710a506-d_640x360&src1=https%3A%2F%2Ff.vimeocdn.com%2Fimages_v6%2Fshare%2Fplay_icon_overlay.png" alt="Превью видео 3">
-                    <div class="play-button-overlay">▶</div>
-                </div>
+                <div class="video-thumbnail-item animate-on-scroll" data-animation-delay="0.2" data-vimeo-id="137804996"><img src="https://i.vimeocdn.com/video/533048489-75465775f0479907179218344c4037904177701556856e4119869995b2f78415-d_640x360.jpg" alt="Превью видео 1"><div class="play-button-overlay">▶</div></div>
+                <div class="video-thumbnail-item animate-on-scroll" data-animation-delay="0.3" data-vimeo-id="259411563"><img src="https://i.vimeocdn.com/video/689958909-e7099bf174201a42a000e0c646a319102a9eaa0d8940c16107a08f5f1a3801aa-d_640x360.jpg" alt="Превью видео 2"><div class="play-button-overlay">▶</div></div>
+                <div class="video-thumbnail-item animate-on-scroll" data-animation-delay="0.4" data-vimeo-id="76979871"><img src="https://i.vimeocdn.com/filter/overlay?src0=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F453995099-cc9777c37638d753089ba4b46837993493a35162166707b7c744fdee2710a506-d_640x360&src1=https%3A%2F%2Ff.vimeocdn.com%2Fimages_v6%2Fshare%2Fplay_icon_overlay.png" alt="Превью видео 3"><div class="play-button-overlay">▶</div></div>
             </div>
         </div>
     </section>
@@ -271,78 +183,65 @@
                     <h2 class="section-title">Работаем с людьми <br>и для людей</h2>
                     <p class="team-subtitle">Экспертиза на каждом этапе, за которой стоит профессиональная команда:</p>
                     <ul class="team-expertise-list">
-                        <li class="animate-on-scroll" data-animation-delay="0.2">
-                            <svg class="expertise-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-                            Персональные менеджеры
-                        </li>
-                        <li class="animate-on-scroll" data-animation-delay="0.25">
-                            <svg class="expertise-icon" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg>
-                            Дизайнеры
-                        </li>
-                        <li class="animate-on-scroll" data-animation-delay="0.3">
-                            <svg class="expertise-icon" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                            Технологи
-                        </li>
-                        <li class="animate-on-scroll" data-animation-delay="0.35">
-                            <svg class="expertise-icon" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-                            Сметчики
-                        </li>
-                        <li class="animate-on-scroll" data-animation-delay="0.4">
-                             <svg class="expertise-icon" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0L12 2.69z"/><circle cx="12" cy="12" r="3"/></svg>
-                            Конструкторы
-                        </li>
-                        <li class="animate-on-scroll" data-animation-delay="0.45">
-                            <svg class="expertise-icon" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1L6 4M10 1L10 4M14 1L14 4"/></svg>
-                            Монтажная бригада
-                        </li>
-                        <li class="animate-on-scroll" data-animation-delay="0.5">
-                           <svg class="expertise-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                            Декораторы
-                        </li>
+                        <li class="animate-on-scroll" data-animation-delay="0.2"><svg class="expertise-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>Персональные менеджеры</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.25"><svg class="expertise-icon" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg>Дизайнеры</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.3"><svg class="expertise-icon" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Технологи</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.35"><svg class="expertise-icon" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>Сметчики</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.4"><svg class="expertise-icon" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0L12 2.69z"/><circle cx="12" cy="12" r="3"/></svg>Конструкторы</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.45"><svg class="expertise-icon" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1L6 4M10 1L10 4M14 1L14 4"/></svg>Монтажная бригада</li>
+                        <li class="animate-on-scroll" data-animation-delay="0.5"><svg class="expertise-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>Декораторы</li>
                     </ul>
                 </div>
-                <div class="team-visual-content animate-on-scroll" data-animation-delay="0.3">
-                    <div class="team-photos-whirl" id="team-photos-container">
-                    </div>
-                </div>
+                <div class="team-visual-content animate-on-scroll" data-animation-delay="0.3"><div class="team-photos-whirl" id="team-photos-container"></div></div>
             </div>
         </div>
     </section>
 
     <section class="awards-section" id="awards-section">
-        <div class="container">
+        <div class="container"> 
             <h2 class="section-title awards-main-title animate-on-scroll">Награды</h2>
-
             <div class="main-award-slider-wrapper animate-on-scroll" data-animation-delay="0.2">
                 <button class="slider-arrow award-arrow-prev" id="main-award-prev" aria-label="Предыдущая награда">←</button>
-                <div class="swiper-container main-award-swiper" id="main-award-swiper-container">
-                    <div class="swiper-wrapper" id="main-award-slides-container">
-                        <!-- Сюда будут добавлены слайды наград из JS -->
-                    </div>
-                </div>
+                <div class="swiper-container main-award-swiper" id="main-award-swiper-container"><div class="swiper-wrapper" id="main-award-slides-container"></div></div>
                 <button class="slider-arrow award-arrow-next" id="main-award-next" aria-label="Следующая награда">→</button>
             </div>
-
             <h3 class="clients-choose-us-title animate-on-scroll" data-animation-delay="0.4">НАС ВЫБИРАЮТ</h3>
-            
-            <div class="clients-slider-wrapper animate-on-scroll" data-animation-delay="0.5">
-                <button class="slider-arrow clients-arrow-prev" id="clients-swiper-prev" aria-label="Предыдущие клиенты">←</button>
-                <div class="swiper-container clients-swiper" id="clients-swiper-container">
-                    <div class="swiper-wrapper">
-                        <!-- Пример логотипов, добавьте сколько нужно -->
-                        <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Burger_King_logo_%281999%29.svg/1200px-Burger_King_logo_%281999%29.svg.png" alt="Burger King"></div>
-                        <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Rado_logo.svg/1280px-Rado_logo.svg.png" alt="Rado"></div>
-                        <div class="swiper-slide client-logo-item"><img src="https://cdn.worldvectorlogo.com/logos/auchan-logo.svg" alt="Auchan"></div>
-                        <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/X5_Retail_Group_logo.svg/1280px-X5_Retail_Group_logo.svg.png" alt="X5 Retail Group"></div>
-                        <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Jil_Sander_Logo.svg/1200px-Jil_Sander_Logo.svg.png" alt="Jil Sander"></div>
-                        <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/ru/thumb/f/f9/%D0%A6%D0%A3%D0%9C_%D0%BB%D0%BE%D0%B3%D0%BE.svg/1200px-%D0%A6%D0%A3%D0%9C_%D0%BB%D0%BE%D0%B3%D0%BE.svg.png" alt="ЦУМ"></div>
-                        <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Ralph_Lauren_logo.svg/1200px-Ralph_Lauren_logo.svg.png" alt="Ralph Lauren"></div>
-                        <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Dior_logo.svg/1200px-Dior_logo.svg.png" alt="Dior"></div>
-                        <div class="swiper-slide client-logo-item"><img src="https://via.placeholder.com/100x50/000/fff?text=Citibank" alt="Citibank"></div>
-                        <div class="swiper-slide client-logo-item"><img src="https://via.placeholder.com/100x50/000/fff?text=OMEGA" alt="OMEGA"></div>
-                    </div>
+        </div> 
+
+        <div class="clients-slider-wrapper animate-on-scroll" data-animation-delay="0.5">
+            <div class="swiper-container clients-swiper" id="clients-swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Burger_King_logo_%281999%29.svg/1200px-Burger_King_logo_%281999%29.svg.png" alt="Burger King"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Rado_logo.svg/1280px-Rado_logo.svg.png" alt="Rado"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://cdn.worldvectorlogo.com/logos/auchan-logo.svg" alt="Auchan"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/X5_Retail_Group_logo.svg/1280px-X5_Retail_Group_logo.svg.png" alt="X5 Retail Group"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Jil_Sander_Logo.svg/1200px-Jil_Sander_Logo.svg.png" alt="Jil Sander"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/ru/thumb/f/f9/%D0%A6%D0%A3%D0%9C_%D0%BB%D0%BE%D0%B3%D0%BE.svg/1200px-%D0%A6%D0%A3%D0%9C_%D0%BB%D0%BE%D0%B3%D0%BE.svg.png" alt="ЦУМ"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Ralph_Lauren_logo.svg/1200px-Ralph_Lauren_logo.svg.png" alt="Ralph Lauren"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Dior_logo.svg/1200px-Dior_logo.svg.png" alt="Dior"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://via.placeholder.com/100x50/000/fff?text=Citibank" alt="Citibank"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://via.placeholder.com/100x50/000/fff?text=OMEGA" alt="OMEGA"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Shell_logo.svg/1200px-Shell_logo.svg.png" alt="Shell"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/1200px-Logo_NIKE.svg.png" alt="Nike"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/1200px-Adidas_Logo.svg.png" alt="Adidas"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1200px-Apple_logo_black.svg.png" alt="Apple"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Samsung_Logo.svg/1280px-Samsung_Logo.svg.png" alt="Samsung"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Burger_King_logo_%281999%29.svg/1200px-Burger_King_logo_%281999%29.svg.png" alt="Burger King"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Rado_logo.svg/1280px-Rado_logo.svg.png" alt="Rado"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://cdn.worldvectorlogo.com/logos/auchan-logo.svg" alt="Auchan"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/X5_Retail_Group_logo.svg/1280px-X5_Retail_Group_logo.svg.png" alt="X5 Retail Group"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Jil_Sander_Logo.svg/1200px-Jil_Sander_Logo.svg.png" alt="Jil Sander"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/ru/thumb/f/f9/%D0%A6%D0%A3%D0%9C_%D0%BB%D0%BE%D0%B3%D0%BE.svg/1200px-%D0%A6%D0%A3%D0%9C_%D0%BB%D0%BE%D0%B3%D0%BE.svg.png" alt="ЦУМ"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Ralph_Lauren_logo.svg/1200px-Ralph_Lauren_logo.svg.png" alt="Ralph Lauren"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Dior_logo.svg/1200px-Dior_logo.svg.png" alt="Dior"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://via.placeholder.com/100x50/000/fff?text=Citibank" alt="Citibank"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://via.placeholder.com/100x50/000/fff?text=OMEGA" alt="OMEGA"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Shell_logo.svg/1200px-Shell_logo.svg.png" alt="Shell"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/1200px-Logo_NIKE.svg.png" alt="Nike"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/1200px-Adidas_Logo.svg.png" alt="Adidas"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1200px-Apple_logo_black.svg.png" alt="Apple"></div>
+                    <div class="swiper-slide client-logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Samsung_Logo.svg/1280px-Samsung_Logo.svg.png" alt="Samsung"></div>
                 </div>
-                <button class="slider-arrow clients-arrow-next" id="clients-swiper-next" aria-label="Следующие клиенты">→</button>
             </div>
         </div>
     </section>
@@ -351,20 +250,58 @@
         <div class="container">
             <h2 class="section-title partner-letters-main-title animate-on-scroll">Письма партнеров</h2>
             <div class="partner-letters-content animate-on-scroll" data-animation-delay="0.2">
-                <div class="letter-image-column" id="letter-image-column">
-                    <img src="https://via.placeholder.com/600x850/ffffff/cccccc?text=Письмо+X5" alt="Письмо от X5" id="current-letter-image" class="active">
-                    <!-- Сюда будут динамически добавляться другие изображения писем -->
+                <div class="letter-image-column" id="letter-image-column"></div>
+                <div class="partner-names-column" id="partner-names-column"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact-us">
+        <div class="container animate-on-scroll">
+            <div class="contact-info-column">
+                <h2 class="section-title contact-main-title">Контакты</h2>
+                <div class="contact-details">
+                    <div class="contact-block"><p class="contact-phone-lg">+7 (495) 023-88-88</p><p class="contact-phone-desc">Бесплатный звонок по России</p></div>
+                    <div class="contact-block"><h3 class="contact-address-title">г.Зеленоград, проспект Генерала Алексеева, дом 42, стр 1</h3></div>
+                    <div class="contact-block"><h3 class="contact-address-title">г.Москва, Головинское шоссе, дом 3</h3><p class="contact-work-hours">09:00 - 18:00, сб-вс: выходной</p></div>
+                    <div class="contact-block"><a href="mailto:info@gildialuch.ru" class="contact-email">info@gildialuch.ru</a><p class="contact-email-desc">Напишите нам</p></div>
                 </div>
-                <div class="partner-names-column" id="partner-names-column">
-                    <!-- Названия партнеров будут добавлены из JS -->
+                <div class="contact-actions">
+                    <button type="button" class="contact-action-btn" id="open-contact-modal-btn">Свяжитесь со мной</button>
+                    <div class="contact-socials">
+                        <a href="#" class="social-icon" aria-label="VK"><img src="img/vk-icon.svg" alt="VK"></a>
+                        <a href="#" class="social-icon" aria-label="Telegram"><img src="img/tg-icon.svg" alt="Telegram"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-map-column">
+                <div class="map-embed-wrapper" id="yandex-map-container">
+                    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Aa928ae678e3dc7f66d32ae73db5f6b1bfd4688962eaaecb9f1ef8dc4266e9f67&width=100%&height=100%&lang=ru_RU&scroll=true"></script>
                 </div>
             </div>
         </div>
     </section>
 
-    <main style="padding: 50px 20px; background-color: #e9e9e9; min-height:50vh; text-align: center; color: #333;">
-        <h2>Футер и другой контент ниже</h2>
-    </main>
+    <footer class="site-footer-main">
+        <div class="container footer-container">
+            <div class="footer-left">
+                <a href="#site-header" class="footer-logo-text">Гильдия Луч</a>
+                <p class="footer-copyright">© <span id="current-year">2024</span> Гильдия Луч. Все права защищены.</p>
+            </div>
+            <nav class="footer-navigation">
+                <ul>
+                    <li><a href="#about-company-section">О компании</a></li>
+                    <li><a href="#projects-section">Проекты</a></li>
+                    <li><a href="#production-stats">Производство</a></li>
+                    <li><a href="#contact-us">Контакты</a></li>
+                </ul>
+            </nav>
+            <div class="footer-right">
+                <button type="button" class="callback-button footer-calculate-cost-btn" id="footer-calculate-cost-btn">Рассчитать стоимость</button>
+                <a href="#site-header" class="scroll-to-top-btn" aria-label="Наверх">↑</a>
+            </div>
+        </div>
+    </footer>
 
     <div class="project-modal" id="project-modal">
         <div class="project-modal-content">
@@ -383,6 +320,90 @@
                     <img src="https://via.placeholder.com/300x200.png?text=Фото+3" alt="Фото проекта 3">
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="modal" id="contact-modal">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="close-contact-modal-btn" aria-label="Закрыть">×</button>
+            <h3 class="modal-title">Свяжитесь с нами</h3>
+            <p class="modal-subtitle">Оставьте ваши данные, и мы скоро свяжемся с вами для обсуждения вашего проекта.</p>
+            <form id="contact-modal-form">
+                <div class="form-group">
+                    <label for="modal-name">Ваше имя</label>
+                    <input type="text" id="modal-name" name="name" required placeholder="Иван Иванов">
+                </div>
+                <div class="form-group">
+                    <label for="modal-phone">Номер телефона</label>
+                    <div class="phone-input-group">
+                        <select id="modal-country-code" name="country_code">
+                            <option value="+7" data-placeholder="(XXX) XXX-XX-XX">🇷🇺 +7 (РФ)</option>
+                            <option value="+375" data-placeholder="(XX) XXX-XX-XX">🇧🇾 +375 (Бел)</option>
+                            <option value="+77" data-placeholder="(XXX) XXX-XX-XX">🇰🇿 +7 (Каз)</option>
+                        </select>
+                        <input type="tel" id="modal-phone" name="phone" required placeholder="(XXX) XXX-XX-XX">
+                    </div>
+                </div>
+                <div class="form-group form-group-checkbox">
+                    <input type="checkbox" id="modal-agree" name="agreement" required>
+                    <label for="modal-agree">Я согласен на <a href="/privacy-policy.html" target="_blank">обработку персональных данных</a></label>
+                </div>
+                <button type="submit" class="modal-submit-btn">Отправить заявку</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Новая модалка "Рассчитать стоимость" -->
+    <div class="modal" id="calculate-cost-modal">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="close-calculate-cost-modal-btn" aria-label="Закрыть">×</button>
+            <h3 class="modal-title">Рассчитать стоимость проекта</h3>
+            <p class="modal-subtitle">Заполните форму, и мы подготовим для вас индивидуальный расчет.</p>
+            <form id="calculate-cost-modal-form">
+                <div class="form-group">
+                    <label for="calc-modal-name">Ваше имя</label>
+                    <input type="text" id="calc-modal-name" name="name" required placeholder="Иван Иванов">
+                </div>
+                <div class="form-group">
+                    <label for="calc-modal-email">Ваш Email</label>
+                    <input type="email" id="calc-modal-email" name="email" required placeholder="example@mail.com">
+                </div>
+                <div class="form-group">
+                    <label for="calc-modal-phone">Номер телефона (необязательно)</label>
+                    <div class="phone-input-group">
+                        <select id="calc-modal-country-code" name="country_code_calc">
+                            <option value="+7" data-placeholder="(XXX) XXX-XX-XX">🇷🇺 +7 (РФ)</option>
+                            <option value="+375" data-placeholder="(XX) XXX-XX-XX">🇧🇾 +375 (Бел)</option>
+                            <option value="+77" data-placeholder="(XXX) XXX-XX-XX">🇰🇿 +7 (Каз)</option>
+                        </select>
+                        <input type="tel" id="calc-modal-phone" name="phone_calc" placeholder="(XXX) XXX-XX-XX">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="calc-modal-details">Краткое описание проекта (до 300 симв.)</label>
+                    <textarea id="calc-modal-details" name="project_details" rows="4" maxlength="300" required placeholder="Опишите ваш проект, ключевые требования, размеры, материалы и т.д."></textarea>
+                    <div class="char-counter" id="calc-details-char-counter">0 / 300</div>
+                </div>
+                <div class="form-group">
+                    <label>Прикрепить файлы (до 3-х, макс. 4.5MB суммарно)</label>
+                    <div class="file-drop-area" id="calc-file-drop-area">
+                        <p>Перетащите файлы сюда или <label for="calc-modal-files" class="file-input-label">выберите на устройстве</label></p>
+                        <input type="file" id="calc-modal-files" name="project_files[]" multiple accept=".pdf,.xlsx,.xls,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png,.zip,.rar">
+                    </div>
+                    <div class="file-list" id="calc-file-list">
+                        <!-- Сюда будут добавляться имена загруженных файлов -->
+                    </div>
+                    <div class="file-upload-info" id="calc-file-upload-info" style="display: none;">
+                        <span id="calc-file-count-info"></span> | <span id="calc-file-size-info"></span>
+                    </div>
+                </div>
+
+                <div class="form-group form-group-checkbox">
+                    <input type="checkbox" id="calc-modal-agree" name="agreement" required>
+                    <label for="calc-modal-agree">Я согласен на <a href="/privacy-policy.html" target="_blank">обработку персональных данных</a></label>
+                </div>
+                <button type="submit" class="modal-submit-btn">Отправить на расчет</button>
+            </form>
         </div>
     </div>
     
