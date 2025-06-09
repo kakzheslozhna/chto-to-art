@@ -4,6 +4,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const burgerMenu = document.getElementById('burger-menu');
     const mainNavMenu = document.getElementById('main-navigation-menu');
 
+    function updateHeaderHeightVar() {
+        if (siteHeader) {
+            const headerHeight = siteHeader.offsetHeight;
+            document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
+            if (heroSliderSection) {
+               heroSliderSection.style.paddingTop = `${headerHeight}px`;
+            }
+        }
+    }
+
     function handleHeaderScroll() {
         if (siteHeader && heroSliderSection) {
             const scrollThreshold = heroSliderSection.offsetHeight * 0.5;
@@ -21,18 +31,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function setDynamicPadding() {
-        if (siteHeader && heroSliderSection) {
-            const headerHeight = siteHeader.offsetHeight;
-            heroSliderSection.style.paddingTop = `${headerHeight}px`;
-        }
-    }
-
     window.addEventListener('scroll', handleHeaderScroll);
-    window.addEventListener('resize', setDynamicPadding);
-    setDynamicPadding();
+    window.addEventListener('resize', updateHeaderHeightVar);
+    updateHeaderHeightVar();
     handleHeaderScroll();
-
 
     if (burgerMenu && mainNavMenu) {
         burgerMenu.addEventListener('click', function() {
@@ -81,14 +83,94 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const slidesData = [
-        { id: "naruzhnaya-reklama", label: "УСЛУГИ КОМПАНИИ", title: "Наружная реклама", description: "Яркие и эффективные решения для вашего бренда на улицах города.", image: "img/slide-naruzhnaya.jpg", tabName: "Наружная реклама" },
-        { id: "oformlenie-vitrin", label: "УСЛУГИ КОМПАНИИ", title: "Оформление витрин", description: "Инсталляции, световые решения, объемные фигуры, буквы в витринах.", image: "img/slide-vitrin.jpg", tabName: "Оформление витрин" },
-        { id: "magazino-stroenie", label: "УСЛУГИ КОМПАНИИ", title: "Магазино-строение", description: "Комплексные решения для открытия магазина: кассовые зоны, прилавки, витрины, торговые точки.", image: "img/slide-magazin.jpg", tabName: "Магазино-строение" },
-        { id: "dizain-proekty", label: "УСЛУГИ КОМПАНИИ", title: "Дизайн-проекты", description: "Создание эксклюзивной дизайн-концепции, адаптация, ребрендинг.", image: "img/slide-dizain.jpg", tabName: "Дизайн-проекты" },
-        { id: "navigatsiya", label: "УСЛУГИ КОМПАНИИ", title: "Навигация", description: "Внутренняя и внешняя рекламная навигация на любых носителях.", image: "img/slide-navigatsiya.jpg", tabName: "Навигация" },
-        { id: "eksklyuzivnye-pop-up", label: "УСЛУГИ КОМПАНИИ", title: "Эксклюзивные pop-up", description: "Сложные функциональные брендированные зоны в торговом пространстве.", image: "img/slide-popup.jpg", tabName: "Эксклюзивные pop-up" },
-        { id: "torgovye-prostranstva", label: "УСЛУГИ КОМПАНИИ", title: "Торговые пространства", description: "Комплексное брендирование магазинов, торговых центров, ресторанов, спортивных объектов.", image: "img/slide-torgovye.jpg", tabName: "Торговые пространства" },
-        { id: "sportivnye-obekty", label: "УСЛУГИ КОМПАНИИ", title: "Спортивные объекты", description: "Рекламное оформление, брендирование, спонсорская реклама, навигация и прочее в спортивных объектах.", image: "img/slide-sport.jpg", tabName: "Спортивные объекты" }
+        { 
+            id: "naruzhnaya-reklama", 
+            label: "УСЛУГИ КОМПАНИИ", 
+            title: "Наружная реклама", 
+            description: "Яркие и эффективные решения для вашего бренда на улицах города.", 
+            image: "img/slide-naruzhnaya-poster.jpg", 
+            videoSrc: "video/slide-naruzhnaya.mp4",    
+            isMedia: true, 
+            mediaType: 'video', 
+            tabName: "Наружная реклама" 
+        },
+        { 
+            id: "oformlenie-vitrin", 
+            label: "УСЛУГИ КОМПАНИИ", 
+            title: "Оформление витрин", 
+            description: "Инсталляции, световые решения, объемные фигуры, буквы в витринах.", 
+            image: "img/slide-vitrin-poster.jpg", 
+            videoSrc: "video/slide-vitrin.mp4",    
+            isMedia: true,
+            mediaType: 'video',
+            tabName: "Оформление витрин" 
+        },
+        { 
+            id: "magazino-stroenie", 
+            label: "УСЛУГИ КОМПАНИИ", 
+            title: "Магазино-строение", 
+            description: "Комплексные решения для открытия магазина: кассовые зоны, прилавки, витрины, торговые точки.", 
+            image: "img/slide-magazin-poster.jpg", 
+            videoSrc: "video/slide-magazin.mp4",
+            isMedia: true,
+            mediaType: 'video',
+            tabName: "Магазино-строение" 
+        },
+        { 
+            id: "dizain-proekty", 
+            label: "УСЛУГИ КОМПАНИИ", 
+            title: "Дизайн-проекты", 
+            description: "Создание эксклюзивной дизайн-концепции, адаптация, ребрендинг.", 
+            image: "img/slide-dizain-poster.jpg", 
+            videoSrc: "video/slide-dizain.mp4",
+            isMedia: true,
+            mediaType: 'video',
+            tabName: "Дизайн-проекты" 
+        },
+        { 
+            id: "navigatsiya", 
+            label: "УСЛУГИ КОМПАНИИ", 
+            title: "Навигация", 
+            description: "Внутренняя и внешняя рекламная навигация на любых носителях.", 
+            image: "img/slide-navigatsiya-poster.jpg", 
+            videoSrc: "video/slide-navigatsiya.mp4",
+            isMedia: true,
+            mediaType: 'video',
+            tabName: "Навигация" 
+        },
+        { 
+            id: "eksklyuzivnye-pop-up", 
+            label: "УСЛУГИ КОМПАНИИ", 
+            title: "Эксклюзивные pop-up", 
+            description: "Сложные функциональные брендированные зоны в торговом пространстве.", 
+            image: "img/slide-popup-poster.jpg", 
+            videoSrc: "video/popup-video.mp4",    
+            isMedia: true,
+            mediaType: 'video',
+            tabName: "Эксклюзивные pop-up" 
+        },
+        { 
+            id: "torgovye-prostranstva", 
+            label: "УСЛУГИ КОМПАНИИ", 
+            title: "Торговые пространства", 
+            description: "Комплексное брендирование магазинов, торговых центров, ресторанов, спортивных объектов.", 
+            image: "img/slide-torgovye-poster.jpg", 
+            videoSrc: "video/slide-torgovye.mp4",
+            isMedia: true,
+            mediaType: 'video',
+            tabName: "Торговые пространства" 
+        },
+        { 
+            id: "sportivnye-obekty", 
+            label: "УСЛУГИ КОМПАНИИ", 
+            title: "Спортивные объекты", 
+            description: "Рекламное оформление, брендирование, спонсорская реклама, навигация и прочее в спортивных объектах.", 
+            image: "img/slide-sport-poster.jpg", 
+            videoSrc: "video/slide-sport.mp4",
+            isMedia: true,
+            mediaType: 'video',
+            tabName: "Спортивные объекты" 
+        }
     ];
     const slideLabelEl = document.getElementById('slide-services-label');
     const slideTitleEl = document.getElementById('slide-title');
@@ -107,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     let autoPlayInterval;
-    const AUTOPLAY_DELAY = 7000;
+    const AUTOPLAY_DELAY = 7000; 
 
     function generateTabs() {
         if (!tabsContainer) return;
@@ -125,56 +207,182 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function updateSlide(index) {
-        if (!slidesData[index] || !slideLabelEl || !slideTitleEl || !slideDescriptionEl || !textContentWrapper || !sliderImageColumn) {
-            return;
-        }
-        const slide = slidesData[index];
-        textContentWrapper.classList.remove('slide-text-animating');
-        slideLabelEl.style.opacity = '0';
-        slideTitleEl.style.opacity = '0';
-        slideDescriptionEl.style.opacity = '0';
-        setTimeout(() => {
-            slideLabelEl.textContent = slide.label;
-            slideTitleEl.textContent = slide.title;
-            slideDescriptionEl.textContent = slide.description;
-            textContentWrapper.classList.add('slide-text-animating');
-        }, 50);
-        const newImage = document.createElement('img');
-        newImage.src = slide.image;
-        newImage.alt = slide.title;
-        const placeholderImg = document.getElementById('slide-image-placeholder');
-        if (placeholderImg) placeholderImg.classList.remove('active');
-        const currentActiveImage = sliderImageColumn.querySelector('img.active');
-        if (currentActiveImage) {
-            currentActiveImage.classList.remove('active');
-        }
-        sliderImageColumn.appendChild(newImage);
-        setTimeout(() => {
-            newImage.classList.add('active');
-        }, 20);
-        const allImages = sliderImageColumn.querySelectorAll('img');
-        allImages.forEach(img => {
-            if (img !== newImage && !img.classList.contains('active')) {
-                setTimeout(() => {
-                    if (img.parentNode) {
-                        img.remove();
+    function playActiveVideo() {
+        const activeVideo = sliderImageColumn.querySelector('video.slide-media.active');
+        if (activeVideo && activeVideo.paused) {
+            if (activeVideo.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) {
+                activeVideo.play().catch(error => {
+                    console.warn("Play attempt failed for active video:", activeVideo.src, error);
+                });
+            } else {
+                const canPlayHandler = () => {
+                    if (activeVideo.classList.contains('active') && activeVideo.paused && 
+                        heroSliderSection.classList.contains('is-visible-slider') && 
+                        !isAutoplayPausedManually) {
+                         activeVideo.play().catch(e => console.warn("Delayed play failed:", activeVideo.src, e));
                     }
-                }, 800);
+                };
+                // Удаляем старые слушатели перед добавлением новых, на всякий случай
+                activeVideo.removeEventListener('canplaythrough', canPlayHandler);
+                activeVideo.removeEventListener('loadeddata', canPlayHandler);
+                activeVideo.addEventListener('canplaythrough', canPlayHandler, { once: true });
+                activeVideo.addEventListener('loadeddata', canPlayHandler, { once: true });
             }
-        });
-        if (tabsContainer) {
-            const tabs = tabsContainer.querySelectorAll('li');
-            tabs.forEach((tab, i) => {
-                if (i === index) {
-                    tab.classList.add('active');
-                } else {
-                    tab.classList.remove('active');
-                }
-            });
         }
-        currentSlideIndex = index;
     }
+
+    function pauseActiveVideo() {
+        const activeVideo = sliderImageColumn.querySelector('video.slide-media.active');
+        if (activeVideo && !activeVideo.paused) {
+            activeVideo.pause();
+        }
+    }
+
+    function updateSlide(index) {
+    if (!slidesData[index] || !slideLabelEl || !slideTitleEl || !slideDescriptionEl || !textContentWrapper || !sliderImageColumn) {
+        console.error("Missing elements for slide update or slide data for index:", index);
+        return;
+    }
+    const slide = slidesData[index];
+    const oldSlideIndex = currentSlideIndex; // Сохраняем предыдущий индекс
+    currentSlideIndex = index; // Обновляем текущий индекс СРАЗУ
+
+    // 1. Пауза всех видео перед сменой
+    sliderImageColumn.querySelectorAll('video.slide-media').forEach(vid => {
+        if (!vid.paused) vid.pause();
+    });
+    
+    // 2. Обновление текстового контента (оставляем как есть)
+    textContentWrapper.classList.remove('slide-text-animating');
+    slideLabelEl.style.opacity = '0';
+    slideTitleEl.style.opacity = '0';
+    slideDescriptionEl.style.opacity = '0';
+    setTimeout(() => {
+        slideLabelEl.textContent = slide.label;
+        slideTitleEl.textContent = slide.title;
+        slideDescriptionEl.textContent = slide.description;
+        textContentWrapper.classList.add('slide-text-animating');
+    }, 50);
+
+    // 3. Работа с медиа-элементами
+    const placeholderImg = document.getElementById('slide-image-placeholder'); // Наш главный плейсхолдер/контейнер для картинки/постера
+
+    // Удаляем ВСЕ предыдущие динамически созданные медиа-элементы (кроме самого плейсхолдера)
+    const allDynamicallyAddedMedia = sliderImageColumn.querySelectorAll('.slide-media:not(#slide-image-placeholder)');
+    allDynamicallyAddedMedia.forEach(mediaEl => {
+        if (mediaEl.tagName === 'VIDEO') {
+            mediaEl.oncanplaythrough = null;
+            mediaEl.onloadeddata = null;
+            mediaEl.onerror = null;
+            mediaEl.src = ""; 
+            mediaEl.removeAttribute('src');
+            mediaEl.load();
+        }
+        if (mediaEl.parentNode) {
+            mediaEl.remove();
+        }
+    });
+    
+    // Сначала всегда скрываем плейсхолдер, если он был активен
+    if (placeholderImg) {
+        placeholderImg.classList.remove('active');
+        placeholderImg.style.opacity = '0'; // Убедимся, что он скрыт
+    }
+    sliderImageColumn.classList.remove('video-slide-active'); // Сбрасываем класс для градиента
+
+    const isVideoSlide = slide.isMedia && slide.mediaType === 'video' && slide.videoSrc;
+
+    if (isVideoSlide) {
+        // Показываем постер через плейсхолдер, пока видео грузится
+        if (placeholderImg && slide.image) {
+            placeholderImg.src = slide.image;
+            placeholderImg.alt = slide.title + " (loading video...)";
+            placeholderImg.style.opacity = '1'; // Показываем постер
+            placeholderImg.classList.add('active'); // Помечаем его активным временно
+        } else if (placeholderImg) {
+            placeholderImg.style.opacity = '0'; // Если постера нет, плейсхолдер не нужен
+            placeholderImg.classList.remove('active');
+        }
+
+        let newVideoElement = document.createElement('video');
+        newVideoElement.src = slide.videoSrc;
+        if (slide.image) newVideoElement.poster = slide.image; // Постер для самого видео тоже полезен
+        newVideoElement.loop = true;
+        newVideoElement.muted = true; 
+        newVideoElement.playsInline = true; 
+        newVideoElement.preload = "auto";
+        newVideoElement.removeAttribute('controls'); 
+        newVideoElement.setAttribute('data-media-type', 'video');
+        newVideoElement.classList.add('slide-media');
+        newVideoElement.style.opacity = '0'; // Изначально видео невидимо
+        
+        sliderImageColumn.appendChild(newVideoElement);
+        sliderImageColumn.classList.add('video-slide-active'); // Для градиента
+
+        const videoReadyHandler = () => {
+            // Убеждаемся, что этот слайд все еще текущий
+            if (currentSlideIndex === index) {
+                if (placeholderImg) { // Плавно скрываем постер (плейсхолдер)
+                    placeholderImg.style.opacity = '0';
+                    placeholderImg.classList.remove('active');
+                }
+                newVideoElement.style.opacity = '1'; // Плавно показываем видео
+                newVideoElement.classList.add('active');
+                if (heroSliderSection.classList.contains('is-visible-slider') && !isAutoplayPausedManually) {
+                    playActiveVideo(); // playActiveVideo теперь найдет newVideoElement с классом active
+                }
+            } else {
+                // Если слайд сменился, пока это видео грузилось, просто удаляем его
+                if (newVideoElement.parentNode) newVideoElement.remove();
+            }
+        };
+        
+        if (newVideoElement.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) {
+           setTimeout(videoReadyHandler, 50); // Даем время постеру отобразиться
+        } else {
+            newVideoElement.addEventListener('canplaythrough', videoReadyHandler, { once: true });
+            newVideoElement.addEventListener('loadeddata', videoReadyHandler, { once: true }); // Фоллбэк
+            newVideoElement.addEventListener('error', (e) => {
+                console.error('Error loading video:', newVideoElement.src, e);
+                // Если видео не загрузилось, оставляем постер видимым (если он есть и был загружен в плейсхолдер)
+                // Плейсхолдер уже должен быть активен с постером
+                if (placeholderImg && !slide.image) { // Если постера не было, а видео не загрузилось
+                    placeholderImg.style.opacity = '0';
+                    placeholderImg.classList.remove('active');
+                }
+                if (newVideoElement.parentNode) newVideoElement.remove();
+                sliderImageColumn.classList.remove('video-slide-active');
+            }, { once: true });
+        }
+
+    } else { // Для GIF или обычных изображений
+        if (placeholderImg) {
+            placeholderImg.src = slide.image; // Загружаем картинку в плейсхолдер
+            placeholderImg.alt = slide.title;
+            placeholderImg.setAttribute('data-media-type', slide.isMedia && slide.mediaType === 'gif' ? 'gif' : 'image');
+            placeholderImg.classList.add('slide-media'); // Убедимся, что у плейсхолдера есть этот класс
+            
+            // Очищаем слушатели, если они были на плейсхолдере от предыдущего видео
+            // (хотя мы удаляем динамические видео, плейсхолдер остается)
+            const newPlaceholder = placeholderImg.cloneNode(true);
+            placeholderImg.parentNode.replaceChild(newPlaceholder, placeholderImg);
+            // placeholderImg = newPlaceholder; // Переназначаем, если нужно будет дальше с ним работать в этой функции
+
+            // Показываем плейсхолдер с новой картинкой
+            newPlaceholder.style.opacity = '1';
+            newPlaceholder.classList.add('active');
+        }
+        sliderImageColumn.classList.remove('video-slide-active');
+    }
+
+    // Обновление табов
+    if (tabsContainer) {
+        const tabs = tabsContainer.querySelectorAll('li');
+        tabs.forEach((tab, i) => {
+            tab.classList.toggle('active', i === index);
+        });
+    }
+}
 
     function nextSlide() {
         let newIndex = (currentSlideIndex + 1) % slidesData.length;
@@ -189,28 +397,82 @@ document.addEventListener('DOMContentLoaded', function() {
     function goToSlide(index) {
         updateSlide(index);
     }
+    
+    let isAutoplayPausedManually = false; 
 
     function startAutoPlay() {
-        stopAutoPlay();
+        isAutoplayPausedManually = false;
+        stopAutoPlay(); 
         autoPlayInterval = setInterval(nextSlide, AUTOPLAY_DELAY);
+        if (heroSliderSection.classList.contains('is-visible-slider')) { 
+            playActiveVideo();
+        }
     }
 
-    function stopAutoPlay() {
+    function stopAutoPlay(manualPause = false) { 
+        if(manualPause) isAutoplayPausedManually = true;
         clearInterval(autoPlayInterval);
+        autoPlayInterval = null; 
+        pauseActiveVideo();
+    }
+
+    if (heroSliderSection) {
+        const sliderObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    heroSliderSection.classList.add('is-visible-slider');
+                    if (!isAutoplayPausedManually) { 
+                       playActiveVideo(); 
+                       if (!autoPlayInterval && slidesData.length > 1) { 
+                           startAutoPlay();
+                       }
+                    }
+                } else {
+                    heroSliderSection.classList.remove('is-visible-slider');
+                    pauseActiveVideo(); 
+                    if (autoPlayInterval) { 
+                        clearInterval(autoPlayInterval);
+                        autoPlayInterval = null; 
+                    }
+                }
+            });
+        }, { threshold: 0.1 }); 
+
+        sliderObserver.observe(heroSliderSection);
     }
 
     if (slidesData.length > 0 && heroSliderSection) {
         generateTabs();
-        updateSlide(currentSlideIndex);
-        startAutoPlay();
-        if (prevArrow && nextArrow) {
-            prevArrow.addEventListener('click', () => { prevSlide(); stopAutoPlay(); startAutoPlay(); });
-            nextArrow.addEventListener('click', () => { nextSlide(); stopAutoPlay(); startAutoPlay(); });
+        // Инициализация первого слайда. Если он не виден, IntersectionObserver не запустит видео/автоплей.
+        // Если он виден, IntersectionObserver должен его подхватить.
+        updateSlide(currentSlideIndex); 
+        // Запускаем автоплей, если слайдер изначально видим и слайдов больше одного
+        if (heroSliderSection.classList.contains('is-visible-slider') && slidesData.length > 1) {
+             startAutoPlay();
         }
-        heroSliderSection.addEventListener('mouseenter', stopAutoPlay);
-        heroSliderSection.addEventListener('mouseleave', startAutoPlay);
+
+
+        if (prevArrow && nextArrow) {
+            prevArrow.addEventListener('click', () => { 
+                prevSlide(); 
+                stopAutoPlay();    
+                startAutoPlay();   
+            });
+            nextArrow.addEventListener('click', () => { 
+                nextSlide(); 
+                stopAutoPlay();
+                startAutoPlay();
+            });
+        }
+        heroSliderSection.addEventListener('mouseenter', () => stopAutoPlay(true)); 
+        heroSliderSection.addEventListener('mouseleave', () => {
+            if (heroSliderSection.classList.contains('is-visible-slider') && slidesData.length > 1) { 
+                startAutoPlay();
+            }
+        });
     }
 
+    // --- ОСТАЛЬНАЯ ЧАСТЬ КОДА ---
     const projectsGridContainer = document.getElementById('projects-grid-container');
     const filterBtns = document.querySelectorAll('.project-filters .filter-btn');
     const allProjects = [
@@ -374,43 +636,27 @@ document.addEventListener('DOMContentLoaded', function() {
         renderProjects();
     }
 
-        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
     const observerCallback = (entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const delay = entry.target.dataset.animationDelay || '0s';
-                entry.target.style.transitionDelay = delay; // Это устанавливает задержку только для первого появления
+                entry.target.style.transitionDelay = delay; 
                 entry.target.classList.add('is-visible');
-                // observer.unobserve(entry.target); // УБЕРИ ЭТУ СТРОКУ, если она есть, чтобы анимация работала повторно
             } else {
-                // Элемент ушел из зоны видимости
-                // Если хочешь, чтобы он скрывался КАЖДЫЙ РАЗ при уходе вверх, используй это:
-                // entry.target.classList.remove('is-visible');
-                // entry.target.style.transitionDelay = '0s, 0s, 0.7s'; // Восстанавливаем задержку для visibility при скрытии, если нужно
-                                                                  // Первый 0s для opacity, второй для transform
-
-                // Если хочешь, чтобы он оставался видимым после первого появления,
-                // но скрывался, если скроллишь очень быстро вверх и он снова попадает в "невидимую" зону
-                // (более сложный сценарий, требующий отслеживания направления скролла),
-                // то этот блок else можно оставить пустым или сделать его более умным.
-                // Пока сделаем так, что он будет скрываться при уходе из видимости.
                  entry.target.classList.remove('is-visible');
             }
         });
     };
-    // Уменьшим threshold, чтобы анимация срабатывала чуть раньше/позже, можно настроить
-    // rootMargin: '-50px 0px -50px 0px' означает, что зона видимости будет "уменьшена" на 50px сверху и снизу,
-    // т.е. элемент должен будет зайти на 50px в экран, чтобы сработать, и уйти на 50px, чтобы скрыться.
     const observerOptions = { 
         root: null, 
-        rootMargin: '0px 0px -10% 0px', // Сработает, когда 10% элемента снизу показалось или ушло
-        threshold: 0.01 // Минимальный порог пересечения
+        rootMargin: '0px 0px -10% 0px', 
+        threshold: 0.01 
     };
     const observer = new IntersectionObserver(observerCallback, observerOptions);
     animatedElements.forEach(el => {
-        // Устанавливаем начальную задержку из data-атрибута один раз
         const initialDelay = el.dataset.animationDelay || '0s';
-        el.style.transitionDelay = `${initialDelay}, ${initialDelay}, 0.7s`; // opacity, transform, visibility
+        el.style.transitionDelay = `${initialDelay}, ${initialDelay}, 0.7s`; 
         observer.observe(el);
     });
 
@@ -506,27 +752,40 @@ document.addEventListener('DOMContentLoaded', function() {
         const photoSizeMax = 220;
         teamPhotosContainer.innerHTML = ''; 
         let existingPhotoPositions = [];
+
+        let containerWidth = teamPhotosContainer.offsetWidth;
+        let containerHeight = teamPhotosContainer.offsetHeight;
+        const parentVisualContent = teamPhotosContainer.closest('.team-visual-content');
+
+        if (containerWidth === 0 || containerHeight === 0) {
+            if (parentVisualContent) {
+                containerWidth = parentVisualContent.offsetWidth;
+                containerHeight = parentVisualContent.offsetHeight;
+            }
+            if (containerWidth === 0) {
+                containerWidth = Math.max(300, window.innerWidth * 0.7); 
+            }
+            if (containerHeight === 0) {
+                containerHeight = Math.max(300, window.innerHeight * 0.5); 
+            }
+        }
+
         for (let i = 0; i < numberOfPhotos; i++) {
             const photoEl = document.createElement('div');
             photoEl.className = 'team-photo-item animate-on-scroll';
             const img = document.createElement('img');
-            const randomWidth = Math.floor(Math.random() * (photoSizeMax - photoSizeMin + 1) + photoSizeMin);
+            
+            let currentPhotoSizeMin = photoSizeMin;
+            let currentPhotoSizeMax = photoSizeMax;
+            if (containerWidth < 400) { 
+                currentPhotoSizeMin = 80;
+                currentPhotoSizeMax = 150;
+            }
+
+            const randomWidth = Math.floor(Math.random() * (currentPhotoSizeMax - currentPhotoSizeMin + 1) + currentPhotoSizeMin);
             const randomHeight = Math.floor(randomWidth * (Math.random() * 0.4 + 1.05));
             img.src = `https://via.placeholder.com/${randomWidth}x${randomHeight}.png/e0e0e0/a0a0a0?text=Сотрудник+${i + 1}`;
             photoEl.appendChild(img);
-            
-            let containerWidth = teamPhotosContainer.offsetWidth;
-            let containerHeight = teamPhotosContainer.offsetHeight;
-
-            if(containerWidth === 0 && containerHeight === 0) {
-                const parentVisualContent = document.querySelector('.team-visual-content');
-                if(parentVisualContent) {
-                    containerWidth = parentVisualContent.offsetWidth || 600;
-                    containerHeight = parentVisualContent.offsetHeight || 550;
-                } else {
-                    containerWidth = 600; containerHeight = 550; 
-                }
-            }
             
             let x, y, overlap;
             let attempts = 0;
@@ -535,11 +794,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
             do {
                 overlap = false;
-                x = Math.random() * (containerWidth - randomWidth - 20) + 10;
-                y = Math.random() * (containerHeight - randomHeight - 20) + 10;
+                x = Math.random() * Math.max(0, (containerWidth - randomWidth - paddingBetweenPhotos * 2)) + paddingBetweenPhotos;
+                y = Math.random() * Math.max(0, (containerHeight - randomHeight - paddingBetweenPhotos * 2)) + paddingBetweenPhotos;
                 
-                x = Math.max(10, Math.min(x, containerWidth - randomWidth - 10));
-                y = Math.max(10, Math.min(y, containerHeight - randomHeight - 10));
+                x = Math.max(paddingBetweenPhotos, Math.min(x, containerWidth - randomWidth - paddingBetweenPhotos));
+                y = Math.max(paddingBetweenPhotos, Math.min(y, containerHeight - randomHeight - paddingBetweenPhotos));
+
 
                 for (const pos of existingPhotoPositions) {
                     if (x < pos.x + pos.w + paddingBetweenPhotos && 
@@ -621,22 +881,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 slidesPerView: 'auto', 
                 spaceBetween: 25,      
                 centeredSlides: false, 
-                // loopedSlides: clientsSwiperContainer.querySelectorAll('.swiper-slide').length > 5 ? clientsSwiperContainer.querySelectorAll('.swiper-slide').length : 5, // Эту строку можно убрать или настроить точнее
                 autoplay: {
-                    delay: 0, // Поставь 0 или очень маленькое значение для непрерывного движения
+                    delay: 0, 
                     disableOnInteraction: false, 
                     pauseOnMouseEnter: true,     
                 },
-                speed: 8000, // Увеличь скорость для более медленного и плавного движения (8-10 секунд на "круг")
+                speed: 8000, 
                 allowTouchMove: false, 
                 observer: true, 
                 observeParents: true,
-                freeMode: true, // Включаем свободный режим
-                freeModeMomentum: false, // Отключаем инерцию для плавности
-                // Убедись, что слайдов достаточно для зацикливания.
-                // Если их мало, loop: true может не работать как ожидается с slidesPerView: 'auto'
-                // В этом случае, в HTML можно просто продублировать существующие слайды.
-                // Например, если у тебя 15 лого, сделай 30 (скопируй блок swiper-slide 15 раз)
+                freeMode: true, 
+                freeModeMomentum: false, 
              });
         }
     } else {
@@ -738,7 +993,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // --- MODAL LOGIC (SHARED FUNCTIONALITY) ---
     function closeModal(modalElement) {
         if (modalElement) {
             modalElement.classList.remove('show');
@@ -890,7 +1144,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if(okResultBtn) okResultBtn.addEventListener('click', restoreFormAndClose);
     }
 
-    // --- "Свяжитесь со мной" Modal ---
     const contactModalConfig = {
         modalId: 'contact-modal',
         openBtnId: 'open-contact-modal-btn',
@@ -957,11 +1210,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 formData.set('agreement', 'on');
             }
             
-            console.log('Отправка данных формы "Свяжитесь со мной"...');
-            for (let [key, value] of formData.entries()) {
-                console.log(`FormData "Свяжитесь": ${key}: ${value}`);
-            }
-
             try {
                 const response = await fetch('http://localhost:5000/api/submit_callback', { 
                     method: 'POST',
@@ -997,15 +1245,16 @@ document.addEventListener('DOMContentLoaded', function() {
                      }
                 );
             } finally {
-                 submitButton.textContent = originalButtonText;
-                 submitButton.disabled = false;
+                 if (submitButton) { 
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
+                 }
             }
         };
         contactModalFormElem.onsubmit = contactFormSubmitHandler;
     }
 
 
-    // --- "Рассчитать стоимость" Modal ---
     const MAX_FILES_COUNT = 3;
     const MAX_TOTAL_SIZE_MB = 4.5; 
     const MAX_TOTAL_SIZE_BYTES = MAX_TOTAL_SIZE_MB * 1024 * 1024;
@@ -1046,17 +1295,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Эти переменные нужно будет переопределять в reinitializeCalcFormElements
-    // let fileDropArea = document.getElementById('calc-file-drop-area');
-    // let fileInput = document.getElementById('calc-modal-files');
-    // let fileListUI = document.getElementById('calc-file-list');
-    // let fileUploadInfoUI = document.getElementById('calc-file-upload-info');
-    // let fileCountInfoUI = document.getElementById('calc-file-count-info');
-    // let fileSizeInfoUI = document.getElementById('calc-file-size-info');
 
     function handleFiles(files) {
         let currentTotalSize = attachedFiles.reduce((sum, f) => sum + f.size, 0);
-        const localFileInput = document.getElementById('calc-modal-files'); // Получаем актуальный элемент
+        const localFileInput = document.getElementById('calc-modal-files'); 
 
         for (const file of files) {
             if (attachedFiles.length >= MAX_FILES_COUNT) {
@@ -1088,10 +1330,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateFileListUI() {
         const localFileListUI = document.getElementById('calc-file-list'); 
         if (!localFileListUI) {
-            // console.error('updateFileListUI: localFileListUI element not found!');
             return;
         }
-        // console.log('updateFileListUI called. attachedFiles:', JSON.stringify(attachedFiles.map(f => f.name)));
         
         localFileListUI.innerHTML = ''; 
         attachedFiles.forEach((file, index) => {
@@ -1122,7 +1362,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const localFileSizeInfoUI = document.getElementById('calc-file-size-info');
 
         if (!localFileUploadInfoUI || !localFileCountInfoUI || !localFileSizeInfoUI) {
-            // console.error('updateFileUploadInfo: One or more UI elements not found!');
             return;
         }
         if (attachedFiles.length > 0) {
@@ -1152,7 +1391,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const restoredFileInput = modalContentElement.querySelector('#calc-modal-files');
         const restoredDropArea = modalContentElement.querySelector('#calc-file-drop-area');
         
-        if (restoredForm && calcModalFormElem && calcModalFormElem.onsubmit) { // calcModalFormElem здесь это ссылка на первоначальный элемент
+        if (restoredForm && calcModalFormElem && calcModalFormElem.onsubmit) { 
              restoredForm.onsubmit = calcModalFormElem.onsubmit; 
         }
         if (restoredCountrySelect && restoredPhoneInput) {
@@ -1160,7 +1399,7 @@ document.addEventListener('DOMContentLoaded', function() {
             restoredPhoneInput.oninput = (e) => handlePhoneInput(e, restoredCountrySelect);
             restoredPhoneInput.onkeydown = (e) => handlePhoneKeyDown(e, restoredCountrySelect);
         }
-        if (restoredCloseBtn && calcModalElem) { // calcModalElem тоже ссылка на первоначальный элемент
+        if (restoredCloseBtn && calcModalElem) { 
             restoredCloseBtn.onclick = () => closeModal(calcModalElem);
         }
         if (restoredDetailsTextarea && restoredCharCounter) {
@@ -1180,14 +1419,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             };
         }
-        updateFileListUI(); // Обновляем UI списка файлов после переинициализации
-        updateFileUploadInfo(); // Обновляем UI информации о файлах
+        updateFileListUI(); 
+        updateFileUploadInfo(); 
     }
     
     let originalCalcFormHTML = '';
     if (calcModalFormElem) {
         originalCalcFormHTML = calcModalFormElem.closest('.modal-content').innerHTML;
-        const calcFormSubmitHandler = async function(event) { // Именуем обработчик
+        const calcFormSubmitHandler = async function(event) { 
             event.preventDefault();
             
             const agreementCheckboxCalc = document.getElementById('calc-modal-agree');
@@ -1236,15 +1475,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 formData.append('project_files[]', file, file.name);
             });
             
-            console.log('Отправка данных формы "Рассчитать стоимость"...');
-             for (let [key, value] of formData.entries()) {
-                if (value instanceof File) {
-                    console.log(`FormData "Расчет": ${key}: ${value.name} (size: ${value.size})`);
-                } else {
-                    console.log(`FormData "Расчет": ${key}: ${value}`);
-                }
-            }
-
             try {
                 const response = await fetch('http://localhost:5000/api/calculate_project_cost', { 
                     method: 'POST',
@@ -1289,8 +1519,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 );
             } finally {
-                 submitButton.textContent = originalButtonText;
-                 submitButton.disabled = false;
+                 if (submitButton) { 
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
+                 }
             }
         };
         calcModalFormElem.onsubmit = calcFormSubmitHandler; 
