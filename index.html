@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Гильдия Луч</title>
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="css/style.css">
@@ -20,6 +20,7 @@
                     <li><a href="#projects-section">Проекты</a></li>
                     <li><a href="#production-stats">Производство</a></li>
                     <li><a href="#contact-us">Контакты</a></li>
+                    <li class="mobile-only-nav-item"><a href="tel:+74950238888" class="phone-number-mobile">+7 (495) 023-88-88</a></li>
                 </ul>
             </nav>
             <div class="header-right-controls">
@@ -36,6 +37,11 @@
 
     <section class="hero-slider-section" id="hero-slider">
         <div class="slider-main-content">
+            <!-- Фоновое видео/изображение будет здесь (JS) -->
+            <div class="slider-image-column">
+                 <img src="img/placeholder.jpg" alt="Изображение слайда" id="slide-image-placeholder" class="slide-media" style="opacity:0;">
+            </div>
+            <!-- Текстовый контент и стрелки поверх -->
             <div class="slider-text-column">
                 <div class="slide-content-wrapper">
                     <span class="services-label" id="slide-services-label">УСЛУГИ КОМПАНИИ</span>
@@ -47,15 +53,14 @@
                     <button class="slider-arrow arrow-next" id="slider-arrow-next" aria-label="Следующий слайд">→</button>
                 </div>
             </div>
-            <div class="slider-image-column">
-                <img src="img/placeholder.jpg" alt="Изображение слайда" id="slide-image-placeholder" style="opacity:0;">
-            </div>
         </div>
         <div class="slider-tabs-navigation">
             <ul id="slider-tabs-container"></ul>
         </div>
     </section>
 
+    <!-- ... Остальная часть HTML-кода остается без изменений ... -->
+    <!-- About Section, Marquee, Services, Projects, Production Stats, Video Gallery, Team, Awards, Partner Letters, Contact, Footer, Modals -->
     <section class="about-section" id="about-company-section">
         <div class="container about-container">
             <div class="about-content-grid">
@@ -353,7 +358,6 @@
         </div>
     </div>
 
-    <!-- Новая модалка "Рассчитать стоимость" -->
     <div class="modal" id="calculate-cost-modal">
         <div class="modal-content">
             <button class="modal-close-btn" id="close-calculate-cost-modal-btn" aria-label="Закрыть">×</button>
@@ -390,9 +394,7 @@
                         <p>Перетащите файлы сюда или <label for="calc-modal-files" class="file-input-label">выберите на устройстве</label></p>
                         <input type="file" id="calc-modal-files" name="project_files[]" multiple accept=".pdf,.xlsx,.xls,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png,.zip,.rar">
                     </div>
-                    <div class="file-list" id="calc-file-list">
-                        <!-- Сюда будут добавляться имена загруженных файлов -->
-                    </div>
+                    <div class="file-list" id="calc-file-list"></div>
                     <div class="file-upload-info" id="calc-file-upload-info" style="display: none;">
                         <span id="calc-file-count-info"></span> | <span id="calc-file-size-info"></span>
                     </div>
