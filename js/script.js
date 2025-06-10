@@ -188,8 +188,10 @@ document.addEventListener('DOMContentLoaded', function() {
         console.warn(`Default slide with id "${defaultSlideId}" not found. Starting with the first slide.`);
     }
 
-    let autoPlayInterval;
+    let autoPlayInterval = null; // Инициализируем null
     const AUTOPLAY_DELAY = 7000; 
+    let isSliderVisible = false; // Флаг видимости слайдера
+    let isMouseOverSlider = false; // Флаг наведения мыши
 
     function generateTabs() {
         if (!tabsContainer) return;
@@ -201,13 +203,23 @@ document.addEventListener('DOMContentLoaded', function() {
             tabsContainer.appendChild(tab);
             tab.addEventListener('click', () => {
                 goToSlide(index);
-                stopAutoPlay();
-                startAutoPlay();
+                // При клике на таб, если мышь не наведена, автоплей перезапустится
+                // Если наведена, видео все равно сменится и заиграет, а автоплей останется на паузе.
+                if (!isMouseOverSlider) {
+                    stopAutoPlayInterval();
+                    startAutoPlayInterval();
+                }
+                // Убедимся, что видео нового слайда играет, если слайдер видим
+                if (isSliderVisible) {
+                    playActiveVideo();
+                }
             });
         });
     }
 
     function playActiveVideo() {
+        if (!isSliderVisible) return; // Не играть, если слайдер не виден
+
         const activeVideo = sliderImageColumn.querySelector('video.slide-media.active');
         if (activeVideo && activeVideo.paused) {
             if (activeVideo.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) {
@@ -216,14 +228,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             } else {
                 const canPlayHandler = () => {
-                    if (activeVideo.classList.contains('active') && activeVideo.paused && 
-                        heroSliderSection.classList.contains('is-visible-slider') && 
-                        !isAutoplayPausedManually) {
+                    if (activeVideo.classList.contains('active') && activeVideo.paused && isSliderVisible) {
                          activeVideo.play().catch(e => console.warn("Delayed play failed:", activeVideo.src, e));
                     }
                 };
-                // Удаляем старые слушатели перед добавлением новых, на всякий случай
-                activeVideo.removeEventListener('canplaythrough', canPlayHandler);
+                activeVideo.removeEventListener('canplaythrough', canPlayHandler); // Удаляем старый, если был
                 activeVideo.removeEventListener('loadeddata', canPlayHandler);
                 activeVideo.addEventListener('canplaythrough', canPlayHandler, { once: true });
                 activeVideo.addEventListener('loadeddata', canPlayHandler, { once: true });
@@ -237,152 +246,165 @@ document.addEventListener('DOMContentLoaded', function() {
             activeVideo.pause();
         }
     }
-
+    
     function updateSlide(index) {
-    if (!slidesData[index] || !slideLabelEl || !slideTitleEl || !slideDescriptionEl || !textContentWrapper || !sliderImageColumn) {
-        console.error("Missing elements for slide update or slide data for index:", index);
-        return;
-    }
-    const slide = slidesData[index];
-    const oldSlideIndex = currentSlideIndex; // Сохраняем предыдущий индекс
-    currentSlideIndex = index; // Обновляем текущий индекс СРАЗУ
-
-    // 1. Пауза всех видео перед сменой
-    sliderImageColumn.querySelectorAll('video.slide-media').forEach(vid => {
-        if (!vid.paused) vid.pause();
-    });
-    
-    // 2. Обновление текстового контента (оставляем как есть)
-    textContentWrapper.classList.remove('slide-text-animating');
-    slideLabelEl.style.opacity = '0';
-    slideTitleEl.style.opacity = '0';
-    slideDescriptionEl.style.opacity = '0';
-    setTimeout(() => {
-        slideLabelEl.textContent = slide.label;
-        slideTitleEl.textContent = slide.title;
-        slideDescriptionEl.textContent = slide.description;
-        textContentWrapper.classList.add('slide-text-animating');
-    }, 50);
-
-    // 3. Работа с медиа-элементами
-    const placeholderImg = document.getElementById('slide-image-placeholder'); // Наш главный плейсхолдер/контейнер для картинки/постера
-
-    // Удаляем ВСЕ предыдущие динамически созданные медиа-элементы (кроме самого плейсхолдера)
-    const allDynamicallyAddedMedia = sliderImageColumn.querySelectorAll('.slide-media:not(#slide-image-placeholder)');
-    allDynamicallyAddedMedia.forEach(mediaEl => {
-        if (mediaEl.tagName === 'VIDEO') {
-            mediaEl.oncanplaythrough = null;
-            mediaEl.onloadeddata = null;
-            mediaEl.onerror = null;
-            mediaEl.src = ""; 
-            mediaEl.removeAttribute('src');
-            mediaEl.load();
+        if (!slidesData[index] || !slideLabelEl || !slideTitleEl || !slideDescriptionEl || !textContentWrapper || !sliderImageColumn) {
+            console.error("Missing elements for slide update or slide data for index:", index);
+            return;
         }
-        if (mediaEl.parentNode) {
-            mediaEl.remove();
+        const slide = slidesData[index];
+        const oldSlideIndex = currentSlideIndex;
+        currentSlideIndex = index;
+
+        sliderImageColumn.querySelectorAll('video.slide-media:not(.active)').forEach(vid => { // Паузим только НЕ активные перед удалением
+            if (!vid.paused) vid.pause();
+        });
+         // Паузим предыдущее активное видео, если оно было видео
+        const previousActiveVideo = sliderImageColumn.querySelector('video.slide-media.active');
+        if (previousActiveVideo && previousActiveVideo.closest('.slider-image-column')) { // Убедимся, что оно еще в DOM
+            previousActiveVideo.pause();
         }
-    });
-    
-    // Сначала всегда скрываем плейсхолдер, если он был активен
-    if (placeholderImg) {
-        placeholderImg.classList.remove('active');
-        placeholderImg.style.opacity = '0'; // Убедимся, что он скрыт
-    }
-    sliderImageColumn.classList.remove('video-slide-active'); // Сбрасываем класс для градиента
-
-    const isVideoSlide = slide.isMedia && slide.mediaType === 'video' && slide.videoSrc;
-
-    if (isVideoSlide) {
-        // Показываем постер через плейсхолдер, пока видео грузится
-        if (placeholderImg && slide.image) {
-            placeholderImg.src = slide.image;
-            placeholderImg.alt = slide.title + " (loading video...)";
-            placeholderImg.style.opacity = '1'; // Показываем постер
-            placeholderImg.classList.add('active'); // Помечаем его активным временно
-        } else if (placeholderImg) {
-            placeholderImg.style.opacity = '0'; // Если постера нет, плейсхолдер не нужен
-            placeholderImg.classList.remove('active');
-        }
-
-        let newVideoElement = document.createElement('video');
-        newVideoElement.src = slide.videoSrc;
-        if (slide.image) newVideoElement.poster = slide.image; // Постер для самого видео тоже полезен
-        newVideoElement.loop = true;
-        newVideoElement.muted = true; 
-        newVideoElement.playsInline = true; 
-        newVideoElement.preload = "auto";
-        newVideoElement.removeAttribute('controls'); 
-        newVideoElement.setAttribute('data-media-type', 'video');
-        newVideoElement.classList.add('slide-media');
-        newVideoElement.style.opacity = '0'; // Изначально видео невидимо
         
-        sliderImageColumn.appendChild(newVideoElement);
-        sliderImageColumn.classList.add('video-slide-active'); // Для градиента
+        textContentWrapper.classList.remove('slide-text-animating');
+        slideLabelEl.style.opacity = '0';
+        slideTitleEl.style.opacity = '0';
+        slideDescriptionEl.style.opacity = '0';
+        setTimeout(() => {
+            slideLabelEl.textContent = slide.label;
+            slideTitleEl.textContent = slide.title;
+            slideDescriptionEl.textContent = slide.description;
+            textContentWrapper.classList.add('slide-text-animating');
+        }, 50);
 
-        const videoReadyHandler = () => {
-            // Убеждаемся, что этот слайд все еще текущий
-            if (currentSlideIndex === index) {
-                if (placeholderImg) { // Плавно скрываем постер (плейсхолдер)
-                    placeholderImg.style.opacity = '0';
-                    placeholderImg.classList.remove('active');
-                }
-                newVideoElement.style.opacity = '1'; // Плавно показываем видео
-                newVideoElement.classList.add('active');
-                if (heroSliderSection.classList.contains('is-visible-slider') && !isAutoplayPausedManually) {
-                    playActiveVideo(); // playActiveVideo теперь найдет newVideoElement с классом active
-                }
-            } else {
-                // Если слайд сменился, пока это видео грузилось, просто удаляем его
-                if (newVideoElement.parentNode) newVideoElement.remove();
+        const placeholderImg = document.getElementById('slide-image-placeholder');
+        
+        const currentActiveMediaElements = sliderImageColumn.querySelectorAll('.slide-media.active');
+        currentActiveMediaElements.forEach(activeMedia => {
+            activeMedia.classList.remove('active');
+            if (activeMedia.tagName === 'VIDEO') {
+                 sliderImageColumn.classList.remove('video-slide-active');
             }
-        };
+        });
+
+        const allDynamicallyAddedMedia = sliderImageColumn.querySelectorAll('.slide-media:not(#slide-image-placeholder)');
+        allDynamicallyAddedMedia.forEach(mediaEl => {
+            if (mediaEl.tagName === 'VIDEO') {
+                mediaEl.oncanplaythrough = null; 
+                mediaEl.onloadeddata = null;
+                mediaEl.onerror = null;
+                mediaEl.src = ""; 
+                mediaEl.removeAttribute('src'); 
+                mediaEl.load();
+            }
+            setTimeout(() => {
+                if (mediaEl.parentNode) mediaEl.remove();
+            }, 800); 
+        });
         
-        if (newVideoElement.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) {
-           setTimeout(videoReadyHandler, 50); // Даем время постеру отобразиться
-        } else {
-            newVideoElement.addEventListener('canplaythrough', videoReadyHandler, { once: true });
-            newVideoElement.addEventListener('loadeddata', videoReadyHandler, { once: true }); // Фоллбэк
-            newVideoElement.addEventListener('error', (e) => {
-                console.error('Error loading video:', newVideoElement.src, e);
-                // Если видео не загрузилось, оставляем постер видимым (если он есть и был загружен в плейсхолдер)
-                // Плейсхолдер уже должен быть активен с постером
-                if (placeholderImg && !slide.image) { // Если постера не было, а видео не загрузилось
-                    placeholderImg.style.opacity = '0';
-                    placeholderImg.classList.remove('active');
-                }
-                if (newVideoElement.parentNode) newVideoElement.remove();
-                sliderImageColumn.classList.remove('video-slide-active');
-            }, { once: true });
-        }
-
-    } else { // Для GIF или обычных изображений
         if (placeholderImg) {
-            placeholderImg.src = slide.image; // Загружаем картинку в плейсхолдер
-            placeholderImg.alt = slide.title;
-            placeholderImg.setAttribute('data-media-type', slide.isMedia && slide.mediaType === 'gif' ? 'gif' : 'image');
-            placeholderImg.classList.add('slide-media'); // Убедимся, что у плейсхолдера есть этот класс
-            
-            // Очищаем слушатели, если они были на плейсхолдере от предыдущего видео
-            // (хотя мы удаляем динамические видео, плейсхолдер остается)
-            const newPlaceholder = placeholderImg.cloneNode(true);
-            placeholderImg.parentNode.replaceChild(newPlaceholder, placeholderImg);
-            // placeholderImg = newPlaceholder; // Переназначаем, если нужно будет дальше с ним работать в этой функции
-
-            // Показываем плейсхолдер с новой картинкой
-            newPlaceholder.style.opacity = '1';
-            newPlaceholder.classList.add('active');
+            placeholderImg.classList.remove('active');
+            placeholderImg.style.opacity = '0';
         }
         sliderImageColumn.classList.remove('video-slide-active');
-    }
 
-    // Обновление табов
-    if (tabsContainer) {
-        const tabs = tabsContainer.querySelectorAll('li');
-        tabs.forEach((tab, i) => {
-            tab.classList.toggle('active', i === index);
-        });
+        let newMediaElement;
+        const isVideoSlide = slide.isMedia && slide.mediaType === 'video' && slide.videoSrc;
+
+        if (isVideoSlide) {
+            if (placeholderImg && slide.image) {
+                placeholderImg.src = slide.image;
+                placeholderImg.alt = slide.title + " (loading video...)";
+                placeholderImg.style.opacity = '1'; 
+                placeholderImg.classList.add('active'); 
+            } else if (placeholderImg) {
+                placeholderImg.style.opacity = '0';
+                placeholderImg.classList.remove('active');
+            }
+
+            newMediaElement = document.createElement('video');
+            newMediaElement.src = slide.videoSrc;
+            if (slide.image) newMediaElement.poster = slide.image;
+            newMediaElement.loop = true;
+            newMediaElement.muted = true; 
+            newMediaElement.playsInline = true; 
+            newMediaElement.preload = "auto";
+            newMediaElement.removeAttribute('controls'); 
+            newMediaElement.setAttribute('data-media-type', 'video');
+            sliderImageColumn.classList.add('video-slide-active');
+        } else { 
+            if (placeholderImg) { // Используем плейсхолдер для картинок
+                placeholderImg.src = slide.image; 
+                placeholderImg.alt = slide.title;
+                placeholderImg.setAttribute('data-media-type', slide.isMedia && slide.mediaType === 'gif' ? 'gif' : 'image');
+                newMediaElement = placeholderImg; // Теперь плейсхолдер это наш "новый" элемент
+            } else { // Если плейсхолдера нет (не должно быть по HTML), создаем img
+                newMediaElement = document.createElement('img');
+                newMediaElement.src = slide.image; 
+                newMediaElement.alt = slide.title;
+                newMediaElement.setAttribute('data-media-type', slide.isMedia && slide.mediaType === 'gif' ? 'gif' : 'image');
+            }
+            sliderImageColumn.classList.remove('video-slide-active');
+        }
+        
+        if (newMediaElement !== placeholderImg) { // Если это не плейсхолдер (т.е. видео)
+            newMediaElement.classList.add('slide-media');
+            newMediaElement.style.opacity = '0'; 
+            sliderImageColumn.appendChild(newMediaElement);
+        }
+
+
+        const finaliseMediaDisplay = () => {
+            if (currentSlideIndex === index) { 
+                if (isVideoSlide && placeholderImg) { 
+                    placeholderImg.style.opacity = '0';
+                    placeholderImg.classList.remove('active');
+                }
+                newMediaElement.style.opacity = '1'; // Плавно показываем (для видео или плейсхолдера-картинки)
+                newMediaElement.classList.add('active'); 
+                
+                if (newMediaElement.tagName === 'VIDEO' && isSliderVisible) { 
+                    playActiveVideo();
+                }
+            } else if (newMediaElement.tagName === 'VIDEO' && newMediaElement !== placeholderImg) {
+                 if (newMediaElement.parentNode) newMediaElement.remove();
+            }
+        };
+    
+        if (isVideoSlide) {
+            if (newMediaElement.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) {
+                setTimeout(finaliseMediaDisplay, 30); 
+            } else {
+                newMediaElement.addEventListener('canplaythrough', finaliseMediaDisplay, { once: true });
+                newMediaElement.addEventListener('loadeddata', finaliseMediaDisplay, { once: true });
+                newMediaElement.addEventListener('error', (e) => {
+                    console.error('Error loading video:', newMediaElement.src, e);
+                    if (placeholderImg && newMediaElement.poster) {
+                        placeholderImg.src = newMediaElement.poster;
+                        placeholderImg.alt = slide.title + " (video error)";
+                        placeholderImg.style.opacity = '1';
+                        placeholderImg.classList.add('active'); 
+                    } else if (placeholderImg) {
+                        placeholderImg.style.opacity = '0';
+                        placeholderImg.classList.remove('active'); 
+                    }
+                    if (newMediaElement.parentNode && newMediaElement !== placeholderImg) newMediaElement.remove();
+                    sliderImageColumn.classList.remove('video-slide-active');
+                }, { once: true });
+            }
+        } else { 
+            // Для картинок, которые теперь отображаются через placeholderImg
+            if (placeholderImg === newMediaElement) { // Убедимся, что это плейсхолдер
+                 setTimeout(finaliseMediaDisplay, 20); // Просто показываем его
+            }
+        }
+
+        if (tabsContainer) {
+            const tabs = tabsContainer.querySelectorAll('li');
+            tabs.forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+            });
+        }
     }
-}
 
     function nextSlide() {
         let newIndex = (currentSlideIndex + 1) % slidesData.length;
@@ -398,42 +420,31 @@ document.addEventListener('DOMContentLoaded', function() {
         updateSlide(index);
     }
     
-    let isAutoplayPausedManually = false; 
-
-    function startAutoPlay() {
-        isAutoplayPausedManually = false;
-        stopAutoPlay(); 
+    function startAutoPlayInterval() {
+        if (autoPlayInterval) clearInterval(autoPlayInterval); // Очищаем существующий, если есть
         autoPlayInterval = setInterval(nextSlide, AUTOPLAY_DELAY);
-        if (heroSliderSection.classList.contains('is-visible-slider')) { 
-            playActiveVideo();
-        }
     }
 
-    function stopAutoPlay(manualPause = false) { 
-        if(manualPause) isAutoplayPausedManually = true;
+    function stopAutoPlayInterval() {
         clearInterval(autoPlayInterval);
-        autoPlayInterval = null; 
-        pauseActiveVideo();
+        autoPlayInterval = null;
     }
 
     if (heroSliderSection) {
         const sliderObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
+                    isSliderVisible = true;
                     heroSliderSection.classList.add('is-visible-slider');
-                    if (!isAutoplayPausedManually) { 
-                       playActiveVideo(); 
-                       if (!autoPlayInterval && slidesData.length > 1) { 
-                           startAutoPlay();
-                       }
+                    playActiveVideo(); // Запускаем видео текущего слайда
+                    if (!isMouseOverSlider && slidesData.length > 1 && !autoPlayInterval) { // Запускаем автоплей только если мышь не наведена
+                        startAutoPlayInterval();
                     }
                 } else {
+                    isSliderVisible = false;
                     heroSliderSection.classList.remove('is-visible-slider');
-                    pauseActiveVideo(); 
-                    if (autoPlayInterval) { 
-                        clearInterval(autoPlayInterval);
-                        autoPlayInterval = null; 
-                    }
+                    pauseActiveVideo(); // Паузим видео
+                    stopAutoPlayInterval(); // Останавливаем автоплей
                 }
             });
         }, { threshold: 0.1 }); 
@@ -443,36 +454,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (slidesData.length > 0 && heroSliderSection) {
         generateTabs();
-        // Инициализация первого слайда. Если он не виден, IntersectionObserver не запустит видео/автоплей.
-        // Если он виден, IntersectionObserver должен его подхватить.
         updateSlide(currentSlideIndex); 
-        // Запускаем автоплей, если слайдер изначально видим и слайдов больше одного
-        if (heroSliderSection.classList.contains('is-visible-slider') && slidesData.length > 1) {
-             startAutoPlay();
-        }
-
+        // Первоначальный запуск автоплея и видео будет обработан IntersectionObserver
 
         if (prevArrow && nextArrow) {
             prevArrow.addEventListener('click', () => { 
                 prevSlide(); 
-                stopAutoPlay();    
-                startAutoPlay();   
+                if (!isMouseOverSlider) {
+                    stopAutoPlayInterval();    
+                    startAutoPlayInterval();   
+                }
+                if(isSliderVisible) playActiveVideo();
             });
             nextArrow.addEventListener('click', () => { 
                 nextSlide(); 
-                stopAutoPlay();
-                startAutoPlay();
+                if (!isMouseOverSlider) {
+                    stopAutoPlayInterval();
+                    startAutoPlayInterval();
+                }
+                if(isSliderVisible) playActiveVideo();
             });
         }
-        heroSliderSection.addEventListener('mouseenter', () => stopAutoPlay(true)); 
+        heroSliderSection.addEventListener('mouseenter', () => {
+            isMouseOverSlider = true;
+            stopAutoPlayInterval(); // Останавливаем только смену слайдов
+            // Видео НЕ останавливаем, оно должно продолжать играть
+        }); 
         heroSliderSection.addEventListener('mouseleave', () => {
-            if (heroSliderSection.classList.contains('is-visible-slider') && slidesData.length > 1) { 
-                startAutoPlay();
+            isMouseOverSlider = false;
+            if (isSliderVisible && slidesData.length > 1) { // Возобновляем автоплей, если слайдер видим
+                startAutoPlayInterval();
             }
         });
     }
 
     // --- ОСТАЛЬНАЯ ЧАСТЬ КОДА ---
+    // (Проекты, статистика, модалки, и т.д. - без изменений из твоего предыдущего полного файла)
+    // ... (скопируй сюда всю оставшуюся часть твоего script.js)
     const projectsGridContainer = document.getElementById('projects-grid-container');
     const filterBtns = document.querySelectorAll('.project-filters .filter-btn');
     const allProjects = [
